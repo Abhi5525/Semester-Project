@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Movie Booking System</title>
+    <link rel="stylesheet" href="style.css">  <!-- Link to external CSS -->
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">Bamel Cinemas</div>
+        <ul class="nav-links">
+            <li><a href="#">Location</a></li>
+            <li><a href="#">Ticket Rate</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+        <button class="sign-in">Sign Up</button>
+    </nav>
+
+    <!-- Movie List Section -->
+    <section class="recommended-movies">
+        <h2>Recommended Movies</h2>
+        <div class="movie-container">
+            <div class="movie">
+                <img src="pic1.png" alt="Waterfall model"> <!-- Reference images properly -->
+                <p class="movie-title">Waterfall model</p>
+                <p class="movie-genre">First/Try/AlmostCorrect</p>
+                <div class="movie-details">
+                    <span>👍 2.2K Likes</span>
+                </div>
+            </div>
+            <div class="movie">
+                <img src="pic.png" alt="Gantt chart">
+                <p class="movie-title">Gantt chart</p>
+                <p class="movie-genre">First/Try/Mistake</p>
+                <div class="movie-details">
+                    <span>⭐ 8.9/10 • 318.7K Votes</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Structure for Movie Details -->
+    <div id="movieModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span> <!-- Close button within modal -->
+            <div class="modal-left">
+                <img src="back.jpg" alt="Movie Poster">
+            </div>
+            <div class="modal-right">
+                <h2 id="modalMovieTitle"></h2>
+                <p id="modalMovieGenre"></p>
+                <p><strong>Details:This is a sweet and short try <br> Please run with no errors</strong></p>
+                <p id="modalMovieLikes"></p>
+                <div class="buttons">
+                    <button onclick="watchTrailer()">Watch Trailer</button>
+                    <button onclick="bookTicket()">Book Tickets</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
