@@ -7,6 +7,7 @@ body {
 .container {
     width: 30%;
     margin: 0 auto;
+    margin-top: 50px;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
@@ -22,25 +23,40 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 20px;
+    font-family: sans-serif;
 }
-
-p{
+.single-data-box{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.register-button-box{
+    width: 80%;
     text-align: center;
 }
+p{
+    text-align: center;
+    font-size: 15px;
+}
+p a{
+    color: #5cb85c;
+ }
 input, button {
     margin: 10px 0;
     padding: 10px;
-    width: 100%;
-    max-width: 300px;
+    width: inherit
 }
 
 button {
-    background-color: #1d639c;
+    background-color: #5cb85c;
     color: white;
     border: none;
     cursor: pointer;
+    font-size: 15px;
 }
 
 button:hover {
-    background-color: #54839e;
+    background-color: #407c1f;
 }

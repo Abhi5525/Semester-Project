@@ -12,7 +12,7 @@ body {
 
 /* Navbar Styling */
 .navbar {
-    background-color: #283593; /* Dark blue for a sleeker look */
+    background-color: #5cb85c; /* Dark blue for a sleeker look */
     padding: 15px;
     display: flex;
     justify-content: space-between;
@@ -41,7 +41,7 @@ body {
 }
 
 .navbar .sign-in {
-    background-color: #ff7043; /* Warm orange button for contrast */
+    background-color: #33a8cb; /* Warm orange button for contrast */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -164,6 +164,7 @@ button {
     cursor: pointer;
     margin-right: 10px;
     border-radius: 5px;
+    
 }
 
 button:hover {

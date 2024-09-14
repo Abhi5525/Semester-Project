@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="logincss.css">
 </head>
-<body>
+
+<body style="background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20230715/pngtree-red-seat-cinema-a-3d-rendered-movie-hall-with-a-white-image_3852269.jpg');
+background-repeat: no-repeat;
+background-size: cover;">
     <div class="container">
         <h1>Create an Account</h1>
-        <form action="login.php" method="POST">
+        <form action="signup.php" method="POST">
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-    
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <button type="submit">Login</button>
+            <div class="single-data-box">
+                <label for="username"> Username:</label>
+                <input type="text" id="username" name="username">
+            </div>
+            <div class="single-data-box">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="single-data-box">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="register-button-box">
+                <button type="submit">Register</button>
+                
+            </div>
         </form>
         <p>Already have an account? <a href="login.html">Login here</a></p>
     </div>
 </body>
-</html>
 
+</html>

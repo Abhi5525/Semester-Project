@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="logincss.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Login to Continue</h1>
         <form action="login.php" method="POST">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-    
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <button type="submit">Login</button>
+            <div class="single-data-box">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+            </div>
+
+
+            <div class="single-data-box">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="register-button-box">
+                <button type="submit">Login</button>
+
+            </div>
         </form>
         <p>Don't have an account? <a href="register.html">Register here</a></p>
     </div>
 </body>
-</html>
 
+</html>
