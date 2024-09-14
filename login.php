@@ -4,21 +4,40 @@ $username = "root";
 $password = "";
 $dbname = "movie_booking";
 
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-if (!$conn) {
-  die("Connection failed: " . mysqli_connect_error());
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: Please try again later.");
 }
-echo "Connected successfully";
-$email=$_POST['email'];
-$pw=$_POST['password'];
-$sql="SELECT * FROM users WHERE email = '$email' AND password='$pw'";
-$result=mysqli_query($conn,$sql);
-  
-if(mysqli_num_rows($result)==1){
-  header("Location:dashboard.php");
-  }else{
-  
-  echo "<script>alert('Incorrect username or password. Please try again.'); window.location.href='login.php';</script>";
-  }
-mysqli_close($conn);
+
+// Get user input
+$email = $_POST['email'];
+$pw = $_POST['password'];
+
+// Prepare and bind
+$stmt = $conn->prepare("SELECT password FROM users WHERE email = ?");
+$stmt->bind_param("s", $email);
+
+// Execute the statement
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Check if the user exists and verify the password
+if ($result->num_rows == 1) {
+    $row = $result->fetch_assoc();
+    if (password_verify($pw, $row['password'])) {
+        header("Location: dashboard.php");
+        exit(); // Ensure script stops after redirection
+    } else {
+        echo "<script>alert('Incorrect username or password. Please try again.'); window.location.href='login.php';</script>";
+    }
+} else {
+    echo "<script>alert('Incorrect username or password. Please try again.'); window.location.href='login.php';</script>";
+}
+
+// Close the connection
+$stmt->close();
+$conn->close();
 ?>

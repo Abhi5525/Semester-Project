@@ -6,10 +6,6 @@ function openModal(movieTitle, movieGenre, movieLikes) {
     document.getElementById("modalMovieLikes").innerText = movieLikes;
 }
 
-// Function to close the modal
-function closeModal() {
-    document.getElementById("movieModal").style.display = "none";
-}
 
 // Add event listeners to each movie thumbnail
 window.onload = () => {
