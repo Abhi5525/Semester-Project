@@ -9,14 +9,14 @@
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <div class="logo">Bamel Cinemas</div>
+        <div class="logo"><img src = "../images/logo.png"></div>
         <ul class="nav-links">
             <li><a href="#">Location</a></li>
             <li><a href="#">Ticket Rate</a></li>
             <li><a href="#">About Us</a></li>
             <li><a href="#">Contact Us</a></li>
         </ul>
-        <button class="sign-in">Sign Up</button>
+        <button class="sign-in" onclick="login()">Sign Up</button>
     </nav>
 
     <!-- Movie List Section -->
@@ -24,7 +24,7 @@
         <h2>Recommended Movies</h2>
         <div class="movie-container">
             <div class="movie">
-                <img src="images/pic.png" alt="Waterfall model"> <!-- Reference images properly -->
+                <img src="../images/pic.png" alt="Waterfall model"> <!-- Reference images properly -->
                 <p class="movie-title">Waterfall model</p>
                 <p class="movie-genre">First/Try/AlmostCorrect</p>
                 <div class="movie-details">
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="movie">
-                <img src="images/pic1.png" alt="Gantt chart">
+                <img src="../images/pic1.png" alt="Gantt chart">
                 <p class="movie-title">Gantt chart</p>
                 <p class="movie-genre">First/Try/Mistake</p>
                 <div class="movie-details">
@@ -47,7 +47,7 @@
         <div class="modal-content">
             <a href="index.html"><span class="close">&times;</span></a> <!-- Close button within modal -->
             <div class="modal-left">
-                <img src="images/back.jpg" alt="Movie Poster">
+                <img src="../images/back.jpg" alt="Movie Poster">
             </div>
             <div class="modal-right">
                 <h2 id="modalMovieTitle"></h2>

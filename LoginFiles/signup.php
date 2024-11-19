@@ -17,6 +17,7 @@ echo "Connected successfully";
 // Retrieve form data
 $username = mysqli_real_escape_string($conn, $_POST['username']);
 $email = mysqli_real_escape_string($conn, $_POST['email']);
+$phone = mysqli_real_escape_string($conn, $_POST['phone']);
 $password = $_POST['password'];  // Use this as the raw password for hashing
 
 // Check if email already exists
@@ -31,7 +32,7 @@ if (mysqli_num_rows($result1) > 0) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert the new user into the database
-    $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
+    $sql = "INSERT INTO users (username, email,phone, password) VALUES ('$username', '$email','$phone', '$hashed_password')";
 
     if (mysqli_query($conn, $sql)) {
         // Redirect to login page upon successful registration

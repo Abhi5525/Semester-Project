@@ -1,0 +1,167 @@
+/* General page settings */
+body {
+    background-color:#1a1a1a;
+    color:  #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: max-content;
+    width: auto;
+}
+
+/* Navbar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: linear-gradient(to bottom, rgba(139, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+}
+
+.navbar .logo img {
+    height: 80px;
+    width: auto;
+    
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 40px;
+}
+
+.navbar .nav-links li {
+    list-style-type: none;
+}
+
+.navbar .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: larger;
+}
+
+.navbar .sign-in {
+    padding: 10px 20px;
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Movie list styling */
+.recommended-movies {
+    padding: 40px;
+}
+
+.recommended-movies h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.movie-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.movie {
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.movie:hover {
+    transform: scale(1.05);
+}
+
+.movie img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    /* transition: opacity 0.3s ease-in-out; */
+}
+
+.movie-details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 10px;
+    border-radius: 10px;
+    width: 350px;
+    height: 200px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.movie:hover .movie-details {
+    opacity: 1;
+}
+
+.movie-title {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Modal styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+    display: flex;
+    color: #fff;
+}
+
+.modal-left img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.modal-right {
+    padding-left: 20px;
+    flex: 1;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 18px; /* Make close button larger */
+}
+
+.buttons button {
+    padding: 8px 15px;
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.buttons button:last-child {
+    margin-right: 0;
+}

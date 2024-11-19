@@ -25,7 +25,11 @@ function watchTrailer() {
     window.open(trailerUrl, '_blank');
 }
 
-// Function to redirect to login page for booking tickets
 function bookTicket() {
-    window.location.href = 'login.html'; // Redirect to the login page
+    window.location.href = '../Seats/logincheck.php';
 }
+
+// function login()
+// {
+//      window.location.href = '../LoginFiles/login.html';
+// }

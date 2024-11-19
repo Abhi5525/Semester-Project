@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="logincss.css">
+     
+    <script>
+        function validation() {
+            var username = document.getElementById("username").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var phone = document.getElementById("phone").value;
+
+            document.getElementById("nameError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("passwordError").textContent = "";
+            document.getElementById("phoneError").textContent = "";
+
+            var valid = true;
+
+            if (username == "") {
+                document.getElementById("nameError").textContent = "Username can't be empty";
+                valid = false;
+            }
+
+            if (email == "") {
+                document.getElementById("emailError").textContent = "Email can't be empty";
+                valid = false;
+            }
+
+            if (password == "") {
+                document.getElementById("passwordError").textContent = "Password can't be empty";
+                valid = false;
+            }
+
+            if (phone == "") {
+                document.getElementById("phoneError").textContent = "Phone number can't be empty";
+                valid = false;
+            }
+
+            return valid;
+        }
+    </script>
+
+</head>
+
+<body style="background-image: url('https://c1.wallpaperflare.com/preview/860/746/438/cinema-theater-hall-curtain.jpg');
+background-repeat: no-repeat;
+background-size: cover;">
+    <div class="container">
+        <h1>Create an Account</h1>
+        <form action="signup.php" method="POST" onsubmit="return validation();">
+
+            <div class="single-data-box">
+                <label for="username"> Full Name:</label>
+                <input type="text" id="username" name="username">
+                <span class="error" id="nameError" style="font-size:12px; color: rgb(253, 252, 252);"></span>
+            </div>
+
+            <div class="single-data-box">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <span class="error" id="emailError" style="font-size: 12px; color: rgb(253, 252, 252);"></span>
+            </div>
+
+            <div class="single-data-box">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}">
+                <span class="error" id="phoneError" style="font-size: 12px; color: rgb(253, 252, 252);"></span>
+            </div>
+
+            <div class="single-data-box">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password">
+                <span class="error" id="passwordError" style="font-size: 12px; color: rgb(253, 252, 252);"></span>
+            </div>
+
+            <div class="register-button-box">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+</body>
+
+</html>
