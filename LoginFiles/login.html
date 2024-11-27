@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="logincss.css">
+    <link rel="stylesheet" href="login.css" >
     <script>
-        function validation()
-        {
+        function validation() {
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
 
@@ -17,24 +16,19 @@
 
             var valid = true;
 
-        if(email == "")
-        {
-            document.getElementById("emailError").textContent = "email can't be empty";
-            valid = false;
-        }
+            if (email == "") {
+                document.getElementById("emailError").textContent = "email can't be empty";
+                valid = false;
+            }
 
-        if (password == "")
-        {
-            document.getElementById("passwordError").textContent = "password can't be empty";
-            valid = false;
-        }
-        if(valid == true) 
-        {
-            localStorage.setItem('isLoggedIn', 'true');
-
-        }
-        return valid;
-
+            if (password == "") {
+                document.getElementById("passwordError").textContent = "password can't be empty";
+                valid = false;
+            }
+            if (valid == true) {
+                localStorage.setItem('isLoggedIn', 'true');
+            }
+            return valid;
         }
     </script>
 </head>
@@ -47,24 +41,44 @@ background-size: cover;">
         <form action="login.php" method="POST" onsubmit="return validation();">
             <div class="single-data-box">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" >
-                <span class="error" id = "emailError" style="font-size: 12px; color: rgb(253, 252, 252);"></span><br>
-
+                <input type="email" id="email" name="email">
+                <span class="error" id="emailError" style="font-size: 12px; color: rgb(253, 252, 252);"></span><br>
             </div>
 
-            <div class="single-data-box">
+            <div class="single-data-box password-container">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" >
-                <span class="error" id = "passwordError" style="font-size: 12px; color: rgb(253, 252, 252)ed;"></span><br>
+                <input type="password" id="password" name="password">
+                <span id="toggle-password" class="eye-icon">👁️</span>
+                <span class="error" id="passwordError" style="font-size: 12px; color: rgb(253, 252, 252);"></span><br>
             </div>
+
+                        
+            <div class="remember-me-container">
+                <input type="checkbox" id="remember-me" name="remember-me">
+                <label for="remember-me">Remember Me</label>
+            </div>
+
 
             <div class="register-button-box">
                 <button type="submit">Login</button>
-
             </div>
         </form>
         <p>Don't have an account? <a href="register.html">Register here</a></p>
     </div>
+    <script>
+        // Select password input and eye icon elements
+        const passwordInput = document.getElementById("password");
+        const togglePasswordIcon = document.getElementById("toggle-password");
+
+        // Add click event listener to toggle password visibility
+        togglePasswordIcon.addEventListener("click", () => {
+            // Toggle the type of input between password and text
+            const isPasswordVisible = passwordInput.type === "text";
+            passwordInput.type = isPasswordVisible ? "password" : "text";
+            // Toggle the eye icon symbol
+            togglePasswordIcon.textContent = isPasswordVisible ? "👁️" : "🙈";  // Change icon accordingly
+        });
+    </script>
 </body>
 
 </html>

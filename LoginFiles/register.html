@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="logincss.css">
-     
+    <title>Register</title>
+    <link rel="stylesheet" href="register.css">
+    
     <script>
         function validation() {
             var username = document.getElementById("username").value;
@@ -52,10 +52,10 @@ background-repeat: no-repeat;
 background-size: cover;">
     <div class="container">
         <h1>Create an Account</h1>
-        <form action="signup.php" method="POST" onsubmit="return validation();">
+        <form action="register.php" method="POST" onsubmit="return validation();">
 
             <div class="single-data-box">
-                <label for="username"> Full Name:</label>
+                <label for="username">Full Name:</label>
                 <input type="text" id="username" name="username">
                 <span class="error" id="nameError" style="font-size:12px; color: rgb(253, 252, 252);"></span>
             </div>
@@ -72,9 +72,10 @@ background-size: cover;">
                 <span class="error" id="phoneError" style="font-size: 12px; color: rgb(253, 252, 252);"></span>
             </div>
 
-            <div class="single-data-box">
+            <div class="single-data-box password-container">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password">
+                <span id="toggle-password" class="eye-icon">👁️</span>
                 <span class="error" id="passwordError" style="font-size: 12px; color: rgb(253, 252, 252);"></span>
             </div>
 
@@ -84,6 +85,21 @@ background-size: cover;">
         </form>
         <p>Already have an account? <a href="login.html">Login here</a></p>
     </div>
+
+    <script>
+        // Select password input and eye icon elements
+        const passwordInput = document.getElementById("password");
+        const togglePasswordIcon = document.getElementById("toggle-password");
+
+        // Add click event listener to toggle password visibility
+        togglePasswordIcon.addEventListener("click", () => {
+            // Toggle the type of input between password and text
+            const isPasswordVisible = passwordInput.type === "text";
+            passwordInput.type = isPasswordVisible ? "password" : "text";
+            // Toggle the eye icon symbol
+            togglePasswordIcon.textContent = isPasswordVisible ? "👁️" : "🙈";  // Change icon accordingly
+        });
+    </script>
 </body>
 
 </html>

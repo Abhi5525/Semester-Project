@@ -1,0 +1,239 @@
+/* Basic Page Setup */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #0a0a0a, #2a2a2a);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Dashboard Container */
+.dashboard {
+    text-align: center;
+    background-color: rgba(30, 30, 30, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+    width: 90%;
+    max-width: 1200px;
+}
+/* Heading Styles */
+h1 {
+    font-size: 2.5em; /* Larger font size for the main title */
+    margin: 0; /* Remove default margin */
+    padding: 10px; /* Add padding for spacing */
+    color: #ffffff; /* White color for better contrast */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Subtle shadow for depth */
+    letter-spacing: 1px; /* Slightly increase letter spacing */
+    font-weight: bold; /* Make the font bold */
+}
+
+h2 {
+    font-size: 1.8em; /* Slightly smaller than h1 */
+    margin: 10px 0; /* Add margin for spacing */
+    padding: 5px; /* Add padding for spacing */
+    color: #f0f0f0; /* Light grey for contrast */
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+    font-weight: normal; /* Normal weight for h2 */
+    letter-spacing: 0.5px; /* Slightly increase letter spacing */
+}
+
+
+/* Shift Buttons */
+.shifts {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Shift Button Styles */
+.shift-btn {
+    padding: 15px 30px;
+    margin: 0 10px;
+    background-color: #444;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.shift-btn:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+.shift-btn.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Seat Map Container */
+#seat-map {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+    border: 1px solid #555;
+    background-color: #222;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    max-height: 450px;
+}
+
+/* Seat Label */
+.seat-label {
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Rows and Seats */
+.row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.row-label {
+    font-weight: bold;
+    width: 40px;
+    text-align: center;
+    margin-right: 15px;
+}
+
+.seat {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Seat Status */
+.seat.available {
+    background-color: #4caf50; /* Green for available */
+}
+
+.seat.booked {
+    background-color: #f44336; /* Red for booked */
+    cursor: not-allowed;
+}
+
+/* Hover Effect for Seats */
+.seat:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Modal Styles */
+#confirmation-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top of other elements */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.7); /* Black background with opacity */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content */
+}
+
+/* Modal Content Box */
+.modal-content {
+    background-color: #333; /* Dark background for modal box */
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%; /* Adjust width as needed */
+    max-width: 400px; /* Set a max width */
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    position: relative;
+}
+
+/* Close Button */
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-button:hover {
+    color: #fff;
+}
+
+/* Buttons inside Modal */
+#confirm-button,
+#cancel-button {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#confirm-button {
+    background-color: #4caf50; /* Green for confirm */
+    color: white;
+}
+
+#confirm-button:hover {
+    background-color: #45a049;
+}
+
+#cancel-button {
+    background-color: #f44336; /* Red for cancel */
+    color: white;
+}
+
+#cancel-button:hover {
+    background-color: #e53935;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .shift-btn {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    #seat-map {
+        max-height: 300px;
+        padding: 20px;
+    }
+
+    .seat {
+        width: 50px;
+        height: 50px;
+        font-size: 14px;
+    }
+
+    .row-label {
+        width: 30px;
+    }
+}

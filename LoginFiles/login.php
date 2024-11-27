@@ -15,6 +15,8 @@ if ($conn->connect_error) {
 }
 
 // Get user input
+$adminemail = "MasterAdmin@gmail.com";
+$adminpassword = "MasterAdmin";
 $email = $_POST['email'];
 $pw = $_POST['password'];
 
@@ -26,6 +28,10 @@ $stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();
 
+if($email === $adminemail && $pw === $adminpassword){
+    header("Location: ../Movies/UploadMovies.php"); 
+    exit();
+}
 // Check if the user exists and verify the password
 if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
@@ -39,7 +45,9 @@ if ($result->num_rows == 1) {
         // Redirect to the home page
         header("Location: ../Home/index.php");
         exit(); // Ensure script stops after redirection
-    } else {
+
+    }
+    else {
         // Incorrect password
         echo "<script>
                 alert('Incorrect username or password. Please try again.');

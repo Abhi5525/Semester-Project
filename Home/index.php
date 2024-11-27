@@ -1,3 +1,5 @@
+<?php include("connection.php");?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Movie Booking System</title>
     <link rel="stylesheet" href="style.css">  <!-- Link to external CSS -->
+    <script src="script.js"></script>
+
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -20,49 +24,72 @@
     </nav>
 
     <!-- Movie List Section -->
-    <section class="recommended-movies">
-        <h2>Recommended Movies</h2>
-        <div class="movie-container">
-            <div class="movie">
-                <img src="../images/pic.png" alt="Waterfall model"> <!-- Reference images properly -->
-                <p class="movie-title">Waterfall model</p>
-                <p class="movie-genre">First/Try/AlmostCorrect</p>
-                <div class="movie-details">
-                    <span>👍 2.2K Likes</span>
+    <section class="available-movies">
+        <h2>Now Showing</h2>
+        
+        <?php 
+        $sql = "SELECT * from movies";
+        $result = $conn->query($sql);
+        if($result->num_rows > 0)
+        {
+            while($row = mysqli_fetch_assoc($result))
+            {
+                $title = $row['Title'];
+                $description = $row['Description'];
+                $duration = $row['Duration'];
+                $genre = $row['Genre'];
+                $thumbnailPath = $row['Thumbnail'];
+                $url = $row['URL'];
+            ?>
+            
+            <div class="movie-container">
+                <div 
+                    class="movie"
+                    data-title="<?php echo $title; ?>" 
+                    data-description="<?php echo $description; ?>" 
+                    data-duration="<?php echo $duration; ?>" 
+                    data-genre="<?php echo $genre; ?>" 
+                    data-url="<?php echo $url; ?>" 
+                    data-thumbnail="../Movies/<?php echo $thumbnailPath; ?>"
+                    onclick="showModal(this)"> <!-- Added onclick for opening modal -->
+
+                    <div class="thumbnail">
+                       <img src="../Movies/<?php echo $thumbnailPath; ?>" alt="<?php echo $title; ?> Thumbnail">
+                    </div>
+                    <p class="movie-title"><?php echo $title;?></p>
                 </div>
             </div>
-            <div class="movie">
-                <img src="../images/pic1.png" alt="Gantt chart">
-                <p class="movie-title">Gantt chart</p>
-                <p class="movie-genre">First/Try/Mistake</p>
-                <div class="movie-details">
-                    <span>⭐ 8.9/10 • 318.7K Votes</span>
-                </div>
-            </div>
-        </div>
+            
+        <?php
+            }
+        }
+        ?>
     </section>
 
     <!-- Modal Structure for Movie Details -->
     <div id="movieModal" class="modal">
         <div class="modal-content">
-            <a href="index.html"><span class="close">&times;</span></a> <!-- Close button within modal -->
+            <a href="index.php"><span class="close">&times;</span></a> <!-- Close button within modal -->
             <div class="modal-left">
-                <img src="../images/back.jpg" alt="Movie Poster">
+                <img id="modalImage" src="" alt="Movie Thumbnail">
             </div>
             <div class="modal-right">
-                <h2 id="modalMovieTitle"></h2>
-                <p id="modalMovieGenre"></p>
-                <p><strong>Details:This is a sweet and short try <br> Please run with no errors</strong></p>
-                <p id="modalMovieLikes"></p>
+                <h2 id="modalTitle"></h2>
+                <p id="modalGenre"></p>
+                <p id="modalDescription"></p>
+                <p id="modalDuration"></p>
                 <div class="buttons">
-                    <button onclick="watchTrailer()">Watch Trailer</button>
+                    <button id="trailerButton" onclick="watchTrailer()">Watch Trailer</button>
                     <button onclick="bookTicket()">Book Tickets</button>
+                    <script>
+                        function bookTicket() {
+                            window.location.href = '../Seats/logincheck.php';
+                            }
+                   </script>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Link to external JavaScript file -->
-    <script src="script.js"></script>
 </body>
 </html>

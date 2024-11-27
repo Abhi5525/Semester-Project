@@ -36,7 +36,7 @@ if (mysqli_num_rows($result1) > 0) {
 
     if (mysqli_query($conn, $sql)) {
         // Redirect to login page upon successful registration
-        echo "<script>alert('Registeres Sucessfully.'); window.location.href='login.html';</script>";
+        echo "<script>alert('Registered Sucessfully.'); window.location.href='login.html';</script>";
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
