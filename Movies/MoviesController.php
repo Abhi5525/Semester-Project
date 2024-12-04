@@ -1,6 +1,6 @@
 <?php
 
-include("../test/connection.php");
+include("connection.php");
 
 $title = $_POST['title'];
 $description = $_POST['description'];

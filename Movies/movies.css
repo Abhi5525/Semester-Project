@@ -1,8 +1,9 @@
+/* movies.css */
 
 body {
+    background: linear-gradient(135deg, #400000, #1a1a1a); /* Blackish-red gradient background */
+    color: #ffffff; /* White text for contrast */
     font-family: 'Arial', sans-serif;
-    background-color: #f5f7fa; /* Subtle gray for a professional look */
-    color: #333; /* Dark text for good readability */
     margin: 0;
     padding: 0;
     display: flex;
@@ -12,11 +13,12 @@ body {
 }
 
 .container {
-    width: 40%;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #0c0a0a; /* Solid black form for contrast */
+    border-radius: 12px;
+    padding: 25px;
+    width: 450px;
+    border: 2px solid #7a0000; /* Subtle red border */
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); /* Faint red glow around the form */
 }
 
 form {
@@ -31,70 +33,71 @@ form {
 }
 
 label {
-    font-size: 14px;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #555;
+    color: wheat; /* Vibrant wheat for labels */
 }
 
+/* Input styles for text and file */
 input[type="text"],
-input[type="file"] {
+input[type="file"],
+select {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-input[type="text"]:focus,
-input[type="file"]:focus {
-    border-color: #007bff; /* Highlighted border color */
-}
-
-.error {
-    font-size: 12px;
-    color: #ff4d4d; /* Error message in red */
-    margin-top: 5px;
-}
-
-input[type="submit"] {
-    padding: 10px 20px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
+    border: 1px solid #ff4d4d; /* Vibrant red border */
+    border-radius: 6px;
+    background-color: #1a1a1a; /* Dark background for inputs */
     color: #fff;
     font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focus effect for inputs */
+input[type="text"]:focus,
+input[type="file"]:focus,
+select:focus {
+    border-color: #ff8080; /* Brighter red focus border */
+    outline: none;
+    box-shadow: 0 0 8px rgba(255, 128, 128, 0.8); /* Glow effect on focus */
+}
+
+/* Submit button styles */
+input[type="submit"] {
+    padding: 12px;
+    background: linear-gradient(135deg, #7a0000, #400000); /* Blackish-red gradient button */
+    color: wheat;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 input[type="submit"]:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background: linear-gradient(135deg, #b30000, #590000); /* Brighter hover effect */
+    transform: scale(1.05); /* Slight enlargement */
 }
 
-input[type="submit"]:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+/* Error message styles */
+.error {
+    color: #ffd700; /* Gold for error messages */
+    font-size: 12px;
+    margin-top: 5px;
 }
 
-@media (max-width: 768px) {
+/* Media query for small screens */
+@media screen and (max-width: 500px) {
     .container {
         width: 90%;
-        padding: 20px;
-    }
-
-    input[type="text"],
-    input[type="file"] {
-        font-size: 12px;
-        padding: 8px;
-    }
-
-    label {
-        font-size: 12px;
     }
 
     input[type="submit"] {
-        font-size: 12px;
+        font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    select {
+        font-size: 13px;
     }
 }

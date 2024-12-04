@@ -1,4 +1,13 @@
-<?php include("connection.php");?>
+
+<?php 
+session_start();
+if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
+    header("Location: ../LoginFiles/login.html");
+    exit();
+}
+
+include("connection.php");?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,13 +29,20 @@
             <li><a href="#">About Us</a></li>
             <li><a href="#">Contact Us</a></li>
         </ul>
-        <button class="sign-in" onclick="login()">Sign Up</button>
+        <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true): ?>
+            <span class="welcome-text">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
+            <a href="../LoginFiles/logout.php"><button class = "logout">Logout </button></a>
+            <?php else: ?>
+        <a href="../LoginFiles/register.html"><button class="sign-in">Sign Up</button></a>
+        <?php endif; ?>
+        
+
     </nav>
 
     <!-- Movie List Section -->
     <section class="available-movies">
         <h2>Now Showing</h2>
-        
+        <div class="movie-container">
         <?php 
         $sql = "SELECT * from movies";
         $result = $conn->query($sql);
@@ -42,7 +58,7 @@
                 $url = $row['URL'];
             ?>
             
-            <div class="movie-container">
+            <!-- <div class="movie-container"> -->
                 <div 
                     class="movie"
                     data-title="<?php echo $title; ?>" 
@@ -58,12 +74,14 @@
                     </div>
                     <p class="movie-title"><?php echo $title;?></p>
                 </div>
-            </div>
+                <!-- </div> -->
             
         <?php
             }
         }
         ?>
+            </div>
+
     </section>
 
     <!-- Modal Structure for Movie Details -->

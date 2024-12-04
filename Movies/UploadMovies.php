@@ -53,7 +53,7 @@
             }
 
             if (thumbnail == "") {
-                document.getElementById("thumbnailError").textContent = "Missing the movie thumbnail";
+                document.getElementById("thumbnailError").textContent = "Please upload a movie thumbnail";
                 valid = false;
             }
 
@@ -91,10 +91,19 @@
             </div>
 
             <div class="input-field">
-                <label for="genre ">Movie Genre: </label>
-                <input type="text" name = "genre" id = "genre">
-                <span class = "error" id = "genreError"></span>
+                <label for="genre">Movie Genre: </label>
+                <select name="genre" id="genre">
+                    <option value="">Select Genre</option> <!-- Optional default option -->
+                    <option value="Action">Action</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <!-- Add other genres as needed -->
+                </select>
+                <span class="error" id="genreError"></span>
             </div>
+
 
             <div class="input-field">
                 <label for="thumbnail ">Movie Thumbnail: </label>

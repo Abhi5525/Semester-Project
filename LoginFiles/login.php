@@ -1,64 +1,65 @@
 <?php
-session_start(); // Start the session at the beginning
+session_start();
+include("../Seats/connection.php");
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "movie_booking";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: Please try again later.");
-}
-
-// Get user input
+// Admin credentials
 $adminemail = "MasterAdmin@gmail.com";
 $adminpassword = "MasterAdmin";
-$email = $_POST['email'];
-$pw = $_POST['password'];
 
-// Prepare and bind
-$stmt = $conn->prepare("SELECT password FROM users WHERE email = ?");
+// Get user input and sanitize it
+$email = isset($_POST['email']) ? trim($_POST['email']) : '';
+$pw = isset($_POST['password']) ? trim($_POST['password']) : '';
+
+
+// Check if it's the admin
+if ($email === $adminemail && $pw === $adminpassword) {
+    $_SESSION['userRole'] = 'Admin'; // Set a role for the admin
+    $_SESSION['userEmail'] = $adminemail;
+    $_SESSION['isLoggedIn'] = true;
+
+    // Redirect to the admin page
+    header("Location: ../AdminPage/index.php"); // Corrected path
+    exit();
+}
+
+// Prepare SQL query to check regular user credentials
+$stmt = $conn->prepare("SELECT username, password, phone FROM users WHERE email = ?");
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
 $stmt->bind_param("s", $email);
 
-// Execute the statement
+// Execute the query
 $stmt->execute();
 $result = $stmt->get_result();
 
-if($email === $adminemail && $pw === $adminpassword){
-    header("Location: ../Movies/UploadMovies.php"); 
-    exit();
-}
-// Check if the user exists and verify the password
+// Check if user exists
 if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
+    
+    // Verify the password
     if (password_verify($pw, $row['password'])) {
-        // Set session variable to indicate the user is logged in
+        // Set session variables
         $_SESSION['username'] = $row['username'];
-        $_SESSION['phone']=$row['phone'];
+        $_SESSION['phone'] = $row['phone'];
+        $_SESSION['userEmail'] = $email;
         $_SESSION['isLoggedIn'] = true;
-        $_SESSION['userEmail'] = $email; // Optionally store email or other info
 
-        // Redirect to the home page
+        // Redirect to user home page
         header("Location: ../Home/index.php");
-        exit(); // Ensure script stops after redirection
-
-    }
-    else {
+        exit();
+    } else {
         // Incorrect password
         echo "<script>
-                alert('Incorrect username or password. Please try again.');
-                window.location.href = '../Home/login.php';
+                alert('Incorrect password. Please try again.');
+                window.location.href = '../LoginFiles/login.html';
               </script>";
     }
 } else {
-    // No user found with the given email
+    // No user found
     echo "<script>
-            alert('Incorrect username or password. Please try again.');
-            window.location.href = '../Home/login.php';
+            alert('No user found with this email. Please register.');
+            window.location.href = '../LoginFiles/register.html';
           </script>";
 }
 

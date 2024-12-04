@@ -65,13 +65,16 @@ input {
     width: 100%;
     padding: 12px 15px;
     font-size: 16px;
+    font-weight: bold;
     color: #333;
-    background-color: #fff;
+    background-color: #cccccc80;
     border: 1px solid #ccc;
     border-radius: 5px;
     transition: border-color 0.3s ease-in-out;
 }
-
+#email{
+    background-color: #cccccc80;
+}
 input:focus {
     border-color: #66cc66;
     outline: none;
@@ -81,16 +84,6 @@ input[type="password"] {
     padding-right: 40px; /* Space for the eye icon */
 }
 
-/* Eye Icon for Password Field */
-.eye-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
-    color: #fff;
-    cursor: pointer;
-}
 
 /* Button */
 button {
@@ -99,6 +92,7 @@ button {
     border: none;
     padding: 12px 20px;
     font-size: 16px;
+    font-weight: bold;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
@@ -108,11 +102,24 @@ button {
 button:hover {
     background-color: #b46759;
 }
-
+.input-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 5px;
+    text-align: start;
+}
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
 /* Error Messages */
 .error {
     font-size: 14px;
     color: #ff4d4d;
+    font-weight: bold;
     margin-top: 5px;
     display: block;
 }
@@ -122,6 +129,8 @@ p {
     margin-top: 15px;
     font-size: 14px;
     color: #eaf2eb;
+    font-weight: bold;
+
 }
 
 p a {

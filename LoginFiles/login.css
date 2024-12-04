@@ -56,10 +56,11 @@ input {
     width: 100%;
     padding: 12px;
     font-size: 16px;
+    font-weight: bold;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #cccccc80;
-    color: white;
+    color: #333;
     box-sizing: border-box;
 }
 
@@ -77,32 +78,6 @@ input:focus {
     padding-right: 40px; /* Space for the eye icon */
 }
 
-.eye-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 18px;
-    color: #fff;
-}
-
-.eye-icon:hover {
-    color: #ccc;
-}
-
-/* Remember Me Checkbox */
-.remember-me-container {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    margin-top: 10px;
-    width: 100%;
-}
-
-.remember-me-container input {
-    margin-right: 10px;
-}
 
 /* Button Styling */
 button {
@@ -111,6 +86,7 @@ button {
     border: none;
     cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
     padding: 12px 20px;
     border-radius: 5px;
     width: 100%;
@@ -126,12 +102,15 @@ button:hover {
     font-size: 12px;
     color: #f44336; /* Red color */
     margin-top: 5px;
+    font-weight: bold;
+
 }
 
 /* Footer Links */
 p {
     font-size: 14px;
     margin-top: 20px;
+    font-weight: bold;
 }
 
 p a {
@@ -141,6 +120,21 @@ p a {
 
 p a:hover {
     text-decoration: underline;
+}
+.register-button-box{
+    width: 100%;
+}
+.input-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
 }
 
 /* Responsive Design */
