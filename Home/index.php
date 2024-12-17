@@ -88,16 +88,27 @@ include("connection.php");?>
     <div id="movieModal" class="modal">
         <div class="modal-content">
             <a href="index.php"><span class="close">&times;</span></a> <!-- Close button within modal -->
-            <div class="modal-left">
-                <img id="modalImage" src="" alt="Movie Thumbnail">
-            </div>
+            <div class="modal-left" id="modalLeft">
+    <!-- Image shown by default -->
+    <img id="modalImage" src="thumbnail.jpg" alt="Movie Thumbnail">
+    <!-- iFrame for the trailer -->
+    <iframe id="modalIframe" width="300" height="300" 
+        src="" 
+        frameborder="0" 
+        allow="autoplay; encrypted-media" 
+        allowfullscreen 
+        style="display: none;">
+    </iframe>
+</div>
+
             <div class="modal-right">
                 <h2 id="modalTitle"></h2>
                 <p id="modalGenre"></p>
-                <p id="modalDescription"></p>
+                <p id="modalDescription">
+                </p>
                 <p id="modalDuration"></p>
                 <div class="buttons">
-                    <button id="trailerButton" onclick="watchTrailer()">Watch Trailer</button>
+                    <!-- <button id="trailerButton" onclick="watchTrailer()">Watch Trailer</button> -->
                     <button onclick="bookTicket()">Book Tickets</button>
                     <script>
                         function bookTicket() {

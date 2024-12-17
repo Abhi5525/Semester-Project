@@ -8,30 +8,45 @@
    
 </head>
 <body>
-    <div id="dashboard" class="dashboard">
+    <div id="dashboard" class="dashboard" >
         <h1>Seat Reservation Section</h1>
 
         <!-- Show Days Section -->
-        <h2>Show Days</h2>
-        <label>
-            <input type="radio" name="date" value="today"> Today
-        </label>
-        <label>
-            <input type="radio" name="date" value="tomorrow"> Tomorrow
-        </label>
-
-        <!-- Showtimes Section -->
-        <h2>Our Available Showtimes</h2>
+        <!-- <h2>Show Days</h2> -->
+<div class="main-part" style="display:flex">
+<div style="display: flex; align-items: start;flex-direction:column" class="left-part">
+    <!-- Dropdown Container -->
+            <div style="margin-right: auto; padding: 20px;">
+                <label for="dateDropdown" style="color: #fff; font-size: 1.2em; font-weight: bold;">Select Date:</label>
+                <select id="dateDropdown" onchange="fetchSeats(this.value)" style="padding: 8px; border-radius: 5px; border: 1px solid #6C63FF; background-color: #fff; color: #333;">
+                    <!-- Dates will be populated dynamically using PHP -->
+                    <?php
+                    // Generate 7 days starting from today
+                    for ($i = 0; $i < 3; $i++) {
+                        $date = date('Y-m-d', strtotime("+$i days"));
+                        echo "<option value='$date'>" . date('M d, Y', strtotime($date)) . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>        <!-- Showtimes Section -->
+        <!-- <h2>Our Available Showtimes</h2> -->
         <div id="shifts" class="shifts">
-            <button id="shift1" class="shift-btn">11:00 AM - 2:00 PM</button>
-            <button id="shift2" class="shift-btn">3:00 PM - 7:00 PM</button>
-            <button id="shift3" class="shift-btn">8:00 PM - 11:00 PM</button>
+            <button id="shift1" class="shift-btn">11:00 AM - 2:00 PM</button><br>
+            <button id="shift2" class="shift-btn">3:00 PM - 7:00 PM</button><br>
+            <button id="shift3" class="shift-btn">8:00 PM - 11:00 PM</button><br>
         </div>
 
-        <!-- Seat Map Section -->
-        <h2>Select Your Seats</h2>
+    <!-- Seat Container -->
+    <!-- <div id="seatContainer" style="flex-grow: 1; text-align: center;"> -->
+        <!-- Seats will be rendered here -->
+        <!-- <h2 style="color: #fff;">Seat Reservation Section</h2> -->
+        <!-- <div id="seats"></div> -->
+    <!-- </div> -->
+</div>
+<div class="right-part">
+<h2>SCREEN</h2>
         <div id="seat-map" class="container">
-            <div class="screen"></div>
+            <img src="../images/Untitled_design-removebg-preview.png" alt="" class="screen">
 
             <div class="column-numbers">
                 <div class="placeholder"></div> <!-- Placeholder to align with row labels -->
@@ -39,12 +54,12 @@
                     <div class="column-number">1</div>
                     <div class="column-number">2</div>
                     <div class="column-number">3</div>
-                    <div class="column-number"></div>
+                    <!-- <div class="column-number"></div> -->
                     <div class="column-number">4</div>
                     <div class="column-number">5</div>
                     <div class="column-number">6</div>
                     <div class="column-number">7</div>
-                    <div class="column-number"></div>
+                    <!-- <div class="column-number"></div> -->
                     <div class="column-number">8</div>
                     <div class="column-number">9</div>
                     <div class="column-number">10</div>
@@ -179,6 +194,12 @@
             </div>
 
         </div>
+</div>
+</div>
+
+
+        <!-- Seat Map Section -->
+        
         <div id="confirmation-modal" class="modal">
             <div class="modal-content">
                 <span id="close-modal" class="close-button">&times;</span>
