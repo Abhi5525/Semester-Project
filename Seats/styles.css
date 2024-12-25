@@ -1,3 +1,60 @@
+/* Dashboard Section */
+.dashboard {
+  padding: 20px;
+  background-color: #2c2f33;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Section Title */
+.section-title {
+  color: #fff;
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Left Part */
+.left-part {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Dropdown Container */
+.dropdown-container {
+  margin-right: auto;
+  padding: 20px;
+}
+
+/* Label Styles */
+.dropdown-label {
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* Dropdown Styles */
+.dropdown-select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #6C63FF;
+  background-color: #fff;
+  color: #333;
+  font-size: 1em;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.dropdown-select:focus {
+  border-color: #4b47d6;
+}
+
+/* Global Styles */
 * {
   box-sizing: border-box;
 }
@@ -9,66 +66,37 @@ body {
   background-color: #242333;
   color: #fff;
   text-align: center;
+  height: 100%; /* Ensure full height */
 }
 
-h1 {
-  margin: 20px 0;
-}
-
-h2 {
-  margin: 10px 0;
-}
-
+/* Center the container */
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 30px auto;
-  perspective: 1000px;
-  width: 90%;
+  width: 100%;
 }
 
+/* Screen Styles */
 .screen {
   margin-left: 20px;
   position: relative;
-  width: 100%; /* Width of the screen */
+  width: 450px;
   height: 150px;
-  -webkit-filter: invert(100%); /* Safari/Chrome */
-    filter: invert(100%); /* Height of the screen */
-  /* margin: 20px auto; */
-  /* background: #e0e0e0; Light gray for screen color */
-  /* border-radius: 8px;  */
-  /* border-top-left-radius: 40%; */
-  /* border-top-right-radius: 40%;Slight rounding for corners */
-  /* box-shadow:  */
-    /* inset 0 -5px 10px rgba(0, 0, 0, 0.2), Inner shading */
-    /* 0 3px 15px rgba(0, 0, 0, 0.5);        Outer shadow */
-  /* display: flex;
+  -webkit-filter: invert(100%); 
+  filter: invert(100%);
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  font-weight: bold; */
-  /* color: #333; Dark gray text */
-  /* text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); Text glow for realism */
-  /* transform: perspective(1000px) rotateX(-10deg); Slight tilt */
-}
-
-/* Optional: Create a glossy reflection effect */
-.screen::before {
-  /* content: "";
-  position: absolute;
-  top: 5%;
-  left: 10%;
-  width: 80%;
-  height: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
-  border-radius: 50%;
-  z-index: 1; */
-  /* pointer-events: none; Non-interactive */
 }
 
 .column-numbers {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;margin-left: 50px;
+  margin-bottom: 10px;
+  margin-left: 50px;
 }
 
 .column-number {
@@ -81,17 +109,20 @@ h2 {
 
 /* Gaps in numbering */
 .column-number:nth-child(4),
-.column-number:nth-child(8) ,
+.column-number:nth-child(8),
 .seat:nth-child(4),
 .seat:nth-child(8) {
- margin-left: 20px; /* Creates space but keeps alignment */
+  margin-left: 20px; /* Creates space but keeps alignment */
 }
 
+/* Seat Rows */
 .seat-row {
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Center the seat rows horizontally */
   align-items: center;
+  gap: 10px;
   margin: 10px 0;
+  padding-left: 40px;
 }
 
 .row-label {
@@ -103,17 +134,20 @@ h2 {
 
 .row {
   display: flex;
-  gap: 10px; /* Spacing between seats */
+  gap: 10px;
+  margin-right: 80px;
 }
 
+/* Seat Styles */
 .seat {
-  width: 50px; /* Seat width */
-  height: 50px; /* Seat height */
-  background-color: #7676b7; /* Default available seat color */
+  width: 50px;
+  height: 50px;
+  background-color: #4caf50;
   border-radius: 8px;
   position: relative;
   cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
 .seat:before {
@@ -121,9 +155,8 @@ h2 {
   position: absolute;
   width: 70%;
   height: 10px;
-  background-color: #333;
+  background-color: #4caf50;
   border-radius: 5px;
-  top: -12px;
   left: 15%;
 }
 
@@ -132,128 +165,227 @@ h2 {
 }
 
 .seat.selected {
-  background-color: #4caf50; /* Green for selected seats */
-}
-
-.seat.available {
-  background-color: #7676b7; /* Default available seat color */
+  background-color: #f44336;
+  animation: pulse 0.3s ease-out;
 }
 
 .seat.booked {
-  background-color: #f44336; /* Red for booked seats */
+  background-color: #f44336;
 }
 
-.seat-booked {
+.seat.booked:hover {
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+.seat.selected::after {
+  content: attr(data-seat);
+  position: absolute;
+  left: 5px;
+  font-size: 0.8em;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2px;
+  border-radius: 3px;
+}
+.disabled {
+  background-color: red; /* Or any color you want for reserved seats */
   cursor: not-allowed;
 }
 
+
+/* Active Class */
 .active {
   background-color: #2196F3;
   color: white;
 }
+
+/* Book Seats Button */
+#bookSeatsButton {
+  height: 40px;
+  width: 370px;
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding for a comfortable size */
+  font-size: 16px; /* Readable font size */
+  font-weight: bold; /* Bold text */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+  display: block;
+  margin-top: 20px; /* Add space above the button */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+}
+
+/* Hover effect */
+#bookSeatsButton:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Focus effect */
+#bookSeatsButton:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 5px 2px rgba(72, 239, 128, 0.5); /* Add a green focus glow */
+}
+
+/* Disabled state (optional) */
+#bookSeatsButton:disabled {
+  background-color: #cccccc; /* Light gray background */
+  color: #666666; /* Dark gray text */
+  cursor: not-allowed; /* Disable pointer */
+}
+
+/* Confirmation Modal */
 #confirmation-modal {
-  display: none; /* Keep the modal hidden by default */
+  display: none;
   position: fixed;
   z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Overlay effect */
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
 }
 
-
-/* Modal content */
 .modal-content {
-  background-color: #ffffff; /* White background for contrast */
-  color: #333; /* Text color */
-  padding: 20px; /* Inner spacing */
-  border-radius: 8px; /* Rounded corners */
-  width: 90%; /* Responsive width */
-  max-width: 400px; /* Maximum width */
-  text-align: center; /* Center-align content */
-  position: relative; /* Position for close button */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  animation: fadeIn 0.3s ease-in-out; /* Smooth fade-in effect */
+  background-color: #ffffff;
+  color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Fade-in animation */
+#reserved-seat-modal {
+  position: fixed; /* Fixed position to stay in place */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for exact center */
+  z-index: 1000; /* Ensure it appears above other content */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: none; /* Initially hidden */
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px; /* Max width for the modal */
+  text-align: center;
+}
+
+#reserved-seat-message {
+  font-size: 16px; /* Adjust text size if necessary */
+  color: #fff;
+}
+
+
 @keyframes fadeIn {
   from {
-    opacity: 0;
-    transform: scale(0.95);
+      opacity: 0;
+      transform: scale(0.95);
   }
   to {
-    opacity: 1;
-    transform: scale(1);
+      opacity: 1;
+      transform: scale(1);
   }
 }
 
-/* Close button */
 .close-button {
   position: absolute;
   top: 10px;
   right: 10px;
-  font-size: 20px; /* Size of close icon */
-  font-weight: bold; /* Emphasis */
-  color: #333; /* Neutral color */
-  cursor: pointer; /* Pointer cursor for clickability */
-  transition: color 0.3s ease; /* Smooth hover effect */
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .close-button:hover {
-  color: #f44336; /* Red on hover */
+  color: #f44336;
 }
 
-/* Confirm and Cancel Buttons */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+/* Button Styles */
 button {
-  padding: 10px 20px; /* Size of buttons */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners */
-  font-size: 16px; /* Readable size */
-  cursor: pointer; /* Pointer cursor */
-  margin: 10px 5px; /* Spacing between buttons */
-  transition: background-color 0.3s ease; /* Smooth hover */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px 5px;
+  transition: background-color 0.3s ease;
 }
 
-/* Confirm button */
 #confirm-button {
-  background-color: #28a745; /* Green for confirmation */
+  background-color: #28a745;
   color: white;
 }
 
 #confirm-button:hover {
-  background-color: #218838; /* Darker green */
-}
-/* Reserved seat styling */
-.reserved {
-  background-color: red;  /* Red background for reserved seat */
-  color: white;  /* White text for better contrast */
-  border-color: #b93e3e;  /* Dark red border for reserved seats */
+  background-color: #218838;
 }
 
-/* Cancel button */
 #cancel-button {
-  background-color: #dc3545; /* Red for cancellation */
+  background-color: #dc3545;
   color: white;
 }
 
 #cancel-button:hover {
-  background-color: #c82333; /* Darker red */
+  background-color: #c82333;
 }
 
 /* Responsive Design */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .modal-content {
-    width: 90%; /* Full width for small screens */
-    max-width: none; /* Remove maximum width */
-    padding: 15px; /* Reduce padding */
+      padding: 15px;
   }
 
   button {
-    font-size: 14px; /* Slightly smaller buttons */
-    padding: 8px 15px;
+      font-size: 14px;
+      padding: 8px 15px;
+  }
+
+  .container {
+      display: block;
+      margin: 0 auto;
+  }
+
+  .seat-row {
+      display: block;
+  }
+
+  .seat {
+      width: 40px;
+      height: 40px;
+  }
+
+  .row-label {
+      font-size: 1rem;
+  }
+}
+
+/* Pulse Effect for Seat Selection */
+@keyframes pulse {
+  0% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.1);
+  }
+  100% {
+      transform: scale(1);
   }
 }

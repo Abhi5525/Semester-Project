@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add event listeners to all movie elements
     movies.forEach(movie => {
-        movie.addEventListener("click", () => openModal(movie));
+        movie.addEventListener("click", () => showModal(movie));
     });
 
     // Close the modal when the close button is clicked
@@ -18,6 +18,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+function showModal(movieElement) {
+    const movieId = movieElement.getAttribute("data-movie-id"); // Retrieve movie_id
+
+    // Store movieId in the session via an AJAX request
+    fetch("login_movieId.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `movie_id=${encodeURIComponent(movieId)}`,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to store movie ID.");
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log(data); // Optional: Log success message
+            openModal(movieElement); // Proceed to open the modal
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Failed to store movie ID. Please try again.");
+        });
+}
+
 // Function to open the modal and populate its content
 function openModal(movie) {
     const modal = document.getElementById("movieModal");
@@ -27,12 +54,8 @@ function openModal(movie) {
     document.getElementById("modalGenre").innerText = `Genre: ${movie.dataset.genre}`;
     document.getElementById("modalDescription").innerText = movie.dataset.description;
     document.getElementById("modalDuration").innerText = `Duration: ${movie.dataset.duration}`;
-    document.getElementById("modalImage").src = movie.dataset.thumbnail; // Changed id to match modalImage
+    document.getElementById("modalImage").src = movie.dataset.thumbnail;
 
-    // Set the "Watch Trailer" button action
-    // const trailerButton = document.getElementById("trailerButton");
-    // trailerButton.onclick = () => window.open(movie.dataset.url, "_blank");
-    
     // Show the modal
     modal.style.display = "flex";
 }
@@ -42,17 +65,26 @@ function closeModal() {
     const modal = document.getElementById("movieModal");
     modal.style.display = "none";
 }
+
+// Initialize dynamic trailer behavior
 document.addEventListener("DOMContentLoaded", function () {
     const modalLeft = document.getElementById("modalLeft");
     const modalImage = document.getElementById("modalImage");
     const modalIframe = document.getElementById("modalIframe");
-    
-    const trailerURL = "https://www.youtube.com/embed/DLgcCTnMheg?si=5-gV7R2e2CG0-1nW"; // Replace YOUR_TRAILER_ID
 
-    // modalLeft.addEventListener("mouseenter", function () {
-        // Show iframe, hide image
+    const trailerURL = "https://www.youtube.com/embed/DLgcCTnMheg?si=5-gV7R2e2CG0-1nW"; // Replace with your trailer ID
+
+    // On mouseenter, replace the image with the trailer
+    modalLeft.addEventListener("mouseenter", function () {
         modalIframe.src = trailerURL; // Set trailer link dynamically
         modalImage.style.display = "none";
         modalIframe.style.display = "block";
-    // });
+    });
+
+    // On mouseleave, revert back to the image
+    modalLeft.addEventListener("mouseleave", function () {
+        modalIframe.src = ""; // Remove iframe source
+        modalImage.style.display = "block";
+        modalIframe.style.display = "none";
+    });
 });

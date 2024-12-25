@@ -46,6 +46,7 @@ include("connection.php");
 
             if ($result->num_rows > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
+                    $movieId = $row['movie_id']; 
                     $title = $row['Title'];
                     $description = $row['Description'];
                     $duration = $row['Duration'];
@@ -55,6 +56,7 @@ include("connection.php");
             ?>
                     <div 
                         class="movie"
+                        data-movie-id="<?php echo $movieId; ?>"
                         data-title="<?php echo $title; ?>" 
                         data-description="<?php echo $description; ?>" 
                         data-duration="<?php echo $duration; ?>" 
