@@ -6,7 +6,9 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
     exit();
 }
 
-include("connection.php");?>
+include("connection.php");
+
+?>
 
 
 <!DOCTYPE html>
@@ -21,24 +23,7 @@ include("connection.php");?>
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="logo"><img src = "../images/logo.png"></div>
-        <ul class="nav-links">
-            <li><a href="#">Location</a></li>
-            <li><a href="#">Ticket Rate</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact Us</a></li>
-        </ul>
-        <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true): ?>
-            <span class="welcome-text">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
-            <a href="../LoginFiles/logout.php"><button class = "logout">Logout </button></a>
-            <?php else: ?>
-        <a href="../LoginFiles/register.html"><button class="sign-in">Sign Up</button></a>
-        <?php endif; ?>
-        
-
-    </nav>
-
+<?php include('navbar.php');?>
     <!-- Movie List Section -->
     <section class="available-movies">
         <h2>Now Showing</h2>

@@ -10,7 +10,9 @@
 </head>
 
 <body>
-
+<?php 
+session_start();
+include('../Home/navbar.php');?>
     <form action="book_seats.php" method="POST" onsubmit="return validateBooking()">
         <div id="dashboard" class="dashboard">
             <h1 class="section-title">Seat Reservation Section</h1>
@@ -23,7 +25,8 @@
                         <?php
                         for ($i = 0; $i < 3; $i++) {
                             $date = date('Y-m-d', strtotime("+$i days"));
-                            echo "<option value='$date'>" . date('M d, Y', strtotime($date)) . "</option>";
+                            $dayOfWeek = date('l', strtotime($date)); // Get the day of the week
+                            echo "<option value='$date'>" . date('M d, Y', strtotime($date)) . " ($dayOfWeek)</option>";
                         }
                         ?>
                     </select>
@@ -32,13 +35,13 @@
                 <!-- Time Buttons -->
                 <div id="shifts" class="shifts">
                     <label>
-                        <input type="radio" name="time" value="10:00 AM - 1:00 PM" checked> 10:00 AM - 1:00 PM
+                        <input type="radio" name="time" value="10:00 AM - 1:00 PM" checked> Morning Show
                     </label>
                     <label>
-                        <input type="radio" name="time" value="2:00 PM - 6:00 PM"> 2:00 PM - 6:00 PM
+                        <input type="radio" name="time" value="2:00 PM - 6:00 PM"> Afternoon Show
                     </label>
                     <label>
-                        <input type="radio" name="time" value="7:00 PM - 10:00 PM"> 7:00 PM - 10:00 PM
+                        <input type="radio" name="time" value="7:00 PM - 10:00 PM"> Evening Show
                     </label>
                 </div>
 

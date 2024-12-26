@@ -68,6 +68,19 @@ body {
     font-weight: bolder;
     /* color: #e64659; */
 }
+.cleanup-button {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.cleanup-button:hover {
+    background-color: #d32f2f;
+}
+
 .logout{
     width: 65px;
     height: 30px;
@@ -127,13 +140,14 @@ body {
 
 /* Individual button containers */
 .managemovies .button1, 
-.managemovies .button2 {
+.managemovies .button2
+.managemovies .button3 {
     width: 100%; /* Full width within the container */
     text-align: center;
 }
 
 /* Button styling */
-.movie-button {
+.movie-button , .ticket-button{
     background-color: #f83509; /* Vibrant red for buttons */
     color: #fff; /* White text for contrast */
     border: none; /* Remove default border */
