@@ -10,9 +10,14 @@
 </head>
 
 <body>
-<?php 
-session_start();
-include('../Home/navbar.php');?>
+    <?php
+    session_start();
+    include('../Home/navbar.php');
+    // Assuming movie_id is stored in PHP session
+    if (isset($_SESSION['movie_id'])) {
+        $movie_id = $_SESSION['movie_id'];
+        echo "<script>sessionStorage.setItem('movieId', '$movie_id');</script>";
+    } ?>
     <form action="book_seats.php" method="POST" onsubmit="return validateBooking()">
         <div id="dashboard" class="dashboard">
             <h1 class="section-title">Seat Reservation Section</h1>
@@ -70,127 +75,127 @@ include('../Home/navbar.php');?>
                     <div class="seat-row">
                         <div class="row-label">A</div>
                         <div class="row">
-                            <div class="seat" data-seat="A1" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="A2" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="A3" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="A4" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="A5" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="A6" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="A7" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="A8" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="A9" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="A10" onclick="toggleSeatSelection(this)"></div>
+                            <div class="seat" data-seat="A1"></div>
+                            <div class="seat" data-seat="A2"></div>
+                            <div class="seat" data-seat="A3"></div>
+                            <div class="seat" data-seat="A4"></div>
+                            <div class="seat" data-seat="A5"></div>
+                            <div class="seat" data-seat="A6"></div>
+                            <div class="seat" data-seat="A7"></div>
+                            <div class="seat" data-seat="A8"></div>
+                            <div class="seat" data-seat="A9"></div>
+                            <div class="seat" data-seat="A10"></div>
                         </div>
                     </div>
                     <!-- Repeat for other rows as needed -->
                     <div class="seat-row">
                         <div class="row-label">B</div>
                         <div class="row">
-                            <div class="seat" data-seat="B1" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="B2" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="B3" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="B4" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="B5" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="B6" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="B7" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="B8" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="B9" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="B10" onclick="toggleSeatSelection(this)"></div>
+                            <div class="seat" data-seat="B1"></div>
+                            <div class="seat" data-seat="B2"></div>
+                            <div class="seat" data-seat="B3"></div>
+                            <div class="seat" data-seat="B4"></div>
+                            <div class="seat" data-seat="B5"></div>
+                            <div class="seat" data-seat="B6"></div>
+                            <div class="seat" data-seat="B7"></div>
+                            <div class="seat" data-seat="B8"></div>
+                            <div class="seat" data-seat="B9"></div>
+                            <div class="seat" data-seat="B10"></div>
                         </div>
                     </div>
                     <div class="seat-row">
                         <div class="row-label">C</div>
                         <div class="row">
-                            <div class="seat" data-seat="C1" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="C2" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="C3" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="C4" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="C5" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="C6" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="C7" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="C8" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="C9" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="C10" onclick="toggleSeatSelection(this)"></div>
+                            <div class="seat" data-seat="C1"></div>
+                            <div class="seat" data-seat="C2"></div>
+                            <div class="seat" data-seat="C3"></div>
+                            <div class="seat" data-seat="C4"></div>
+                            <div class="seat" data-seat="C5"></div>
+                            <div class="seat" data-seat="C6"></div>
+                            <div class="seat" data-seat="C7"></div>
+                            <div class="seat" data-seat="C8"></div>
+                            <div class="seat" data-seat="C9"></div>
+                            <div class="seat" data-seat="C10"></div>
                         </div>
                     </div>
 
                     <div class="seat-row">
                         <div class="row-label">D</div>
                         <div class="row">
-                            <div class="seat" data-seat="D1" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="D2" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="D3" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="D4" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="D5" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="D6" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="D7" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="D8" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="D9" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="D10" onclick="toggleSeatSelection(this)"></div>
+                            <div class="seat" data-seat="D1"></div>
+                            <div class="seat" data-seat="D2"></div>
+                            <div class="seat" data-seat="D3"></div>
+                            <div class="seat" data-seat="D4"></div>
+                            <div class="seat" data-seat="D5"></div>
+                            <div class="seat" data-seat="D6"></div>
+                            <div class="seat" data-seat="D7"></div>
+                            <div class="seat" data-seat="D8"></div>
+                            <div class="seat" data-seat="D9"></div>
+                            <div class="seat" data-seat="D10"></div>
                         </div>
                     </div>
 
                     <div class="seat-row">
                         <div class="row-label">E</div>
                         <div class="row">
-                            <div class="seat" data-seat="E1" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="E2" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="E3" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="E4" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="E5" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="E6" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="E7" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="E8" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="E9" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="E10" onclick="toggleSeatSelection(this)"></div>
+                            <div class="seat" data-seat="E1"></div>
+                            <div class="seat" data-seat="E2"></div>
+                            <div class="seat" data-seat="E3"></div>
+                            <div class="seat" data-seat="E4"></div>
+                            <div class="seat" data-seat="E5"></div>
+                            <div class="seat" data-seat="E6"></div>
+                            <div class="seat" data-seat="E7"></div>
+                            <div class="seat" data-seat="E8"></div>
+                            <div class="seat" data-seat="E9"></div>
+                            <div class="seat" data-seat="E10"></div>
                         </div>
                     </div>
 
                     <div class="seat-row">
                         <div class="row-label">F</div>
                         <div class="row">
-                            <div class="seat" data-seat="F1" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="F2" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="F3" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="F4" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="F5" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="F6" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="F7" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="F8" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="F9" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="F10" onclick="toggleSeatSelection(this)"></div>
+                            <div class="seat" data-seat="F1"></div>
+                            <div class="seat" data-seat="F2"></div>
+                            <div class="seat" data-seat="F3"></div>
+                            <div class="seat" data-seat="F4"></div>
+                            <div class="seat" data-seat="F5"></div>
+                            <div class="seat" data-seat="F6"></div>
+                            <div class="seat" data-seat="F7"></div>
+                            <div class="seat" data-seat="F8"></div>
+                            <div class="seat" data-seat="F9"></div>
+                            <div class="seat" data-seat="F10"></div>
                         </div>
                     </div>
 
                     <div class="seat-row">
                         <div class="row-label">G</div>
                         <div class="row">
-                            <div class="seat" data-seat="G1" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="G2" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="G3" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="G4" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="G5" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="G6" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="G7" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="G8" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="G9" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="G10" onclick="toggleSeatSelection(this)"></div>
+                            <div class="seat" data-seat="G1"></div>
+                            <div class="seat" data-seat="G2"></div>
+                            <div class="seat" data-seat="G3"></div>
+                            <div class="seat" data-seat="G4"></div>
+                            <div class="seat" data-seat="G5"></div>
+                            <div class="seat" data-seat="G6"></div>
+                            <div class="seat" data-seat="G7"></div>
+                            <div class="seat" data-seat="G8"></div>
+                            <div class="seat" data-seat="G9"></div>
+                            <div class="seat" data-seat="G10"></div>
                         </div>
                     </div>
 
                     <div class="seat-row">
                         <div class="row-label">H</div>
                         <div class="row">
-                            <div class="seat" data-seat="H1" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="H2" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="H3" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="H4" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="H5" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="H6" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="H7" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="H8" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="H9" onclick="toggleSeatSelection(this)"></div>
-                            <div class="seat" data-seat="H10" onclick="toggleSeatSelection(this)"></div>
+                            <div class="seat" data-seat="H1"></div>
+                            <div class="seat" data-seat="H2"></div>
+                            <div class="seat" data-seat="H3"></div>
+                            <div class="seat" data-seat="H4"></div>
+                            <div class="seat" data-seat="H5"></div>
+                            <div class="seat" data-seat="H6"></div>
+                            <div class="seat" data-seat="H7"></div>
+                            <div class="seat" data-seat="H8"></div>
+                            <div class="seat" data-seat="H9"></div>
+                            <div class="seat" data-seat="H10"></div>
                         </div>
                     </div>
 
@@ -228,6 +233,10 @@ include('../Home/navbar.php');?>
         </div>
     </form>
     <script src="script.js"></script>
+    <?php
+
+    include('../Footer/footer.php'); ?>
+
 
 </body>
 

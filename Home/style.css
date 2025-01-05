@@ -1,7 +1,7 @@
 /* General body styling */
 body {
     min-height: 100vh;
-    background-color: #251717;
+    background: rgb(30, 14, 14); 
     color: #fff;
     font-family: Arial, sans-serif;
     margin: 0;

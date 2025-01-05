@@ -1,10 +1,26 @@
-
-<?php 
+<?php  
 session_start();
 if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
     header("Location: ../LoginFiles/login.html");
     exit();
 }
+
+if ($_SESSION['isLoggedIn']) {
+    // Use null coalescing operator to provide fallback values
+    $username = $_SESSION['username'] ?? 'Guest';
+    $userEmail = $_SESSION['userEmail'] ?? '';
+    $phone = $_SESSION['phone'] ?? '';
+
+    // Safely pass values to JavaScript using json_encode
+    echo "<script>
+        sessionStorage.setItem('username', " . json_encode($username) . ");
+        sessionStorage.setItem('userEmail', " . json_encode($userEmail) . ");
+        sessionStorage.setItem('phone', " . json_encode($phone) . ");
+    </script>";
+}
+
+
+
 
 include("connection.php");
 
@@ -106,6 +122,6 @@ include("connection.php");
             </div>
         </div>
     </div>
-
+<?php include('../Footer/footer.php');?>
 </body>
 </html>

@@ -10,7 +10,6 @@ $adminpassword = "MasterAdmin";
 $email = isset($_POST['email']) ? trim($_POST['email']) : '';
 $pw = isset($_POST['password']) ? trim($_POST['password']) : '';
 
-
 // Check if it's the admin
 if ($email === $adminemail && $pw === $adminpassword) {
     $_SESSION['userRole'] = 'Admin'; // Set a role for the admin
@@ -41,9 +40,10 @@ if ($result->num_rows == 1) {
     if (password_verify($pw, $row['password'])) {
         // Set session variables
         $_SESSION['username'] = $row['username'];
-        $_SESSION['phone'] = $row['phone'];
+        $_SESSION['phone'] = $row['phone']; // Corrected to 'phone'
         $_SESSION['userEmail'] = $email;
         $_SESSION['isLoggedIn'] = true;
+        $_SESSION['userRole'] = 'User';
 
         // Redirect to user home page
         header("Location: ../Home/index.php");

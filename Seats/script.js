@@ -131,6 +131,42 @@ document.getElementById('dateDropdown').addEventListener('change', function() {
 // Set initial value of the hidden date field when the page loads
 document.getElementById('selectedDate').value = document.getElementById('dateDropdown').value;
 
+// Store the selected movie in the session
+function storeMovie(movieId) {
+    return fetch("login_movieId.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `movie_id=${movieId}`,
+    })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); // Log server response for debugging
+            if (data.toLowerCase().includes("success")) {
+                alert("Movie selected successfully!");
+            } else {
+                alert("Failed to select movie. Please try again.");
+            }
+        })
+        .catch(error => {
+            console.error("Error storing movie ID:", error);
+            alert("An error occurred. Please try again.");
+        });
+}
+
+// Handle movie selection
+function selectMovie(movieElement) {
+    const movieId = movieElement.getAttribute("data-movie-id"); // Extract movie_id
+    const movieTitle = movieElement.getAttribute("data-title");
+
+    if (confirm(`Do you want to book tickets for "${movieTitle}"?`)) {
+        storeMovie(movieId); // Store the movie ID in session
+    }
+}
+
+// Attach event listeners to movies
+document.querySelectorAll(".movie").forEach(movieElement => {
+    movieElement.addEventListener("click", () => selectMovie(movieElement));
+});
 // Validate booking form inputs
 function validateBooking() {
     const date = document.getElementById('dateDropdown')?.value;
@@ -171,74 +207,6 @@ function handleBookingConfirmation() {
     toggleModal(message);
 }
 
-// Upload booking data to the database
-function submitBooking() {
-    const date = document.getElementById("dateDropdown").value;
-    const time = document.querySelector('input[name="time"]:checked').value;
-
-    const formData = new FormData();
-    formData.append("date", date);
-    formData.append("time", time);
-    formData.append("seats", JSON.stringify(selectedSeats));
-
-    fetch("book_seats.php", {
-        method: "POST",
-        body: formData,
-    })
-        .then(response => response.text())
-        .then(data => {
-            if (data.toLowerCase().includes("success")) {
-                alert("Your booking was successful!");
-                window.location.href = "../Home/index.php";
-            } else {
-                alert(`Failed to book seats: ${data}`);
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("An error occurred. Please try again.");
-        });
-
-    toggleModal(); // Close the modal
-}
-
-// Store the selected movie in the session
-function storeMovie(movieId) {
-    return fetch("select_movie.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `movie_id=${movieId}`,
-    })
-        .then(response => response.text())
-        .then(data => {
-            console.log(data); // Log server response for debugging
-            if (data.toLowerCase().includes("success")) {
-                alert("Movie selected successfully!");
-            } else {
-                alert("Failed to select movie. Please try again.");
-            }
-        })
-        .catch(error => {
-            console.error("Error storing movie ID:", error);
-            alert("An error occurred. Please try again.");
-        });
-}
-
-// Handle movie selection
-function selectMovie(movieElement) {
-    const movieId = movieElement.getAttribute("data-movie-id"); // Extract movie_id
-    const movieTitle = movieElement.getAttribute("data-title");
-
-    if (confirm(`Do you want to book tickets for "${movieTitle}"?`)) {
-        storeMovie(movieId); // Store the movie ID in session
-    }
-}
-
-// Attach event listeners to movies
-document.querySelectorAll(".movie").forEach(movieElement => {
-    movieElement.addEventListener("click", () => selectMovie(movieElement));
-});
-
 // Reset the booking form
 function resetBooking() {
     selectedSeats = [];
@@ -268,3 +236,95 @@ function initializeBookingSystem() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeBookingSystem);
+
+function submitBooking() {
+    const userName = sessionStorage.getItem("username");
+    const userEmail = sessionStorage.getItem("userEmail");
+    const userPhone = sessionStorage.getItem("phone");
+    const currentMovieId = sessionStorage.getItem("movieId");
+
+    if (!userName || !userEmail || !userPhone) {
+        alert("User details are missing. Please log in again.");
+        window.location.href = "../LoginFiles/login.php";
+        return;
+    }
+
+    const date = document.getElementById("dateDropdown").value;
+    const time = document.querySelector('input[name="time"]:checked')?.value;
+
+    if (!date || !time || !selectedSeats || selectedSeats.length === 0) {
+        alert("Please select a date, time, and seats.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("date", date);
+    formData.append("time", time);
+    formData.append("seats", JSON.stringify(selectedSeats));
+    // formData.append("movie_id", currentMovieId); 
+
+    fetch("book_seats.php", {
+        method: "POST",
+        body: formData,
+    })
+    .then(response => {
+        // console.log("Response received:", response); // Log the raw response
+        if (!response.ok) {
+            throw new Error("Booking request failed");
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Parsed JSON data:", data); // Log the parsed JSON
+        if (data.success) {
+            console.log("Booking successful. Calling generateTicket...");
+            // Now call the function to generate the PDF ticket
+            generateTicketPDF(data); // Pass the entire response data (including seats and movie details)
+        } else {
+            alert(`Booking failed: ${data.message}`);
+        }
+    })
+    .catch(error => {
+        console.error("Error during booking:", error);
+        alert("An error occurred during booking. Please try again.");
+    });
+
+    toggleModal(); // Close the modal after submission
+}
+
+
+function generateTicketPDF(data) {
+    // Retrieve the user's session information
+    const userName = sessionStorage.getItem("username");
+    const userEmail = sessionStorage.getItem("userEmail");
+    const userPhone = sessionStorage.getItem("phone");
+    
+    // Prepare the ticket data
+    const ticketData = {
+        seats: JSON.stringify(data.data), // Reserved seats data (array of objects)
+        movie: JSON.stringify(data.movie), // Movie details (object)
+        userName: userName, // User's name
+        userEmail: userEmail, // User's email
+        userPhone: userPhone, // User's phone
+        reservation_date: data.reservation_date, // Reservation date (string)
+        showtime: data.showtime, // Showtime (string)
+        movieId: data.movie_id // Movie ID (integer)
+    };
+
+    // Send POST request to generateTicket.php
+    fetch('generate_ticket.php', {
+        method: 'POST',
+        body: new URLSearchParams(ticketData) // Send data as form data
+    })
+    .then(response => response.blob()) // Expect a PDF blob response
+    .then(blob => {
+        // Create a download link for the PDF
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'ticket.pdf'; // PDF file name
+        link.click(); // Trigger the download
+    })
+    .catch(error => {
+        console.error('Error generating PDF:', error);
+    });
+}

@@ -11,7 +11,7 @@ body {
     color: #333;
     font-size: 16px;
     line-height: 1.6;
-    background: linear-gradient(to bottom, rgba(105, 3, 3, 0.9), rgba(0, 0, 0, 0.9));
+    background: linear-gradient(to bottom, rgb(82, 2, 2), rgba(0, 0, 0, 0.9));
 
 }
 
