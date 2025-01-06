@@ -18,7 +18,7 @@
         $movie_id = $_SESSION['movie_id'];
         echo "<script>sessionStorage.setItem('movieId', '$movie_id');</script>";
     } ?>
-    <form action="book_seats.php" method="POST" onsubmit="return validateBooking()">
+    <form action="book_seats.php" method="POST" onsubmit="event.preventDefault();">
         <div id="dashboard" class="dashboard">
             <h1 class="section-title">Seat Reservation Section</h1>
 

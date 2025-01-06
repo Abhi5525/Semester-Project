@@ -58,9 +58,9 @@ function toggleModal(message = null) {
 }
 
 // Open modal when "Book Selected Seats" button is clicked
-bookSeatsButton.addEventListener("click", () => {
-    toggleModal("Are you sure you want to book these seats?");
-});
+// bookSeatsButton.addEventListener("click", () => {
+//     toggleModal("Are you sure you want to book these seats?");
+// });
 
 // Close modal when "Cancel" button is clicked
 cancelButton.addEventListener("click", () => {
@@ -123,7 +123,7 @@ function toggleSeat(seat) {
 }
 
 // Set the selected date in the hidden input when the date dropdown changes
-document.getElementById('dateDropdown').addEventListener('change', function() {
+document.getElementById('dateDropdown').addEventListener('change', function () {
     const selectedDate = this.value;
     document.getElementById('selectedDate').value = selectedDate;
 });
@@ -184,7 +184,7 @@ function validateBooking() {
     const selectedSeatsValue = document.getElementById('selectedSeats')?.value || "[]";
     const selectedSeatsList = JSON.parse(selectedSeatsValue);
     if (selectedSeatsList.length === 0) {
-        alert("Please select at least one seat.");
+        // alert("Please select at least one seat.");
         return false;
     }
 
@@ -197,14 +197,16 @@ function validateBooking() {
 
 // Handle booking confirmation
 function handleBookingConfirmation() {
-    if (!validateBooking()) return;
+    if (!validateBooking()) {
+        alert("PLease select atleast one seat ");
+    } else {
 
-    const date = document.getElementById("dateDropdown").value;
-    const time = document.querySelector('input[name="time"]:checked').value;
-    const seats = JSON.parse(document.getElementById("selectedSeats").value || "[]").join(", ");
-
-    const message = `You have selected the following seats: ${seats}\nDate: ${date}\nTime: ${time}\nDo you want to proceed?`;
-    toggleModal(message);
+        const date = document.getElementById("dateDropdown").value;
+        const time = document.querySelector('input[name="time"]:checked').value;
+        const seats = JSON.parse(document.getElementById("selectedSeats").value || "[]").join(", ");
+        const message = `You have selected the following seats: ${seats}\nDate: ${date}\nTime: ${time}\nDo you want to proceed?`;
+        toggleModal(message);
+    }
 }
 
 // Reset the booking form
@@ -225,7 +227,10 @@ function initializeBookingSystem() {
         seat.addEventListener("click", () => toggleSeat(seat))
     );
 
-    document.getElementById("bookSeatsButton")?.addEventListener("click", handleBookingConfirmation);
+    document.getElementById("bookSeatsButton")?.addEventListener("click", function () {
+
+        handleBookingConfirmation();
+    });
     document.getElementById("confirm-button")?.addEventListener("click", submitBooking);
     document.getElementById("close-modal")?.addEventListener("click", () => toggleModal());
     document.getElementById("cancel-button")?.addEventListener("click", () => toggleModal());
@@ -257,74 +262,80 @@ function submitBooking() {
         return;
     }
 
-    const formData = new FormData();
-    formData.append("date", date);
-    formData.append("time", time);
-    formData.append("seats", JSON.stringify(selectedSeats));
-    // formData.append("movie_id", currentMovieId); 
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "book_seats.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    fetch("book_seats.php", {
-        method: "POST",
-        body: formData,
-    })
-    .then(response => {
-        // console.log("Response received:", response); // Log the raw response
-        if (!response.ok) {
-            throw new Error("Booking request failed");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    console.log("Parsed JSON data:", response);
+                    if (response.success) {
+                        console.log("Booking successful. Calling generateTicket...");
+                        generateTicketPDF(response); // Pass the entire response data
+                    } else {
+                        alert(`Booking failed: ${response.message}`);
+                    }
+                } catch (error) {
+                    console.error("Error parsing response JSON:", error);
+                    alert("An error occurred during booking. Please try again.");
+                }
+            } else {
+                console.error("Error during booking:", xhr.status, xhr.statusText);
+                alert("An error occurred during booking. Please try again.");
+            }
         }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Parsed JSON data:", data); // Log the parsed JSON
-        if (data.success) {
-            console.log("Booking successful. Calling generateTicket...");
-            // Now call the function to generate the PDF ticket
-            generateTicketPDF(data); // Pass the entire response data (including seats and movie details)
-        } else {
-            alert(`Booking failed: ${data.message}`);
-        }
-    })
-    .catch(error => {
-        console.error("Error during booking:", error);
-        alert("An error occurred during booking. Please try again.");
-    });
+    };
+
+    const postData = `date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&seats=${encodeURIComponent(JSON.stringify(selectedSeats))}`;
+    xhr.send(postData);
 
     toggleModal(); // Close the modal after submission
 }
-
 
 function generateTicketPDF(data) {
     // Retrieve the user's session information
     const userName = sessionStorage.getItem("username");
     const userEmail = sessionStorage.getItem("userEmail");
     const userPhone = sessionStorage.getItem("phone");
-    
+
     // Prepare the ticket data
-    const ticketData = {
-        seats: JSON.stringify(data.data), // Reserved seats data (array of objects)
-        movie: JSON.stringify(data.movie), // Movie details (object)
-        userName: userName, // User's name
-        userEmail: userEmail, // User's email
-        userPhone: userPhone, // User's phone
-        reservation_date: data.reservation_date, // Reservation date (string)
-        showtime: data.showtime, // Showtime (string)
-        movieId: data.movie_id // Movie ID (integer)
+    const ticketData = `seats=${encodeURIComponent(JSON.stringify(data.data))}` +
+        `&movie=${encodeURIComponent(JSON.stringify(data.movie))}` +
+        `&userName=${encodeURIComponent(userName)}` +
+        `&userEmail=${encodeURIComponent(userEmail)}` +
+        `&userPhone=${encodeURIComponent(userPhone)}` +
+        `&reservation_date=${encodeURIComponent(data.reservation_date)}` +
+        `&showtime=${encodeURIComponent(data.showtime)}` +
+        `&movieId=${encodeURIComponent(data.movie_id)}`;
+
+    // Create an XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "generate_ticket.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.responseType = "blob"; // Expect a blob response (PDF)
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Create a download link for the PDF
+            const blob = xhr.response;
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.target = '_blank'; // Open in a new tab
+            link.click();
+            // Trigger the download
+        } else {
+            console.error('Error generating PDF:', xhr.status, xhr.statusText);
+        }
     };
 
-    // Send POST request to generateTicket.php
-    fetch('generate_ticket.php', {
-        method: 'POST',
-        body: new URLSearchParams(ticketData) // Send data as form data
-    })
-    .then(response => response.blob()) // Expect a PDF blob response
-    .then(blob => {
-        // Create a download link for the PDF
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'ticket.pdf'; // PDF file name
-        link.click(); // Trigger the download
-    })
-    .catch(error => {
-        console.error('Error generating PDF:', error);
-    });
+    xhr.onerror = function () {
+        console.error('Error occurred while generating PDF');
+    };
+
+    // Send the POST request with ticket data
+    xhr.send(ticketData);
 }
