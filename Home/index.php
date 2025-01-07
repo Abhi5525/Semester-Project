@@ -93,7 +93,7 @@ include("connection.php");
             <a href="index.php"><span class="close">&times;</span></a> <!-- Close button within modal -->
             <div class="modal-left" id="modalLeft">
     <!-- Image shown by default -->
-    <img id="modalImage" src="thumbnail.jpg" alt="Movie Thumbnail">
+    <img id="modalImage" src="../images/screen.png" alt="Movie Thumbnail">
     <!-- iFrame for the trailer -->
     <iframe id="modalIframe" width="300" height="300" 
         src="" 

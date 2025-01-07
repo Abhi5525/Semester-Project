@@ -11,6 +11,7 @@ if (isset($_POST['seats']) && isset($_POST['movie']) && isset($_POST['reservatio
     $userPhone = $_POST['userPhone'];
     $reservationDate = $_POST['reservation_date'];
     $showtime = $_POST['showtime'];
+    // $thumbnail = $_POST['thumbnail'];
     
 
     // Check if data is valid
@@ -32,7 +33,7 @@ if (isset($_POST['seats']) && isset($_POST['movie']) && isset($_POST['reservatio
             $pdf->Cell(190, 10, 'Ticket for ' . $movie['Title'], 0, 1, 'C');
 
             // Embed the thumbnail image
-            // // Get the thumbnail path from the database
+            // Get the thumbnail path from the database
             // $thumbnailPath = $movie['Thumbnail']; // 'thumbnails/Pushpa.jpg'
 
             // // Define the base path to the directory where images are stored

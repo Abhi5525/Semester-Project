@@ -9,36 +9,34 @@
         position: sticky;
         top: 0;
         z-index: 1000;
-        /* Ensure navbar stays on top */
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     }
 
     .navbar .logo img {
         height: 80px;
-        width: auto;
         max-width: 100%;
-        /* Responsive scaling */
     }
 
     .navbar .nav-links {
         display: flex;
         gap: 30px;
-    }
-
-    .navbar .nav-links li {
         list-style: none;
+        /* Moved from li */
+        padding: 0;
+        /* Ensure no extra spacing */
     }
 
     .navbar .nav-links a {
         color: #fff;
         text-decoration: none;
         font-size: larger;
-        transition: color 0.3s ease;
         font-weight: 600;
+        transition: color 0.3s ease;
     }
 
     .navbar .nav-links a:hover {
         color: #e50914;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
     }
 
     .navbar .sign-in {
@@ -51,20 +49,20 @@
         font-weight: 700;
         border-radius: 5px;
         transition: background-color 0.3s ease;
-        text-decoration: none;
     }
 
     .navbar .sign-in:hover {
         background-color: #c12c17;
     }
 
+    /* Welcome Text */
     .welcome-text {
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
         font-size: 25px;
-        font-weight: bolder;
-        /* color: #e64659; */
+        font-weight: bold;
     }
 
+    /* Logout Button */
     .logout {
         width: 65px;
         height: 30px;
@@ -75,21 +73,17 @@
         font-weight: bold;
         font-size: 15px;
         text-decoration: none;
-
+        transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
     .logout:hover {
         background-color: #de0f27;
         transform: scale(1.1);
-        /* Slight enlargement */
-
-
     }
 
     /* Modal */
     .navbar-modal {
         display: none;
-        /* Hidden by default */
         position: fixed;
         z-index: 1000;
         left: 0;
@@ -98,19 +92,20 @@
         height: 100%;
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.8);
-        /* Semi-transparent black */
         justify-content: center;
         align-items: center;
     }
 
     .navbar-modal-content {
-        background: linear-gradient(90deg, rgb(18, 17, 17)0%, rgb(104, 12, 12)50%, rgb(120, 3, 3)100%);
+        background: linear-gradient(90deg, rgb(18, 17, 17) 0%, rgb(104, 12, 12) 50%, rgb(120, 3, 3) 100%);
         padding: 20px;
         border-radius: 10px;
         max-width: 600px;
         width: 90%;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         text-align: center;
+        max-height: 90vh;
+        overflow-y: auto;
     }
 
     .navbar-close-btn {
@@ -120,36 +115,105 @@
         font-size: 35px;
         font-weight: bold;
         cursor: pointer;
-        padding: 0;
     }
 
+    /* Rates Table */
     .rates-table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
-    }
-
-
-    .rates-table th {
-        color: rgb(251, 249, 249);
-        font-weight: bold;
-        font-size: 20px;
         text-align: center;
-        padding: 8px;
-        margin-bottom: 12px;
-
+        /* Centralized alignment */
     }
 
+    .rates-table th,
     .rates-table td {
-        
         color: white;
         font-size: 17px;
         font-weight: 600;
-        text-align: center;
         padding: 8px;
-
     }
+
+    /* Search Container */
+.search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 30px auto;
+    flex-grow: 1;
+    margin: 0 20px;
+    border: none;
+}
+
+.search-bar {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+/* Search Results */
+.search-results {
+    position: absolute;
+    top: calc(100% + 5px);
+    width: 70%;
+    background-color: white;
+    color: black;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    border: none; /* No borders */
+    border-radius: 0; /* No rounded corners */
+}
+
+/* Individual Search Result Item */
+.search-results div {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: white; /* Background remains white */
+    color: black; /* Text remains black */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.search-results div:hover {
+    background-color: #f0f0f0; /* Slight gray background on hover */
+}
+
+/* Thumbnail Image */
+.search-results img {
+    width: 40px;
+    height: 60px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+/* Movie Title and Details */
+.search-results span {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+}
+
+.search-results span h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+.search-results span p {
+    margin: 5px 0 0;
+    font-size: 12px;
+    color: black
+}
+
 </style>
+
 <nav class="navbar">
     <div class="logo">
         <img src="../images/logo.png" alt="Logo">
@@ -158,14 +222,21 @@
         <li><a href="#">Location</a></li>
         <li><a href="#" id="viewRatesLink">Ticket Rate</a></li>
         <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact Us</a></li>
+
     </ul>
-    <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true): ?>
-        <span class="welcome-text">Welcome, <?php echo htmlspecialchars($_SESSION['userRole'] == 'User'? $_SESSION['username']:'Admin'); ?>!</span>
-        <a href="../LoginFiles/logout.php" class="logout">Logout</a>
-    <?php else: ?>
-        <a href="../LoginFiles/register.html" class="sign-in">Sign Up</a>
-    <?php endif; ?>
+
+    <div class="search-container">
+        <input type="text" class="search-bar" id="search-bar" placeholder="Search movies..." onkeyup="searchMovies()">
+        <div class="search-results" id="search-results"></div>
+    </div
+
+        <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true): ?>
+        <span class="welcome-text">Welcome, <?php echo htmlspecialchars($_SESSION['userRole'] == 'User' ? $_SESSION['username'] : 'Admin'); ?>!</span>
+    <a href="../LoginFiles/logout.php" class="logout">Logout</a>
+<?php else: ?>
+    <a href="../LoginFiles/register.html" class="sign-in">Sign Up</a>
+<?php endif; ?>
+
 </nav>
 
 <div id="ticketRatesModal" class="navbar-modal" role="dialog" aria-label="Ticket Rates Modal" style="display: none;">
@@ -187,6 +258,71 @@
     </div>
 </div>
 <script>
+    function searchMovies() {
+        const query = document.getElementById('search-bar').value.trim(); // Fetch and trim the query
+        const searchResults = document.getElementById('search-results'); // Target results container
+
+        if (query.length > 0) {
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.onload = function() {
+                if (xhttp.status === 200) {
+                    try {
+                        const results = JSON.parse(xhttp.responseText); // Parse JSON response
+                        searchResults.innerHTML = ''; // Clear previous results
+                        console.log(results);
+
+                        if (results.length > 0) {
+                            results.forEach(movie => {
+                                const resultItem = document.createElement('div'); // Create container for each result
+                                resultItem.classList.add('result-item'); // Add CSS class
+
+                                resultItem.innerHTML = `
+                                <img src="../Movies/${movie.Thumbnail}" alt="${movie.Title}">
+                                <div class="movie-details">
+                                    <h4>${movie.Title}</h4>
+                                    <p> ${movie.Duration} Movie</p>
+                                </div>
+                            `;
+                                // console.log($movie.Title);
+                                searchResults.appendChild(resultItem); // Append the result
+                            });
+                        } else {
+                            // No results found
+                            searchResults.innerHTML = `
+                            <div class="result-item no-results">
+                                No results found
+                            </div>
+                        `;
+                        }
+                    } catch (error) {
+                        console.error('Error parsing JSON response:', error);
+                        searchResults.innerHTML = `
+                        <div class="result-item error-message">
+                            Error loading results. Please try again.
+                        </div>
+                    `;
+                    }
+                } else {
+                    console.error('Error fetching data:', xhttp.status);
+                    searchResults.innerHTML = `
+                    <div class="result-item error-message">
+                        Error fetching data. Please try again.
+                    </div>
+                `;
+                }
+            };
+
+            // Properly encode query to avoid special character issues
+            xhttp.open('GET', 'search.php?search=' + encodeURIComponent(query), true);
+            xhttp.send();
+        } else {
+            searchResults.innerHTML = ''; // Clear results if query is empty
+        }
+    }
+
+
+
     function openRatesModal() {
         const ratesTableBody = document.getElementById("ratesTableBody");
 
@@ -227,8 +363,8 @@
             });
     }
     window.onload = function(event) {
-        var modals = document.getElementById('ticketRatesModal');
-        if (event.terget == modal) {
+        var modal = document.getElementById('ticketRatesModal');
+        if (event.target == modal) {
             modal.style.display = 'none';
         }
     }
