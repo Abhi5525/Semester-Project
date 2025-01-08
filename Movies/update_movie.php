@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $url = $_POST['url'];
     $genre = $_POST['genre'];
     $thumbnail = $_FILES['thumbnail']['name'];
+    $status = $_POST['status'];
 
     // Handle thumbnail upload or preserve old one
     if ($thumbnail) {
@@ -24,21 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     } else {
         // Fetch the old thumbnail if no new one is uploaded
-        $sql = "SELECT Thumbnail FROM movies WHERE movie_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $movie_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $sql = "SELECT Thumbnail FROM movies WHERE movie_id = $movie_id";
+        $result = $conn->query($sql);
         $movie = $result->fetch_assoc();
         $thumbnail_path = $movie['Thumbnail'];
     }
 
-    // Update movie details in the database
-    $update_sql = "UPDATE movies SET Title = ?, Description = ?, Duration = ?, URL = ?, Genre = ?, Thumbnail = ? WHERE movie_id = ?";
-    $stmt = $conn->prepare($update_sql);
-    $stmt->bind_param("ssisssi", $title, $description, $duration, $url, $genre, $thumbnail_path, $movie_id);
+    // Update movie details in the database without prepared statements
+    $update_sql = "UPDATE movies SET Title = '$title', Description = '$description', Duration = '$duration', URL = '$url', Genre = '$genre', Thumbnail = '$thumbnail_path', status = '$status' WHERE movie_id = $movie_id";
 
-    if ($stmt->execute()) {
+    if ($conn->query($update_sql) === TRUE) {
         // Redirect after a successful update
         header("Location: Availablemovies.php");
         exit();

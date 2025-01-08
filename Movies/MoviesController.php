@@ -1,5 +1,4 @@
 <?php
-
 include("connection.php");
 
 $title = $_POST['title'];
@@ -7,6 +6,7 @@ $description = $_POST['description'];
 $duration = $_POST['duration'];
 $url = $_POST['url'];
 $genre = $_POST['genre'];
+$status = $_POST['status']; // Corrected typo from 'staus' to 'status'
 
 if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] == UPLOAD_ERR_OK) {
     $targetDir = "thumbnails/";
@@ -39,21 +39,19 @@ if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] == UPLOAD_ERR_O
         // Store the file path in the database
         $thumbnail = $targetFilePath;
 
-        // Prepared statement to insert movie details into the database
-        $sql = "INSERT INTO movies (Title, Description, Duration, URL, Genre, Thumbnail) 
-                VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssssss', $title, $description, $duration, $url, $genre, $thumbnail);
+        // Normal SQL query to insert movie details into the database
+        $sql = "INSERT INTO movies (Title, Description, Duration, URL, Genre, Thumbnail, status) 
+                VALUES ('$title', '$description', '$duration', '$url', '$genre', '$thumbnail', '$status')";
 
-        // Execute the prepared statement
-        if ($stmt->execute()) {
+        // Execute the SQL query
+        if ($conn->query($sql) === TRUE) {
             // Successfully uploaded and inserted
             echo "<script> alert('Uploaded Successfully!'); </script>";
             header("Location: ../Home/index.php");
             exit(); // Stop the script execution here after redirect
         } else {
             // Error in database insertion
-            echo "Error: " . $stmt->error;
+            echo "Error: " . $conn->error;
         }
     } else {
         // Error moving the uploaded file

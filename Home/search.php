@@ -10,7 +10,7 @@ $query = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search
 
 if ($query != '') {
     // Query to fetch Title, Duration, and Thumbnail from movies
-    $sql = "SELECT Title, Duration, Thumbnail FROM movies WHERE Title LIKE '%$query%' LIMIT 5";
+    $sql = "SELECT Title,Description,Duration ,URL ,Genre, Thumbnail FROM movies WHERE Title LIKE '%$query%' LIMIT 5";
     $result = $conn->query($sql);
 
     $movies = [];

@@ -6,68 +6,9 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scroll issues */
+    /* overflow-x: hidden; Prevent horizontal scroll issues */
 }
 
-/* Navbar styling */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 50px;
-    background: linear-gradient(to bottom, rgba(139, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
-    position: sticky;
-    top: 0;
-    z-index: 1000; /* Ensure navbar stays on top */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-.navbar .logo img {
-    height: 80px;
-    width: auto;
-    max-width: 100%; /* Responsive scaling */
-}
-
-.navbar .nav-links {
-    display: flex;
-    gap: 30px;
-}
-
-.navbar .nav-links li {
-    list-style: none;
-}
-
-.navbar .nav-links a {
-    color: #fff;
-    text-decoration: none;
-    font-size: larger;
-    transition: color 0.3s ease;
-}
-
-.navbar .nav-links a:hover {
-    color: #e50914;
-}
-
-.navbar .sign-in {
-    padding: 10px 20px;
-    background-color: #e50914;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.navbar .sign-in:hover {
-    background-color: #c12c17;
-}
-.welcome-text{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 25px;
-    font-weight: bolder;
-    /* color: #e64659; */
-}
 .cleanup-button {
     background-color: #f44336;
     color: white;
@@ -77,26 +18,9 @@ body {
     border-radius: 5px;
     font-weight: bold;
 }
+
 .cleanup-button:hover {
     background-color: #d32f2f;
-}
-
-.logout{
-    width: 65px;
-    height: 30px;
-    color: white;
-    background-color: #651d24;
-    border-radius: 5%;
-    border: none;
-    font-weight: bold;
-    font-size: 15px;
-    
-}
-.logout:hover{
-    background-color: #de0f27;
-    transform: scale(1.1); /* Slight enlargement */
-
-
 }
 
 /* Movie list styling */
@@ -124,67 +48,93 @@ body {
     transition: transform 0.3s ease-in-out;
     overflow: hidden;
 }
+
 /* General container styling for the buttons */
 .managemovies {
-    height: 210px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 50px; /* Spacing between buttons */
+    gap: 50px;
+    /* Spacing between buttons */
     margin-top: 20px;
     padding: 20px;
-    background: linear-gradient(0deg, #5b2828, #0f0404); /* Black gradient background */
-    border-radius: 10px; /* Smooth rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); /* Subtle shadow for depth */
+    background-color: #251717;
+    
+    /* Black gradient background */
+    /* border-radius: 10px; */
+    /* Smooth rounded corners */
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); */
+    /* Subtle shadow for depth */
 }
 
 /* Individual button containers */
-.managemovies .button1, 
-.managemovies .button2
-.managemovies .button3 {
-    width: 100%; /* Full width within the container */
+.managemovies .button1,
+.managemovies .button2 .managemovies .button3 .managemovies .cleanup  {
+    /* width: 100%; */
+    /* Full width within the container */
     text-align: center;
+    padding: auto;
 }
 
 /* Button styling */
-.movie-button , .ticket-button{
-    background-color: #f83509; /* Vibrant red for buttons */
-    color: #fff; /* White text for contrast */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Slightly rounded corners */
-    padding: 15px 30px; /* Comfortable padding */
-    font-size: 1.1rem; /* Slightly larger text */
-    font-weight: bold; /* Bold text */
-    text-transform: uppercase; /* Uppercase for a bold appearance */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: all 0.3s ease; /* Smooth transitions for hover effects */
+.movie-button,
+.ticket-button {
+    background-color: #f83509;
+    /* Vibrant red for buttons */
+    color: #fff;
+    /* White text for contrast */
+    border: none;
+    /* Remove default border */
+    border-radius: 5px;
+    /* Slightly rounded corners */
+    padding: 15px 30px;
+    /* Comfortable padding */
+    font-size: 1.1rem;
+    /* Slightly larger text */
+    font-weight: bold;
+    /* Bold text */
+    text-transform: uppercase;
+    /* Uppercase for a bold appearance */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    transition: all 0.3s ease;
+    /* Smooth transitions for hover effects */
 }
 
 /* Button hover effect */
 .movie-button:hover {
-    background-color: #b71c1c; /* Darker red on hover */
+    background-color: #b71c1c;
+    /* Darker red on hover */
     /* color: #000; Black text for inverted contrast */
-    transform: scale(1.05); /* Slight enlargement */
-    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.5); /* Glow effect */
+    transform: scale(1.05);
+    /* Slight enlargement */
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.5);
+    /* Glow effect */
 }
 
 /* Button active effect */
 .movie-button:active {
-    transform: scale(0.98); /* Slightly shrink on click */
-    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.4); /* Reduced shadow */
+    transform: scale(0.98);
+    /* Slightly shrink on click */
+    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.4);
+    /* Reduced shadow */
 }
 
 /* Link styling to remove default link appearance */
 .managemovies a {
-    text-decoration: none; /* Remove underline */
-    width: 100%; /* Full width for flex alignment */
+    text-decoration: none;
+    /* Remove underline */
+    width: 100%;
+    /* Full width for flex alignment */
     display: block;
 }
 
 /* Text styling inside buttons */
 .movie-button span {
-    font-family: "Arial", sans-serif; /* Clean font family */
-    letter-spacing: 1px; /* Subtle spacing for better readability */
+    font-family: "Arial", sans-serif;
+    /* Clean font family */
+    letter-spacing: 1px;
+    /* Subtle spacing for better readability */
 }
 
 .movie:hover {

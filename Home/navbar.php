@@ -36,7 +36,7 @@
 
     .navbar .nav-links a:hover {
         color: #e50914;
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        /* text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); */
     }
 
     .navbar .sign-in {
@@ -135,83 +135,105 @@
     }
 
     /* Search Container */
-.search-container {
-    position: relative;
-    max-width: 500px;
-    margin: 30px auto;
-    flex-grow: 1;
-    margin: 0 20px;
-    border: none;
-}
+    .search-container {
+        position: relative;
+        max-width: 500px;
+        margin: 30px auto;
+        flex-grow: 1;
+        margin: 0 20px;
+        border: none;
+    }
 
-.search-bar {
-    width: 70%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-}
+    .search-bar {
+        width: 70%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        outline: none;
+    }
 
-/* Search Results */
-.search-results {
-    position: absolute;
-    top: calc(100% + 5px);
-    width: 70%;
-    background-color: white;
-    color: black;
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 1000;
-    border: none; /* No borders */
-    border-radius: 0; /* No rounded corners */
-}
+    /* Search Results Container */
+    .search-results {
+        position: absolute;
+        /* Position results relative to the container */
+        top: 100%;
+        /* Place below the search bar */
+        left: 0;
+        width: 100%;
+        max-height: 200px;
+        /* Set a max height for the results dropdown */
+        overflow-y: auto;
+        /* Enable scrolling if content exceeds max height */
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        /* Ensure it appears on top */
+        display: none;
+        /* Hidden by default */
+    }
 
-/* Individual Search Result Item */
-.search-results div {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: white; /* Background remains white */
-    color: black; /* Text remains black */
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
+    /* Visible State */
+    .search-results.active {
+        display: block;
+        /* Display when there are results */
+    }
 
-.search-results div:hover {
-    background-color: #f0f0f0; /* Slight gray background on hover */
-}
+    /* Individual Result Item */
+    .result-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        /* Separator between items */
+        gap: 10px;
+        /* Space between thumbnail and details */
+        cursor: pointer;
+        /* Indicate clickable item */
+    }
 
-/* Thumbnail Image */
-.search-results img {
-    width: 40px;
-    height: 60px;
-    object-fit: cover;
-    margin-right: 10px;
-}
+    .result-item:hover {
+        background: white;
+        /* Light gray background on hover */
+    }
 
-/* Movie Title and Details */
-.search-results span {
-    display: flex;
-    flex-direction: column;
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
-}
+    /* Thumbnail Image */
+    .search-results img {
+        width: 40px;
+        height: 60px;
+        object-fit: cover;
+        /* Ensure the image fills the area without distortion */
+        border-radius: 4px;
+        /* Slight rounding on edges */
+        margin-right: 10px;
+        /* Space between thumbnail and text */
+    }
 
-.search-results span h4 {
-    margin: 0;
-    font-size: 14px;
-    font-weight: bold;
-    color: black;
-}
+    /* Movie Details (Title and Info) */
+    .search-results h4 {
+        margin: 0;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        white-space: nowrap;
+        /* Prevent text wrapping */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* Add ellipsis for long titles */
+    }
 
-.search-results span p {
-    margin: 5px 0 0;
-    font-size: 12px;
-    color: black
-}
-
+    .result-item.no-results {
+        text-align: center;
+        font-size: 16px;
+        color: black;
+        padding: 0px;
+        /* border: 1px solid #ccc; */
+        background-color: white;
+        margin: 5px;
+        /* border-radius: 5px; */
+    }
 </style>
 
 <nav class="navbar">
@@ -228,14 +250,14 @@
     <div class="search-container">
         <input type="text" class="search-bar" id="search-bar" placeholder="Search movies..." onkeyup="searchMovies()">
         <div class="search-results" id="search-results"></div>
-    </div
+    </div>
 
-        <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true): ?>
+    <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true): ?>
         <span class="welcome-text">Welcome, <?php echo htmlspecialchars($_SESSION['userRole'] == 'User' ? $_SESSION['username'] : 'Admin'); ?>!</span>
-    <a href="../LoginFiles/logout.php" class="logout">Logout</a>
-<?php else: ?>
-    <a href="../LoginFiles/register.html" class="sign-in">Sign Up</a>
-<?php endif; ?>
+        <a href="../LoginFiles/logout.php" class="logout">Logout</a>
+    <?php else: ?>
+        <a href="../LoginFiles/register.html" class="sign-in">Sign Up</a>
+    <?php endif; ?>
 
 </nav>
 
@@ -258,6 +280,8 @@
     </div>
 </div>
 <script>
+
+    
     function searchMovies() {
         const query = document.getElementById('search-bar').value.trim(); // Fetch and trim the query
         const searchResults = document.getElementById('search-results'); // Target results container
@@ -272,44 +296,56 @@
                         searchResults.innerHTML = ''; // Clear previous results
                         console.log(results);
 
-                        if (results.length > 0) {
+                        if (results.length === 0) {
+                            // No results found, show the message
+                            searchResults.style.display = 'block';
+                            searchResults.innerHTML = `
+                    <div class="result-item no-results">
+                        No results found
+                    </div>
+                `;
+                        } else {
+                            // Display matching results
+                            searchResults.style.display = 'block';
                             results.forEach(movie => {
                                 const resultItem = document.createElement('div'); // Create container for each result
                                 resultItem.classList.add('result-item'); // Add CSS class
-
+                                // Add movie details as data-* attributes
+                                resultItem.dataset.title = movie.Title;
+                                resultItem.dataset.genre = movie.Genre;
+                                resultItem.dataset.description = movie.Description;
+                                resultItem.dataset.duration = movie.Duration;
+                                resultItem.dataset.thumbnail = `../Movies/${movie.Thumbnail}`;
                                 resultItem.innerHTML = `
-                                <img src="../Movies/${movie.Thumbnail}" alt="${movie.Title}">
-                                <div class="movie-details">
-                                    <h4>${movie.Title}</h4>
-                                    <p> ${movie.Duration} Movie</p>
-                                </div>
-                            `;
-                                // console.log($movie.Title);
+                        <img src="../Movies/${movie.Thumbnail}" alt="${movie.Title}">
+                        <h4>${movie.Title}</h4>
+                        
+                    `;
+                                // Add click event listener to reuse the existing openModal function
+                                resultItem.addEventListener('click', function() {
+                                    openModal(this); // Pass the clicked result item to openModal
+                                });
+
                                 searchResults.appendChild(resultItem); // Append the result
                             });
-                        } else {
-                            // No results found
-                            searchResults.innerHTML = `
-                            <div class="result-item no-results">
-                                No results found
-                            </div>
-                        `;
                         }
                     } catch (error) {
                         console.error('Error parsing JSON response:', error);
+                        searchResults.style.display = 'block';
                         searchResults.innerHTML = `
-                        <div class="result-item error-message">
-                            Error loading results. Please try again.
-                        </div>
-                    `;
+                <div class="result-item error-message">
+                    Error loading results. Please try again.
+                </div>
+            `;
                     }
                 } else {
                     console.error('Error fetching data:', xhttp.status);
+                    searchResults.style.display = 'block';
                     searchResults.innerHTML = `
-                    <div class="result-item error-message">
-                        Error fetching data. Please try again.
-                    </div>
-                `;
+            <div class="result-item error-message">
+                Error fetching data. Please try again.
+            </div>
+        `;
                 }
             };
 
@@ -390,4 +426,6 @@
             closeRatesModal();
         }
     });
+
+    
 </script>

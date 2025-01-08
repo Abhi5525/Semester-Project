@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,8 +13,9 @@
             var description = document.getElementById("description").value;
             var duration = document.getElementById("duration").value;
             var url = document.getElementById("url").value;
-            var genre = document.getElementById("genre").value; 
-            var thumbnail = document.getElementById("thumbnail").value;           
+            var genre = document.getElementById("genre").value;
+            var thumbnail = document.getElementById("thumbnail").value;
+            var status = document.getElementById("status").value;
 
 
             document.getElementById("titleError").textContent = "";
@@ -22,6 +24,8 @@
             document.getElementById("urlError").textContent = "";
             document.getElementById("genreError").textContent = "";
             document.getElementById("thumbnailError").textContent = "";
+            document.getElementById("statusError").textContent = "";
+
 
 
 
@@ -56,38 +60,43 @@
                 document.getElementById("thumbnailError").textContent = "Please upload a movie thumbnail";
                 valid = false;
             }
+            if (status == "") {
+                document.getElementById("statusError").textContent = "Please upload a movie thumbnail";
+                valid = false;
+            }
 
             return valid;
         }
     </script>
 
 </head>
+
 <body>
     <div class="container">
-        <form action="MoviesController.php" method = "POST" enctype="multipart/form-data" onsubmit = "return validation();">
-        
+        <form action="MoviesController.php" method="POST" enctype="multipart/form-data" onsubmit="return validation();">
+
             <div class="input-field">
                 <label for="title">Movie Title: </label>
-                <input type="text" name = "title" id = "title">
-                <span class = "error" id = "titleError"></span>
+                <input type="text" name="title" id="title">
+                <span class="error" id="titleError"></span>
             </div>
 
             <div class="input-field">
                 <label for="description ">Movie Description: </label>
-                <input type="text" name = "description" id = "description">
-                <span class = "error" id = "descriptionError"></span>
+                <input type="text" name="description" id="description">
+                <span class="error" id="descriptionError"></span>
             </div>
-                
+
             <div class="input-field">
                 <label for="duration ">Movie Duration : </label>
-                <input type="text" name = "duration" id = "duration">
-                <span class = "error" id = "durationError"></span>
+                <input type="text" name="duration" id="duration">
+                <span class="error" id="durationError"></span>
             </div>
 
             <div class="input-field">
                 <label for="url ">Movie Trailer URL : </label>
-                <input type="text" name = "url" id = "url">
-                <span class = "error" id = "urlError"></span>
+                <input type="text" name="url" id="url">
+                <span class="error" id="urlError"></span>
             </div>
 
             <div class="input-field">
@@ -107,15 +116,29 @@
 
             <div class="input-field">
                 <label for="thumbnail ">Movie Thumbnail: </label>
-                <input type="file" accept="image/*" name = "thumbnail" id = "thumbnail">
-                <span class = "error" id = "thumbnailError"></span>
+                <input type="file" accept="image/*" name="thumbnail" id="thumbnail">
+                <span class="error" id="thumbnailError"></span>
             </div>
-        
-            <input type="submit" value = "Upload">
+
+            <div class="input-field">
+
+            <label for="status">Movie Status:</label>
+            <select id="status" name="status">
+                <option value="Now Showing">Now Showing</option>
+                <option value="Coming Soon">Coming Soon</option>
+
+            </select>
+            <span class="error" id="statusError"></span>
+
+            </div>
+           
+
+            <input type="submit" value="Upload">
         </form>
 
-    </div>    
+    </div>
 
-    
+
 </body>
+
 </html>
