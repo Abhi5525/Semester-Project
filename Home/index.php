@@ -1,11 +1,11 @@
 <?php  
 session_start();
-if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
-    header("Location: ../LoginFiles/login.html");
-    exit();
-}
+// if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
+//     header("Location: ../LoginFiles/login.html");
+//     exit();
+// }
 
-if ($_SESSION['isLoggedIn']) {
+if (isset($_SESSION['isLoggedIn'])) {
     // Use null coalescing operator to provide fallback values
     $username = $_SESSION['username'] ?? 'Guest';
     $userEmail = $_SESSION['userEmail'] ?? '';

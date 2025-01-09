@@ -64,14 +64,13 @@
 
     /* Logout Button */
     .logout {
-        width: 65px;
-        height: 30px;
+        padding: 10px 20px;
         color: white;
-        background-color: #651d24;
+        background-color:transparent;
         border-radius: 5%;
         border: none;
         font-weight: bold;
-        font-size: 15px;
+        font-size: 18px;
         text-decoration: none;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
@@ -137,7 +136,7 @@
     /* Search Container */
     .search-container {
         position: relative;
-        max-width: 500px;
+        max-width: 350px;
         margin: 30px auto;
         flex-grow: 1;
         margin: 0 20px;
@@ -145,7 +144,7 @@
     }
 
     .search-bar {
-        width: 70%;
+        width: 100%;
         padding: 10px;
         font-size: 16px;
         border: 1px solid #ccc;
@@ -166,7 +165,7 @@
         overflow-y: auto;
         /* Enable scrolling if content exceeds max height */
         background-color: #fff;
-        border: 1px solid #ccc;
+        /* border: 1px solid #ccc; */
         border-radius: 5px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         z-index: 10;
