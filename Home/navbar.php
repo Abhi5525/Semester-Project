@@ -39,7 +39,7 @@
         /* text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); */
     }
 
-    .navbar .sign-in {
+    /* .navbar .sign-in {
         padding: 10px 20px;
         background-color: #e50914;
         color: #fff;
@@ -49,11 +49,11 @@
         font-weight: 700;
         border-radius: 5px;
         transition: background-color 0.3s ease;
-    }
+    } */
 
-    .navbar .sign-in:hover {
+    /* .navbar .sign-in:hover {
         background-color: #c12c17;
-    }
+    } */
 
     /* Welcome Text */
     .welcome-text {
@@ -63,7 +63,7 @@
     }
 
     /* Logout Button */
-    .logout {
+    .logout  {
         padding: 10px 20px;
         color: white;
         background-color:transparent;
@@ -75,7 +75,23 @@
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
+    .sign-in{
+
+        padding: 10px 20px;
+        color: white;
+        background-color:transparent;
+        border-radius: 5%;
+        border: none;
+        font-weight: bold;
+        font-size: 18px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
     .logout:hover {
+        background-color: #de0f27;
+        transform: scale(1.1);
+    }
+    .sign-in:hover {
         background-color: #de0f27;
         transform: scale(1.1);
     }
