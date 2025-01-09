@@ -72,6 +72,8 @@
 </head>
 
 <body>
+<h2>Upload Movie</h2>
+
     <div class="container">
         <form action="MoviesController.php" method="POST" enctype="multipart/form-data" onsubmit="return validation();">
 

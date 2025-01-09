@@ -1,7 +1,7 @@
 /* movies.css */
 
 body {
-    background: linear-gradient(135deg, #5d3434, #410d0d);
+    background: linear-gradient(135deg,rgb(39, 25, 25),rgb(57, 3, 3));
     color: #ffffff;
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -9,13 +9,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     flex-direction: column;
 }
 h2{
-    margin-bottom: 10px;
+font-size: 28px;
+margin-bottom: 20px;
+text-align: center;
+color: wheat; /* Vibrant wheat for labels */
+
 }
 .container {
+    margin: auto;
     background-color: #1b1717; /* Solid black form for contrast */
     border-radius: 12px;
     padding: 25px;

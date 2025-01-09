@@ -18,11 +18,10 @@ $result = $conn->query($sql);
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: rgb(29, 10, 10);
+            background: wheat;
 
             margin: 0;
             padding: 0;
-            color: rgb(249, 252, 254);
         }
 
         h2 {
@@ -32,8 +31,10 @@ $result = $conn->query($sql);
             text-align: center;
             margin-bottom: 30px;
             text-transform: uppercase;
-            color: rgb(249, 252, 254);
-            
+            color: black;
+            /* Vibrant wheat for labels */
+
+
         }
 
         .container {
@@ -55,22 +56,37 @@ $result = $conn->query($sql);
         .table td {
             padding: 12px 15px;
             text-align: left;
-            border: 4px solid rgb(69, 10, 10);
-            color: rgb(235, 239, 242);
+            border: 3px solid rgb(199, 44, 44);
+            color: black;
+            font-size: 17px;
+
         }
-        td:nth-child(3) { /* Description column */
-    width: 30%; /* Adjust as per your requirement */
-    white-space: nowrap; /* Ensures text does not wrap */
-    overflow: hidden; /* Hides overflow */
-    text-overflow: ellipsis; /* Adds ... for clipped text */
-}
-td:nth-child(5) { /* URL column */
-    width: 20%;
-}
+
+        .table th {
+            font-size: 18px;
+
+        }
+
+        td:nth-child(3) {
+            /* Description column */
+            width: 30%;
+            /* Adjust as per your requirement */
+            white-space: nowrap;
+            /* Ensures text does not wrap */
+            overflow: hidden;
+            /* Hides overflow */
+            text-overflow: ellipsis;
+            /* Adds ... for clipped text */
+        }
+
+        td:nth-child(5) {
+            /* URL column */
+            width: 20%;
+        }
 
         .table th {
             background-color: transparent;
-            color: rgb(235, 239, 242);
+            color: black;
             font-weight: 600;
         }
 

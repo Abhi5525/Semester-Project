@@ -55,8 +55,8 @@ try {
         }
 
         // Insert the reservation
-        $query = "INSERT INTO seat_reservations (seat_number, reservation_date, showtime, reserved_by, movie_id) 
-                  VALUES ('$seat', '$date', '$time', $userId, $movieId)";
+        $query = "INSERT INTO seat_reservations (seat_number, reservation_date, showtime, reserved_by, movie_id, status) 
+                  VALUES ('$seat', '$date', '$time', $userId, $movieId ,'reserved')";
         if (!mysqli_query($conn, $query)) {
             mysqli_rollback($conn);
             throw new Exception("Database error: " . mysqli_error($conn));
