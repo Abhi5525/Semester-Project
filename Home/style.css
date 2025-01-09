@@ -11,13 +11,13 @@ body {
 
 
 /* Movie list styling */
-.available-movies {
+.available-movies , .Coming-soon{
     max-width: 1200px;
     margin: 40px auto;
     padding: 20px;
 }
 
-.available-movies h2 {
+ h2 {
     font-size: 28px;
     margin-bottom: 20px;
     text-align: center;
@@ -92,13 +92,6 @@ body {
     line-height: 1.5; /* Adjust line height for proper spacing */
     position: relative;
 }
-/* .see-more-btn{
-    display: relative;
-    bottom: 0;
-    right: 0;
-color: white;
-cursor: pointer;
-} */
 /* Modal styling */
 .modal {
     display: none; /* Hidden by default */

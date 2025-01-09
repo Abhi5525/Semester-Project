@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="register.css">
-    
+
     <script>
         function validation() {
             var username = document.getElementById("username").value;
@@ -20,6 +20,9 @@
             document.getElementById("emailError").textContent = "";
             document.getElementById("passwordError").textContent = "";
             document.getElementById("phoneError").textContent = "";
+            let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+
 
             var valid = true;
 
@@ -28,13 +31,19 @@
                 valid = false;
             }
 
-            if (email == "") {
+            if (email == "" ) {
                 document.getElementById("emailError").textContent = "Email can't be empty";
+                valid = false;
+            } else if (!emailPattern.test(email)) {
+                document.getElementById("emailError").textContent = "Invalid email format";
                 valid = false;
             }
 
             if (password == "") {
                 document.getElementById("passwordError").textContent = "Password can't be empty";
+                valid = false;
+            } else if (!passwordPattern.test(password)) {
+                document.getElementById("passwordError").textContent = "Password must include 6-20 characters, uppercase, lowercase, digit, and special character";
                 valid = false;
             }
 
@@ -76,9 +85,10 @@ background-size: cover;">
 
             <div class="single-data-box password-container">
                 <div class="input-container">
-                    <label for="password" >Password</label>
+                    <label for="password">Password</label>
                     <input type="password" id="password" name="password">
-                    <i id="togglePasswordIcon" class="fas fa-eye toggle-password" onclick="togglePasswordVisibility()"></i>
+                    <i id="togglePasswordIcon" class="fas fa-eye toggle-password"
+                        onclick="togglePasswordVisibility()"></i>
                 </div>
                 <span class="error" id="passwordError" style="font-size: 12px; color: rgb(253, 252, 252);"></span>
             </div>
@@ -92,16 +102,16 @@ background-size: cover;">
 
     <script>
         function togglePasswordVisibility() {
-  const passwordInput = document.getElementById('password');
-  const toggleIcon = document.getElementById('togglePasswordIcon');
-  if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-      toggleIcon.className = 'fas fa-eye-slash toggle-password';
-  } else {
-      passwordInput.type = 'password';
-      toggleIcon.className = 'fas fa-eye toggle-password';
-  }
-}
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePasswordIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'fas fa-eye-slash toggle-password';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'fas fa-eye toggle-password';
+            }
+        }
     </script>
 </body>
 

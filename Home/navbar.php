@@ -39,22 +39,6 @@
         /* text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); */
     }
 
-    /* .navbar .sign-in {
-        padding: 10px 20px;
-        background-color: #e50914;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 700;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    } */
-
-    /* .navbar .sign-in:hover {
-        background-color: #c12c17;
-    } */
-
     /* Welcome Text */
     .welcome-text {
         font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
@@ -70,7 +54,7 @@
         border-radius: 5%;
         border: none;
         font-weight: bold;
-        font-size: 18px;
+        font-size: 16px;
         text-decoration: none;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
@@ -83,17 +67,17 @@
         border-radius: 5%;
         border: none;
         font-weight: bold;
-        font-size: 18px;
+        font-size: 16px;
         text-decoration: none;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
     .logout:hover {
         background-color: #de0f27;
-        transform: scale(1.1);
+        transform: scale(1.);
     }
     .sign-in:hover {
         background-color: #de0f27;
-        transform: scale(1.1);
+        transform: scale(1.0);
     }
 
     /* Modal */
@@ -256,7 +240,9 @@
         <img src="../images/logo.png" alt="Logo">
     </div>
     <ul class="nav-links">
-    <?php if($_SESSION['userRole'] == 'User'){?>
+    <?php
+    
+    if($_SESSION['userRole'] == 'User'){?>
         <li><a href="#">Location</a></li>
         <li><a href="#">About Us</a></li>
         <?php } ?>

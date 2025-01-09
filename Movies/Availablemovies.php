@@ -18,10 +18,11 @@ $result = $conn->query($sql);
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f2f2f2;
+            background: rgb(29, 10, 10);
+
             margin: 0;
             padding: 0;
-            color: #343a40;
+            color: rgb(249, 252, 254);
         }
 
         h2 {
@@ -31,7 +32,8 @@ $result = $conn->query($sql);
             text-align: center;
             margin-bottom: 30px;
             text-transform: uppercase;
-            color: #343a40;
+            color: rgb(249, 252, 254);
+            
         }
 
         .container {
@@ -53,34 +55,32 @@ $result = $conn->query($sql);
         .table td {
             padding: 12px 15px;
             text-align: left;
-            border: 1px solid #dee2e6;
+            border: 4px solid rgb(69, 10, 10);
+            color: rgb(235, 239, 242);
         }
+        td:nth-child(3) { /* Description column */
+    width: 30%; /* Adjust as per your requirement */
+    white-space: nowrap; /* Ensures text does not wrap */
+    overflow: hidden; /* Hides overflow */
+    text-overflow: ellipsis; /* Adds ... for clipped text */
+}
+td:nth-child(5) { /* URL column */
+    width: 20%;
+}
 
         .table th {
-            background-color: #343a40;
-            color: #ffffff;
+            background-color: transparent;
+            color: rgb(235, 239, 242);
             font-weight: 600;
         }
 
-        .table td {
-            word-wrap: break-word;
-            /* Break long words like URLs */
-            word-break: break-all;
-            /* Ensure long URLs are broken into lines */
-        }
-
         .table tbody tr {
-            min-height: 140px;
+            height: 140px;
             /* Set a minimum height for all rows */
             height: auto;
             /* Allow rows to expand if needed */
             vertical-align: middle;
             /* Align content vertically in the middle */
-        }
-
-
-        .table tr:nth-child(even) {
-            background-color: #f2f2f2;
         }
 
         .btn-edit,
@@ -120,6 +120,7 @@ $result = $conn->query($sql);
         }
 
         .see-more-btn {
+            display: inline-block;
             color: #007bff;
             background: none;
             border: none;
@@ -135,7 +136,7 @@ $result = $conn->query($sql);
     <div class="container">
         <h2 class="text-center mb-4">Available Movies</h2>
         <div class="table-container">
-            <table class="table table-bordered table-hover text-center w-100">
+            <table class="table table-bordered text-center ">
                 <thead>
                     <tr>
                         <th>Id</th>

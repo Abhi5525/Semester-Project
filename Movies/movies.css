@@ -6,14 +6,15 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    display: flex
-;
+    display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     flex-direction: column;
 }
-
+h2{
+    margin-bottom: 10px;
+}
 .container {
     background-color: #1b1717; /* Solid black form for contrast */
     border-radius: 12px;
