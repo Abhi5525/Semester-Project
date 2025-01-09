@@ -9,19 +9,6 @@ body {
     /* overflow-x: hidden; Prevent horizontal scroll issues */
 }
 
-.cleanup-button {
-    background-color: #f44336;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-.cleanup-button:hover {
-    background-color: #d32f2f;
-}
 
 /* Movie list styling */
 .available-movies {
@@ -79,7 +66,8 @@ body {
 /* Button styling */
 .movie-button,
 .ticket-button {
-    background-color: #f83509;
+    background-color: #8b1109;
+    
     /* Vibrant red for buttons */
     color: #fff;
     /* White text for contrast */
@@ -140,6 +128,21 @@ body {
 .movie:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.cleanup form{
+    margin: 0;
+}
+.cleanup-button {
+    background-color: #8b1109;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.cleanup-button:hover {
+    background-color: #d32f2f;
 }
 
 .thumbnail {

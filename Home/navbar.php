@@ -256,9 +256,11 @@
         <img src="../images/logo.png" alt="Logo">
     </div>
     <ul class="nav-links">
+    <?php if($_SESSION['userRole'] == 'User'){?>
         <li><a href="#">Location</a></li>
-        <li><a href="#" id="viewRatesLink">Ticket Rate</a></li>
         <li><a href="#">About Us</a></li>
+        <?php } ?>
+        <li><a href="#" id="viewRatesLink">Ticket Rate</a></li>
 
     </ul>
 

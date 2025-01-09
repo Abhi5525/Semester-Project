@@ -1,24 +1,26 @@
 /* movies.css */
 
 body {
-    background: linear-gradient(135deg, #400000, #1a1a1a); /* Blackish-red gradient background */
-    color: #ffffff; /* White text for contrast */
+    background: linear-gradient(135deg, #5d3434, #410d0d);
+    color: #ffffff;
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
+    display: flex
+;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    flex-direction: column;
 }
 
 .container {
-    background-color: #0c0a0a; /* Solid black form for contrast */
+    background-color: #1b1717; /* Solid black form for contrast */
     border-radius: 12px;
     padding: 25px;
-    width: 450px;
-    border: 2px solid #7a0000; /* Subtle red border */
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.1); /* Faint red glow around the form */
+    width:600px;
+    /* border: 2px solid #7a0000; Subtle red border */
+    box-shadow: 0 0 15px rgba(176, 173, 173, 0.1); /* Faint red glow around the form */
 }
 
 form {
@@ -43,7 +45,7 @@ input[type="text"],
 input[type="file"],
 select {
     padding: 10px;
-    border: 1px solid #ff4d4d; /* Vibrant red border */
+    border: 1px solid #df7676; /* Vibrant red border */
     border-radius: 6px;
     background-color: #1a1a1a; /* Dark background for inputs */
     color: #fff;
@@ -61,7 +63,7 @@ select:focus {
 }
 
 /* Submit button styles */
-input[type="submit"] {
+input[type="submit"],button {
     padding: 12px;
     background: linear-gradient(135deg, #7a0000, #400000); /* Blackish-red gradient button */
     color: wheat;
