@@ -11,15 +11,15 @@ body {
 
 
 /* Movie list styling */
-.available-movies {
+.available-movies, .Coming-soon {
     max-width: 1200px;
     margin: 40px auto;
     padding: 20px;
 }
 
-.available-movies h2 {
+ h2 {
     font-size: 28px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     text-align: center;
 }
 
@@ -47,11 +47,6 @@ body {
     padding: 20px;
     background-color: #251717;
     
-    /* Black gradient background */
-    /* border-radius: 10px; */
-    /* Smooth rounded corners */
-    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); */
-    /* Subtle shadow for depth */
 }
 
 /* Individual button containers */

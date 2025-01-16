@@ -48,36 +48,37 @@
 
     /* Logout Button */
     .logout  {
-        padding: 10px 20px;
+        /* font-family: 'Times New Roman', serif; */
+        padding: 7px 12px;
         color: white;
         background-color:transparent;
         border-radius: 5%;
         border: none;
-        font-weight: bold;
+        font-weight: 600;
         font-size: 16px;
         text-decoration: none;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
     .sign-in{
-
-        padding: 10px 20px;
+        /* font-family: Cambria, Georgia, Times, 'Times New Roman', serif; */
+        padding: 8px 14px;
         color: white;
         background-color:transparent;
         border-radius: 5%;
         border: none;
-        font-weight: bold;
+        font-weight: 600;
         font-size: 16px;
         text-decoration: none;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
     .logout:hover {
         background-color: #de0f27;
-        transform: scale(1.);
+        transform: scale(1.1);
     }
     .sign-in:hover {
         background-color: #de0f27;
-        transform: scale(1.0);
+        transform: scale(1.1);
     }
 
     /* Modal */

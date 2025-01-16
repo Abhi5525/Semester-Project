@@ -24,7 +24,8 @@ include('../Home/navbar.php')
         <h2>Now Showing</h2>
         <div class="movie-container">
             <?php
-            $sql = "SELECT * FROM movies";
+        $sql = "SELECT * from movies WHERE status = 'Now Showing'";
+            
             $result = $conn->query($sql);
 
             if ($result && $result->num_rows > 0) {
@@ -60,7 +61,54 @@ include('../Home/navbar.php')
             }
             ?>
         </div>
-        <div class="managemovies">
+       
+    </section>
+    <section class="Coming-soon">
+        <h2>Coming Soon</h2>
+        <div class="movie-container">
+        <?php 
+        $sql = "SELECT * from movies WHERE status = 'Coming Soon'";
+        $result = $conn->query($sql);
+        if($result->num_rows > 0)
+        {
+            while($row = mysqli_fetch_assoc($result))
+            {
+                $movieId = $row['movie_id'];
+                $title = $row['Title'];
+                $description = $row['Description'];
+                $duration = $row['Duration'];
+                $genre = $row['Genre'];
+                $thumbnailPath = $row['Thumbnail'];
+                $url = $row['URL'];
+            ?>
+            
+            <!-- <div class="movie-container"> -->
+                <div 
+                    class="movie"
+                    data-movie-id="<?php echo $movieId; ?>"
+                    data-title="<?php echo $title; ?>" 
+                    data-description="<?php echo $description; ?>" 
+                    data-duration="<?php echo $duration; ?>" 
+                    data-genre="<?php echo $genre; ?>" 
+                    data-url="<?php echo $url; ?>" 
+                    data-thumbnail="../Movies/<?php echo $thumbnailPath; ?>"
+                    onclick="showModal(this)"> <!-- Added onclick for opening modal -->
+
+                    <div class="thumbnail">
+                       <img src="../Movies/<?php echo $thumbnailPath; ?>" alt="<?php echo $title; ?> Thumbnail">
+                    </div>
+                    <p class="movie-title"><?php echo $title;?></p>
+                </div>
+                <!-- </div> -->
+            
+        <?php
+            }
+        }
+        ?>
+            </div>
+
+    </section>
+    <div class="managemovies">
             <div class="button1">
                 <a href="../Movies/UploadMovies.php"><button class="movie-button">Add New Movies</button></a>
             </div>
@@ -76,7 +124,7 @@ include('../Home/navbar.php')
                 </form>
             </div>
         </div>
-    </section>
+
 
     <!-- Movie Details Modal -->
     <div id="movie-modal" class="modal" style="display: none;">
