@@ -257,8 +257,16 @@ function submitBooking() {
     const date = document.getElementById("dateDropdown").value;
     const time = document.querySelector('input[name="time"]:checked')?.value;
 
-    if (!date || !time || !selectedSeats || selectedSeats.length === 0) {
-        alert("Please select a date, time, and seats.");
+    if (!date) {
+        alert("Please select a date.");
+        return;
+    }
+    if (!time) {
+        alert("Please select a time.");
+        return;
+    }
+    if (!selectedSeats || selectedSeats.length === 0) {
+        alert("Please select at least one seat.");
         return;
     }
 
@@ -275,6 +283,9 @@ function submitBooking() {
                     if (response.success) {
                         console.log("Booking successful. Calling generateTicket...");
                         generateTicketPDF(response); // Pass the entire response data
+                        setTimeout(function() {
+                            window.location.href = "dashboard.php"; // Correct syntax to redirect
+                        }, 500);
                     } else {
                         alert(`Booking failed: ${response.message}`);
                     }
@@ -290,6 +301,7 @@ function submitBooking() {
     };
 
     const postData = `date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&seats=${encodeURIComponent(JSON.stringify(selectedSeats))}`;
+    console.log(postData);
     xhr.send(postData);
 
     toggleModal(); // Close the modal after submission
@@ -307,10 +319,11 @@ function generateTicketPDF(data) {
         `&userName=${encodeURIComponent(userName)}` +
         `&userEmail=${encodeURIComponent(userEmail)}` +
         `&userPhone=${encodeURIComponent(userPhone)}` +
-        `&reservation_date=${encodeURIComponent(data.reservation_date)}` +
-        `&showtime=${encodeURIComponent(data.showtime)}` +
-        `&movieId=${encodeURIComponent(data.movie_id)}`;
+        `&reservation_date=${encodeURIComponent(data.data[0].reservation_date)}` +
+        `&showtime=${encodeURIComponent(data.data[0].showtime)}` +
+        `&movieId=${encodeURIComponent(data.data[0].movie_id)}`;
 
+    console.log(ticketData);
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "generate_ticket.php", true);
@@ -329,6 +342,7 @@ function generateTicketPDF(data) {
             // Trigger the download
         } else {
             console.error('Error generating PDF:', xhr.status, xhr.statusText);
+            alert("Failed to generate the ticket. Please try again.");
         }
     };
 

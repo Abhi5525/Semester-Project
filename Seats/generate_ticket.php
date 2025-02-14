@@ -27,58 +27,98 @@ if (isset($_POST['seats']) && isset($_POST['movie']) && isset($_POST['reservatio
         // Loop through each seat and generate a page for each ticket
         foreach ($seats as $seat) {
             $pdf->AddPage();
-            $pdf->SetFont('Arial', 'B', 16);
 
-            // Ticket Title
-            $pdf->Cell(190, 10, 'Movie Ticket', 0, 1, 'C');
-            $pdf->Ln(10); // Add some space
+            // --- Header / Title section ---
+            $pdf->SetFillColor(240, 240, 240); // Light gray background for the header
+            $pdf->Rect(0, 0, $pdf->GetPageWidth(), 25, 'F'); // Draw a filled rectangle for the header
+            $pdf->SetFont('Arial', 'B', 18);
+            $pdf->SetTextColor(0, 0, 0);
+            $pdf->Cell(190, 15, 'A Ticket to Bamel Cinemas', 0, 1, 'C'); // Centered title
+            $pdf->Ln(2); // Add some spacing
 
-            if (!empty($thumbnail) && file_exists("../movies/$thumbnail")) {
-                $pdf->Image("../movies/$thumbnail", 10, 30, 50, 70);
-            }
-            
-
-            // Movie details
+            // --- Movie Details Section ---
+            $pdf->SetFont('Arial', 'B', 14);
+            $pdf->Cell(190, 10, 'Movie Details', 0, 1); // Section title
             $pdf->SetFont('Arial', '', 12);
-            $pdf->SetXY(70, 30); // Position after the image
-            $pdf->Cell(120, 10, 'Movie: ' . $movie['Title'], 0, 1);
-            $pdf->SetX(70);
-            $pdf->Cell(120, 10, 'Duration: ' . $movie['Duration'] . ' mins', 0, 1);
-            $pdf->SetX(70);
-            $pdf->Cell(120, 10, 'Genre: ' . $movie['Genre'], 0, 1);
-            $pdf->SetX(70);
-            $pdf->Cell(120, 10, 'Reservation Date: ' . $reservationDate, 0, 1);
-            $pdf->SetX(70);
-            $pdf->Cell(120, 10, 'Showtime: ' . $showtime, 0, 1);
-            $pdf->Ln(10); // Add some space
 
-            // User info
-            $pdf->SetX(10);
-            $pdf->Cell(190, 10, 'User: ' . $userName, 0, 1);
-            $pdf->SetX(10);
-            $pdf->Cell(190, 10, 'Email: ' . $userEmail, 0, 1);
-            $pdf->SetX(10);
-            $pdf->Cell(190, 10, 'Phone: ' . $userPhone, 0, 1);
-            $pdf->Ln(10); // Add some space
+            // Movie details (without reservation date and showtime)
+            $pdf->Cell(40, 6, 'Title:', 0, 0);
+            $pdf->Cell(60, 6, $movie['Title'], 0, 1);
+            $pdf->Cell(40, 6, 'Genre:', 0, 0);
+            $pdf->Cell(60, 6, $movie['Genre'], 0, 1);
+            $pdf->Cell(40, 6, 'Duration:', 0, 0);
+            $pdf->Cell(60, 6, $movie['Duration'] . ' mins', 0, 1);
+            $pdf->Ln(10); // Add some spacing
 
-            // Seat details
-            $pdf->SetX(10);
-            $pdf->Cell(190, 10, 'Reserved Seat: ' . $seat['seat_number'], 0, 1);
-            $pdf->Ln(20); // Add some space
+            // --- Customer Details Section ---
+            $pdf->SetFont('Arial', 'B', 14);
+            $pdf->Cell(190, 10, 'Customer Details', 0, 1); // Section title
+            $pdf->SetFont('Arial', '', 12);
 
-            // Generate QR code
+            // Customer details
+            $pdf->Cell(40, 6, 'Name:', 0, 0);
+            $pdf->Cell(60, 6, $userName, 0, 1);
+            $pdf->Cell(40, 6, 'Email:', 0, 0);
+            $pdf->Cell(60, 6, $userEmail, 0, 1);
+            $pdf->Cell(40, 6, 'Phone:', 0, 0);
+            $pdf->Cell(60, 6, $userPhone, 0, 1);
+            $pdf->Ln(10); // Add some spacing
+
+            // --- Reservation Details Section ---
+            $pdf->SetFont('Arial', 'B', 14);
+            $pdf->Cell(190, 10, 'Reservation Details', 0, 1); // Changed section title
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(40, 6, 'Seat Number:', 0, 0);
+            $pdf->Cell(60, 6, $seat['seat_number'], 0, 1);
+            $pdf->Cell(40, 6, 'Date:', 0, 0);
+            $pdf->Cell(60, 6, $reservationDate, 0, 1);
+            $pdf->Cell(40, 6, 'Showtime:', 0, 0);
+            $pdf->Cell(60, 6, $showtime, 0, 1);
+            $pdf->Ln(10); // Add some spacing
+
+            // --- Movie Poster (Thumbnail) ---
+            if (!empty($thumbnail) && file_exists("../movies/$thumbnail")) {
+                // Save current position
+                $currentX = $pdf->GetX();
+                $currentY = $pdf->GetY();
+
+                // Place the image on the right side
+                $pdf->SetXY(135, 40);
+                $pdf->Image("../movies/$thumbnail", null, null, 50, 60, 'JPG' /* or PNG */);
+
+                // Return to the left side for the next text
+                $pdf->SetXY($currentX, $currentY + 40);
+            } else {
+                // If no valid thumbnail found, display a placeholder
+                $pdf->Cell(190, 10, 'Poster not available.', 0, 1, 'R');
+            }
+
+            // --- Generate QR code ---
             $qrData = "Movie: " . $movie['Title'] . "\n" .
                       "Seat: " . $seat['seat_number'] . "\n" .
                       "Date: " . $reservationDate . "\n" .
                       "Showtime: " . $showtime . "\n" .
                       "User: " . $userName;
 
-            $qrFile = tempnam(sys_get_temp_dir(), 'qr') . '.png'; // Temporary file for QR code
+            // Temporary file for QR code
+            $qrFile = tempnam(sys_get_temp_dir(), 'qr') . '.png';
             QRcode::png($qrData, $qrFile, 'L', 4, 2); // Generate QR code
 
-            // Embed QR code in the PDF
-            $pdf->Image($qrFile, 80, 150, 50, 50); // Adjust position and size as needed
-            unlink($qrFile); // Delete the temporary QR code file
+            // Place the QR code near the bottom
+            $pdf->SetXY(80, 160);
+            $pdf->Image($qrFile, $pdf->GetX(), $pdf->GetY(), 50, 50);
+            unlink($qrFile); // Remove the temporary file
+
+            // Optional: a small note about scanning the QR code
+            $pdf->SetXY(70, 220);
+            $pdf->SetFont('Arial', 'I', 10);
+            $pdf->Cell(70, 5, 'Scan this code at the Reception', 0, 1, 'C');
+
+            // Footer with contact information
+            $pdf->SetXY(0, 270);
+            $pdf->SetFont('Arial', '', 10);
+            $pdf->Cell(190, 5, 'Contact: support@BamelCinemas.com | Phone: 01-123223', 0, 1, 'R');
+            $pdf->Ln(5);
         }
 
         // Output the PDF to the browser (inline display)
