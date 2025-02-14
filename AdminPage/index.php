@@ -118,6 +118,9 @@ include('../Home/navbar.php')
             <div class="button3">
                 <a href="../ticket/ticketform.php"><button class="ticket-button">Manage ticket rates</button></a>
             </div>
+            <div class="button4">
+            <a href="admin_bookings.php"><button class="movie-button">Manage Seat Bookings</button></a>
+        </div>
             <div class="cleanup">
                 <form action="dbcleanup.php" method="post">
                     <button class="movie-button cleanup-button" type="submit">Archive Data</button>
