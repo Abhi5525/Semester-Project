@@ -118,6 +118,10 @@ include('../Home/navbar.php')
             <div class="button3">
                 <a href="../ticket/ticketform.php"><button class="ticket-button">Manage ticket rates</button></a>
             </div>
+            <div class="button5">
+                <a href="assign_showtimes.php"><button class="ticket-button">Manage Showtimes </button></a>
+            </div>
+
             <div class="button4">
             <a href="admin_bookings.php"><button class="movie-button">Manage Seat Bookings</button></a>
         </div>

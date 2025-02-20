@@ -23,6 +23,23 @@
   flex-direction: column;
   width: 100%;
 }
+input[type="radio"] {
+  transform: scale(1.5); /* Increase the size */
+  margin-right: 5px; /* Add spacing between radio and label */
+  margin-bottom: 5px;
+}
+#shifts {
+  display: flex;
+  gap: 20px; /* Adds spacing between each option */
+  align-items: center; /* Align items in the center vertically */
+}
+
+#shifts div {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Adds spacing between radio and label */
+}
+
 
 /* Dropdown Container */
 .dropdown-container {

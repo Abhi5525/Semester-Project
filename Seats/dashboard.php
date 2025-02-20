@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Ticket Booking</title>
     <link rel="stylesheet" href="styles.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -17,16 +17,17 @@
     if (isset($_SESSION['movie_id'])) {
         $movie_id = $_SESSION['movie_id'];
         echo "<script>sessionStorage.setItem('movieId', '$movie_id');</script>";
-    } ?>
+    }
+    ?>
     <form action="book_seats.php" method="POST" onsubmit="event.preventDefault();">
         <div id="dashboard" class="dashboard">
             <h1 class="section-title">Seat Reservation Section</h1>
-
             <div class="left-part">
                 <!-- Date Dropdown -->
                 <div class="dropdown-container">
                     <label for="dateDropdown" class="dropdown-label">Select Date:</label>
                     <select id="dateDropdown" name="date" class="dropdown-select">
+                        <!-- <option value="">Choose a Date</option> -->
                         <?php
                         for ($i = 0; $i < 3; $i++) {
                             $date = date('Y-m-d', strtotime("+$i days"));
@@ -39,18 +40,114 @@
 
                 <!-- Time Buttons -->
                 <div id="shifts" class="shifts">
-                    <label>
-                        <input type="radio" name="time" value="10:00 AM - 1:00 PM" checked> Morning Show
-                    </label>
-                    <label>
-                        <input type="radio" name="time" value="2:00 PM - 6:00 PM"> Afternoon Show
-                    </label>
-                    <label>
-                        <input type="radio" name="time" value="7:00 PM - 10:00 PM"> Evening Show
-                    </label>
+                    <div id="morningOption">
+                        <label>
+                            <input type="radio" id="morning" name="time" value="10:00:00" checked> Morning Show
+                        </label>
+                    </div>
+                    <div id="afternoonOption">
+                        <label>
+                            <input type="radio" id="afternoon" name="time" value="14:00:00"> Afternoon Show
+                        </label>
+                    </div>
+                    <div id="eveningOption">
+                        <label>
+                            <input type="radio" id="evening" name="time" value="18:00:00"> Evening Show
+                        </label>
+                    </div>
+                    <div id="noShowsMessage" style="display: none; color: red; font-weight: bold; margin-left: 10px;">
+                        (No shows available for this date)
+                    </div>
                 </div>
-
             </div>
+
+
+
+            <script>
+                $(document).ready(function() {
+                    // Fetch showtimes when the page loads
+                    fetchShowtimes();
+
+                    // Fetch showtimes when the user changes the date
+                    $("#dateDropdown").on("change", function() {
+                        fetchShowtimes();
+                    });
+
+                    // Function to fetch showtimes from the server
+                    function fetchShowtimes() {
+                        var movie_id = sessionStorage.getItem('movieId');
+                        var selectedDate = $("#dateDropdown").val();
+
+                        if (!movie_id || !selectedDate) {
+                            console.error("Movie ID or selected date is missing.");
+                            return;
+                        }
+
+                        $.ajax({
+                            url: "fetch_showtimes.php",
+                            type: "POST",
+                            data: {
+                                movie_id: movie_id,
+                                show_date: selectedDate
+                            },
+                            dataType: "json",
+                            success: function(response) {
+                                if (response && !response.error) {
+                                    updateShowtimes(response);
+                                } else {
+                                    console.error("Error in response:", response.error);
+                                    alert("No available showtimes for this date.");
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("AJAX Error:", error);
+                                alert("Error fetching showtimes. Please try again.");
+                            }
+                        });
+                    }
+
+                    // Function to update the showtimes based on response
+                    function updateShowtimes(showtimesData) {
+                        var selectedDate = $("#dateDropdown").val();
+                        var availableShowtimes = showtimesData[selectedDate] || [];
+
+                        $("#morning, #afternoon, #evening").prop('disabled', false);
+                        $("#noShowsMessage").hide();
+
+                        var allDisabled = true;
+
+                        if (!availableShowtimes.includes("10:00:00")) {
+                            $("#morning").prop('disabled', true);
+                        } else {
+                            allDisabled = false;
+                        }
+
+                        if (!availableShowtimes.includes("14:00:00")) {
+                            $("#afternoon").prop('disabled', true);
+                        } else {
+                            allDisabled = false;
+                        }
+
+                        if (!availableShowtimes.includes("18:00:00")) {
+                            $("#evening").prop('disabled', true);
+                        } else {
+                            allDisabled = false;
+                        }
+
+                        if (allDisabled) {
+                            $("#noShowsMessage").show();
+                        }
+                    }
+
+                    // Prevent form submission if no showtime is selected
+                    $("form").on("submit", function(event) {
+                        if ($("input[name='time']:checked").length === 0 || $("input[name='time']:checked").prop('disabled')) {
+                            event.preventDefault();
+                            alert("Please select an available showtime before proceeding.");
+                        }
+                    });
+                });
+            </script>
             <div class="right-part">
                 <h2>SCREEN</h2>
                 <div id="seat-map" class="container">
@@ -236,7 +333,6 @@
     <?php
 
     include('../Footer/footer.php'); ?>
-
 
 </body>
 
