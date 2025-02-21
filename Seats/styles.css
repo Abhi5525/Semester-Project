@@ -167,47 +167,56 @@ body {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
-.seat:before {
-  content: "";
+/* Seat number inside the seat */
+.seat::after {
+  content: attr(data-seat); /* Display seat number */
   position: absolute;
-  width: 70%;
-  height: 10px;
-  background-color: #4caf50;
-  border-radius: 5px;
-  left: 15%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center number inside seat */
+  font-size: 1.2em;
+  color: #fff; /* White text */
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+/* Booked seat styles */
+.seat.booked {
+  background-color: #f44336;
+}
+
+.seat.booked::after {
+  background-color: #f44336; /* Red background for booked seats */
+}
+
+/* Selected seat styles */
+.seat.selected {
+  background-color: #f44336;
+  animation: pulse 0.3s ease-out;
 }
 
 .seat:hover {
   transform: scale(1.1);
 }
 
-.seat.selected {
-  background-color: #f44336;
-  animation: pulse 0.3s ease-out;
-}
-
-.seat.booked {
-  background-color: #f44336;
-}
-
-.seat.booked:hover {
-  cursor: not-allowed;
-  transform: scale(1);
-}
-
-.seat.selected::after {
-  content: attr(data-seat);
-  position: absolute;
-  left: 5px;
-  font-size: 0.8em;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 2px;
-  border-radius: 3px;
-}
+/* Disabled seats */
 .disabled {
-  background-color: red; /* Or any color you want for reserved seats */
+  background-color: red;
   cursor: not-allowed;
+}
+
+/* Pulse Effect for Seat Selection */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 

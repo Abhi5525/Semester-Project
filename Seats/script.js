@@ -11,8 +11,19 @@ function updateReservedSeats() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`
     })
-        .then(response => response.json())
-        .then(reservedSeats => {
+    .then(response => response.text())  // Use .text() to get raw response
+    .then(text => {
+        console.log("Server Response:", text);  // Log the server's raw response
+
+        try {
+            const reservedSeats = JSON.parse(text);  // Try to parse JSON
+
+            if (reservedSeats.error) {
+                console.error("Error:", reservedSeats.error);
+                alert("Error fetching reserved seats: " + reservedSeats.error);
+                return;
+            }
+
             // Reset all seats to default
             document.querySelectorAll(".seat").forEach(seat => {
                 seat.classList.remove("disabled");
@@ -26,8 +37,15 @@ function updateReservedSeats() {
                     seatElement.classList.add("disabled");
                 }
             });
-        })
-        .catch(error => console.error("Error fetching reserved seats:", error));
+        } catch (e) {
+            console.error("Error parsing JSON:", e);
+            alert("Failed to parse reserved seats data. Please try again.");
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching reserved seats:", error);
+        alert("Failed to load reserved seats. Please try again.");
+    });
 }
 
 // Add event listeners for date and time changes
@@ -38,6 +56,45 @@ document.querySelectorAll('input[name="time"]').forEach(radio =>
 
 // Initial call to update reserved seats on page load
 document.addEventListener("DOMContentLoaded", updateReservedSeats);
+
+
+
+function toggleSeat(seat) {
+    if (!seat || !seat.dataset) {
+        console.error("Invalid seat element.");
+        return;
+    }
+
+    const seatNumber = seat.dataset.seat;
+
+    // If the seat is disabled (already reserved), alert the user
+    if (seat.classList.contains("disabled")) {
+        alert("This seat is already reserved.");
+        return;
+    }
+
+    // Toggle the 'selected' class on the seat
+    seat.classList.toggle("selected");
+
+    // If the seat is now selected, mark it as booked
+    if (seat.classList.contains("selected")) {
+        selectedSeats.push(seatNumber);
+        seat.classList.add("booked");  // Add the 'booked' class to display the seat number
+    } else {
+        selectedSeats = selectedSeats.filter(s => s !== seatNumber);
+        seat.classList.remove("booked");  // Remove the 'booked' class if unselected
+    }
+
+    // Update the hidden input with the selected seats
+    const selectedSeatsInput = document.getElementById("selectedSeats");
+    if (selectedSeatsInput) {
+        selectedSeatsInput.value = JSON.stringify(selectedSeats);
+    } else {
+        console.error("Selected seats input element not found.");
+    }
+}
+
+
 
 // Selecting required elements
 const bookSeatsButton = document.getElementById("bookSeatsButton");
@@ -56,12 +113,6 @@ function toggleModal(message = null) {
         modal.style.display = "none"; // Hide modal
     }
 }
-
-// Open modal when "Book Selected Seats" button is clicked
-// bookSeatsButton.addEventListener("click", () => {
-//     toggleModal("Are you sure you want to book these seats?");
-// });
-
 // Close modal when "Cancel" button is clicked
 cancelButton.addEventListener("click", () => {
     toggleModal();
@@ -93,34 +144,6 @@ function setDefaultTime() {
     }
 }
 
-// Toggle seat selection
-function toggleSeat(seat) {
-    if (!seat || !seat.dataset) {
-        console.error("Invalid seat element.");
-        return;
-    }
-
-    const seatNumber = seat.dataset.seat;
-
-    if (seat.classList.contains("disabled")) {
-        alert("This seat is already reserved.");
-        return;
-    }
-
-    seat.classList.toggle("selected");
-    if (seat.classList.contains("selected")) {
-        selectedSeats.push(seatNumber);
-    } else {
-        selectedSeats = selectedSeats.filter(s => s !== seatNumber);
-    }
-
-    const selectedSeatsInput = document.getElementById("selectedSeats");
-    if (selectedSeatsInput) {
-        selectedSeatsInput.value = JSON.stringify(selectedSeats);
-    } else {
-        console.error("Selected seats input element not found.");
-    }
-}
 
 // Set the selected date in the hidden input when the date dropdown changes
 document.getElementById('dateDropdown').addEventListener('change', function () {
@@ -198,7 +221,7 @@ function validateBooking() {
 // Handle booking confirmation
 function handleBookingConfirmation() {
     if (!validateBooking()) {
-        alert("PLease select atleast one seat ");
+        return;
     } else {
 
         const date = document.getElementById("dateDropdown").value;
