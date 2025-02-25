@@ -22,7 +22,7 @@
     <form action="book_seats.php" method="POST" onsubmit="event.preventDefault();">
         <div id="dashboard" class="dashboard">
             <h1 class="section-title">Seat Reservation Section</h1>
-            
+
             <div class="left-part">
                 <!-- Date Dropdown -->
                 <div class="dropdown-container">
@@ -43,7 +43,7 @@
                 <div id="shifts" class="shifts">
                     <div id="morningOption">
                         <label>
-                            <input type="radio" id="morning" name="time" value="10:00:00" > Morning Show
+                            <input type="radio" id="morning" name="time" value="10:00:00"> Morning Show
                         </label>
                     </div>
                     <div id="afternoonOption">
@@ -59,87 +59,142 @@
                     <div id="noShowsMessage" style="display: none; color: red; font-weight: bold; margin-left: 10px;">
                         (NO SHOWS AVAILABLE FOR THIS DATE)
                     </div>
-                    <div id = "messageShow" style = "display: none; color: green; font-weight: bolder; margin-left: 10px;">(SELECT AMONG AVAILABLE SHOWTIMES)</div>
+                    <div id="messageShow" style="display: none; color: green; font-weight: bolder; margin-left: 10px;">(SELECT AMONG AVAILABLE SHOWTIMES)</div>
                 </div>
             </div>
 
 
 
             <script>
-$(document).ready(function () {
-    fetchShowtimes();
+                // Global variable to store prices
+                let price = null;
+                $(document).ready(function() {
+                    fetchShowtimes();
 
-    $("#dateDropdown").on("change", function () {
-        fetchShowtimes();
-    });
+                    $("#dateDropdown").on("change", function() {
+                        fetchShowtimes();
+                    });
 
-    function fetchShowtimes() {
-        var movie_id = sessionStorage.getItem('movieId');
-        var selectedDate = $("#dateDropdown").val();
+                    function fetchShowtimes() {
+                        var movie_id = sessionStorage.getItem('movieId');
+                        var selectedDate = $("#dateDropdown").val();
 
-        if (!movie_id || !selectedDate) {
-            console.error("Movie ID or selected date is missing.");
-            return;
-        }
+                        if (!movie_id || !selectedDate) {
+                            console.error("Movie ID or selected date is missing.");
+                            return;
+                        }
 
-        $.ajax({
-            url: "fetch_showtimes.php",
-            type: "POST",
-            data: { movie_id: movie_id, show_date: selectedDate },
-            dataType: "json",
-            success: function (response) {
-                if (response && !response.error) {
-                    updateShowtimes(response);
-                } else {
-                    console.error("Error in response:", response.error);
-                    alert("No available showtimes for this date.");
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("AJAX Error:", error);
-                alert("Error fetching showtimes. Please try again.");
-            }
-        });
-    }
+                        $.ajax({
+                            url: "fetch_showtimes.php",
+                            type: "POST",
+                            data: {
+                                movie_id: movie_id,
+                                show_date: selectedDate
+                            },
+                            dataType: "json",
+                            success: function(response) {
+                                if (response && !response.error) {
+                                    updateShowtimes(response);
+                                } else {
+                                    console.error("Error in response:", response.error);
+                                    alert("No available showtimes for this date.");
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("AJAX Error:", error);
+                                alert("Error fetching showtimes. Please try again.");
+                            }
+                        });
+                    }
 
-    function updateShowtimes(showtimesData) {
-        var selectedDate = $("#dateDropdown").val();
-        var availableShowtimes = showtimesData[selectedDate] || [];
+                    function updateShowtimes(showtimesData) {
+                        var selectedDate = $("#dateDropdown").val();
+                        var availableShowtimes = showtimesData[selectedDate] || [];
 
-        $("#morning, #afternoon, #evening").prop('disabled', false).prop('checked', false);
-        $("#noShowsMessage").hide();
+                        $("#morning, #afternoon, #evening").prop('disabled', false).prop('checked', false);
+                        $("#noShowsMessage").hide();
 
-        var firstAvailable = null;
+                        var firstAvailable = null;
 
-        if (!availableShowtimes.includes("10:00:00")) {
-            $("#morning").prop('disabled', true);
-        } else {
-            firstAvailable = firstAvailable || "#morning";
-        }
+                        if (!availableShowtimes.includes("10:00:00")) {
+                            $("#morning").prop('disabled', true);
+                        } else {
+                            firstAvailable = firstAvailable || "#morning";
+                        }
 
-        if (!availableShowtimes.includes("14:00:00")) {
-            $("#afternoon").prop('disabled', true);
-        } else {
-            firstAvailable = firstAvailable || "#afternoon";
-        }
+                        if (!availableShowtimes.includes("14:00:00")) {
+                            $("#afternoon").prop('disabled', true);
+                        } else {
+                            firstAvailable = firstAvailable || "#afternoon";
+                        }
 
-        if (!availableShowtimes.includes("18:00:00")) {
-            $("#evening").prop('disabled', true);
-        } else {
-            firstAvailable = firstAvailable || "#evening";
-        }
+                        if (!availableShowtimes.includes("18:00:00")) {
+                            $("#evening").prop('disabled', true);
+                        } else {
+                            firstAvailable = firstAvailable || "#evening";
+                        }
 
-        if (firstAvailable) {
-            $(firstAvailable).prop('checked', true);
-            $("#messageShow").show();
-        } else {
-            $("#noShowsMessage").show();
-            $("#messageShow").hide();
+                        if (firstAvailable) {
+                            $(firstAvailable).prop('checked', true);
+                            $("#messageShow").show();
+                        } else {
+                            $("#noShowsMessage").show();
+                            $("#messageShow").hide();
 
-        }
-    }
-});
+                        }
+                    }
 
+                    // Function to fetch prices
+                    function fetchPrices(selectedDate, selectedTime) {
+                        // Get the movie ID from the session (assuming it's stored in a variable)
+                        var movieId = sessionStorage.getItem('movieId'); // Replace with your actual session storage key
+
+                        // Make an AJAX request to fetch prices
+                        $.ajax({
+                            url: '../ticket/get_price.php', // Replace with your server-side script URL
+                            type: 'POST',
+                            data: {
+                                date: selectedDate,
+                                time: selectedTime,
+                                movieId: movieId
+                            },
+                            success: function(response) {
+                                // Store the fetched prices in the global variable
+                                price = parseFloat(JSON.parse(response).price);
+
+                                // Log the prices to the console (for debugging)
+                                console.log('Prices fetched and stored:', price);
+                                // alert(price);
+                                // You can update the DOM with the fetched prices here
+                                // Example: Display the prices in a div
+                                $('#priceDisplay').html(`Prices: ${JSON.stringify(price)}`);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error fetching prices:', error);
+                            }
+                        });
+                    }
+
+                    // Event listeners for date dropdown and time radio buttons
+                    $('#dateDropdown').change(function() {
+                        checkAndFetchPrices();
+                    });
+
+                    $('input[name="time"]').change(function() {
+                        checkAndFetchPrices();
+                    });
+
+                    // Function to check if both date and time are selected
+                    function checkAndFetchPrices() {
+                        var selectedDate = $('#dateDropdown').val();
+                        var selectedTime = $('input[name="time"]:checked').val();
+
+                        if (selectedDate && selectedTime) {
+                            // Both date and time are selected, call fetchPrices
+                            fetchPrices(selectedDate, selectedTime);
+                        }
+                    }
+                });
             </script>
             <div class="right-part">
                 <h2>SCREEN</h2>
@@ -306,6 +361,9 @@ $(document).ready(function () {
             <div class="confirm-booking">
                 <!-- Changed the "Book Selected Seats" button to a normal button -->
                 <button type="button" id="bookSeatsButton">Book Selected Seats</button>
+            </div>
+            <div id="total-price">
+
             </div>
 
             <!-- Confirmation Modal -->

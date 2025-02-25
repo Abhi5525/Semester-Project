@@ -1,4 +1,5 @@
 let selectedSeats = [];
+let totalPrice=0;
 
 // Function to fetch and update reserved seats
 function updateReservedSeats() {
@@ -76,13 +77,21 @@ function toggleSeat(seat) {
     // Toggle the 'selected' class on the seat
     seat.classList.toggle("selected");
 
+    let totalPriceDiv=document.getElementById('total-price');
     // If the seat is now selected, mark it as booked
     if (seat.classList.contains("selected")) {
         selectedSeats.push(seatNumber);
         seat.classList.add("booked");  // Add the 'booked' class to display the seat number
+        totalPrice=totalPrice+price;
+        console.log(totalPrice);
+        totalPriceDiv.innerText=totalPrice;
     } else {
         selectedSeats = selectedSeats.filter(s => s !== seatNumber);
         seat.classList.remove("booked");  // Remove the 'booked' class if unselected
+        totalPrice=totalPrice-price;
+        console.log(totalPrice);
+        totalPriceDiv.innerText=totalPrice;
+        
     }
 
     // Update the hidden input with the selected seats
@@ -123,26 +132,26 @@ closeModalButton.addEventListener("click", () => {
     toggleModal();
 });
 
-// Set the current date in the dropdown
-function setDefaultDate() {
-    const dateDropdown = document.getElementById("dateDropdown");
-    if (dateDropdown) {
-        const formattedDate = new Date().toISOString().split("T")[0];
-        dateDropdown.value = formattedDate; // Set default date
-    } else {
-        console.error("Date dropdown not found.");
-    }
-}
+// // Set the current date in the dropdown
+// function setDefaultDate() {
+//     const dateDropdown = document.getElementById("dateDropdown");
+//     if (dateDropdown) {
+//         const formattedDate = new Date().toISOString().split("T")[0];
+//         dateDropdown.value = formattedDate; // Set default date
+//     } else {
+//         console.error("Date dropdown not found.");
+//     }
+// }
 
-// Set the first available showtime
-function setDefaultTime() {
-    const timeRadioButtons = document.querySelectorAll('input[name="time"]');
-    if (timeRadioButtons.length > 0) {
-        timeRadioButtons[0].checked = true; // Default to first time slot
-    } else {
-        console.error("No time radio buttons found.");
-    }
-}
+// // Set the first available showtime
+// function setDefaultTime() {
+//     const timeRadioButtons = document.querySelectorAll('input[name="time"]');
+//     if (timeRadioButtons.length > 0) {
+//         timeRadioButtons[0].checked = true; // Default to first time slot
+//     } else {
+//         console.error("No time radio buttons found.");
+//     }
+// }
 
 
 // Set the selected date in the hidden input when the date dropdown changes
@@ -223,7 +232,6 @@ function handleBookingConfirmation() {
     if (!validateBooking()) {
         return;
     } else {
-
         const date = document.getElementById("dateDropdown").value;
         const time = document.querySelector('input[name="time"]:checked').value;
         const seats = JSON.parse(document.getElementById("selectedSeats").value || "[]").join(", ");
@@ -243,8 +251,8 @@ function resetBooking() {
 
 // Initialization
 function initializeBookingSystem() {
-    setDefaultDate();
-    setDefaultTime();
+    // setDefaultDate();
+    // setDefaultTime();
 
     document.querySelectorAll(".seat").forEach(seat =>
         seat.addEventListener("click", () => toggleSeat(seat))
@@ -331,7 +339,7 @@ function submitBooking() {
 }
 
 function generateTicketPDF(data) {
-    // alert("ENtered in generate ticket");
+    alert("ENtered in generate ticket");
     // Retrieve the user's session information
     const userName = sessionStorage.getItem("username");
     const userEmail = sessionStorage.getItem("userEmail");

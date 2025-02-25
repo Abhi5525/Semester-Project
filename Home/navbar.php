@@ -336,30 +336,38 @@
                 <input type="text" class="search-bar" id="search-bar" placeholder="Search movies..." onkeyup="searchMovies()">
                 <div class="search-results" id="search-results"></div>
             </div>
-    <?php }
-    } ?>
+        <?php }
+    } else { ?>
+        <div class="search-container">
+            <input type="text" class="search-bar" id="search-bar" placeholder="Search movies..." onkeyup="searchMovies()">
+            <div class="search-results" id="search-results"></div>
+        </div><?php
+            } ?>
 
+    <?php
+    if (isset($_SESSION['userRole'])) { ?>
+        <span class="welcome-text">Welcome,
+            <?php echo htmlspecialchars($_SESSION['userRole'] == 'User' ? $_SESSION['username'] : 'Admin'); ?>!
+        </span>
+    <?php } ?>
 
-<span class="welcome-text">Welcome, <?php echo htmlspecialchars($_SESSION['userRole'] == 'User' ? $_SESSION['username'] : 'Admin'); ?>!</span>
-<?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true): ?>
-    <?php if ($_SESSION['userRole'] == 'Admin'): ?>
-        <div class="dropdown">
-            <button class="dropbtn">Admin Panel</button>
-            <div class="dropdown-content">
-                <a href="../Movies/UploadMovies.php"><button class="dropdown-btns">Add New Movies</button></a>
-                <a href="../Movies/Availablemovies.php"><button class="dropdown-btns">Manage Available Movies</button></a>
-                <a href="../ticket/ticketform.php"><button class="dropdown-btns">Manage ticket rates</button></a>
-                <a href="assign_showtimes.php"><button class="dropdown-btns">Manage Showtimes </button></a>
-                <a href="admin_bookings.php"><button class="dropdown-btns">Manage Seat Bookings</button></a>
+    <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true): ?>
+        <?php if ($_SESSION['userRole'] == 'Admin'): ?>
+            <div class="dropdown">
+                <button class="dropbtn">Admin Panel</button>
+                <div class="dropdown-content">
+                    <a href="../Movies/UploadMovies.php"><button class="dropdown-btns">Add New Movies</button></a>
+                    <a href="../Movies/Availablemovies.php"><button class="dropdown-btns">Manage Available Movies</button></a>
+                    <a href="../ticket/ticketform.php"><button class="dropdown-btns">Manage ticket rates</button></a>
+                    <a href="assign_showtimes.php"><button class="dropdown-btns">Manage Showtimes </button></a>
+                    <a href="admin_bookings.php"><button class="dropdown-btns">Manage Seat Bookings</button></a>
 
-
-
-                <form action="dbcleanup.php" method="post">
-                    <button class="dropdown-btns" type="submit">Archive Data</button>
-                </form>
+                    <form action="dbcleanup.php" method="post">
+                        <button class="dropdown-btns" type="submit">Archive Data</button>
+                    </form>
+                </div>
             </div>
-        </div>
-    <?php endif; ?>
+        <?php endif; ?>
         <a href="../LoginFiles/logout.php" class="logout">Logout</a>
     <?php else: ?>
         <a href="../LoginFiles/register.html" class="sign-in">Sign Up</a>
@@ -489,7 +497,7 @@
                     row.innerHTML = `
                     <td>${dayType}</td>
                     <td>${showTime}</td>
-                    <td>$${rate.price}</td>
+                    <td>Rs. ${rate.price}</td>
                 `;
                     ratesTableBody.appendChild(row);
                 });

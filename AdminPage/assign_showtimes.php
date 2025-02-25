@@ -112,6 +112,13 @@ include('connection.php');
             <option value="18:00:00">6:00 PM</option>
         </select>
 
+        <label for="day_type">Select Day Type:</label>
+        <select id="day_type" name="day_type" required>
+            <option value="weekday">weekday</option>
+            <option value="weekend">weekend</option>
+            <option value="holiday">holiday</option>
+        </select>
+
         <button type="submit">Assign Showtime</button>
     </form>
 
