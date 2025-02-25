@@ -2,6 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Get all the movie elements
     const movies = document.querySelectorAll(".movie");
     const modal = document.getElementById("movieModal");
+    const modalImage = document.getElementById("modalImage");
+    const modalIframe = document.getElementById("modalIframe");
+    const modalLeft = document.getElementById("modalLeft");
+
+    let currentTrailerUrl = ""; // To store the trailer URL dynamically
 
     // Add event listeners to all movie elements
     movies.forEach(movie => {
@@ -16,75 +21,81 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.addEventListener("click", (e) => {
         if (e.target === modal) closeModal();
     });
-});
 
-function showModal(movieElement) {
-    const movieId = movieElement.getAttribute("data-movie-id"); // Retrieve movie_id
-
-    // Store movieId in the session via an AJAX request
-    fetch("login_movieId.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `movie_id=${encodeURIComponent(movieId)}`,
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Failed to store movie ID.");
-            }
-            return response.text();
-        })
-        .then(data => {
-            console.log(data); // Optional: Log success message
-            openModal(movieElement); // Proceed to open the modal
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Failed to store movie ID. Please try again.");
-        });
-}
-
-// Function to open the modal and populate its content
-function openModal(movie) {
-    const modal = document.getElementById("movieModal");
-
-    // Set modal content from the clicked movie's data attributes
-    document.getElementById("modalTitle").innerText = movie.dataset.title;
-    document.getElementById("modalGenre").innerText = `Genre: ${movie.dataset.genre}`;
-    document.getElementById("modalDescription").innerText = movie.dataset.description;
-    document.getElementById("modalDuration").innerText = `Duration: ${movie.dataset.duration}`;
-    document.getElementById("modalImage").src = movie.dataset.thumbnail;
-
-    // Show the modal
-    modal.style.display = "flex";
-}
-
-// Function to close the modal
-function closeModal() {
-    const modal = document.getElementById("movieModal");
-    modal.style.display = "none";
-}
-
-// Initialize dynamic trailer behavior
-document.addEventListener("DOMContentLoaded", function () {
-    const modalLeft = document.getElementById("modalLeft");
-    const modalImage = document.getElementById("modalImage");
-    const modalIframe = document.getElementById("modalIframe");
-
-    const trailerURL = "https://www.youtube.com/embed/DLgcCTnMheg?si=5-gV7R2e2CG0-1nW"; // Replace with your trailer ID
-
-    // On mouseenter, replace the image with the trailer
+    // Mouse hover event for trailer preview
     modalLeft.addEventListener("mouseenter", function () {
-        modalIframe.src = trailerURL; // Set trailer link dynamically
-        modalImage.style.display = "none";
-        modalIframe.style.display = "block";
+        if (currentTrailerUrl) {
+            const videoId = extractYouTubeId(currentTrailerUrl);
+            if (videoId) {
+                modalIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                modalImage.style.display = "none";
+                modalIframe.style.display = "block";
+            }
+        }
     });
 
-    // On mouseleave, revert back to the image
+    // Mouse leave event to revert back to image
     modalLeft.addEventListener("mouseleave", function () {
-        modalIframe.src = ""; // Remove iframe source
+        modalIframe.src = ""; // Stop video playback
         modalImage.style.display = "block";
         modalIframe.style.display = "none";
     });
+
+    function showModal(movieElement) {
+        const movieId = movieElement.getAttribute("data-movie-id"); // Retrieve movie_id
+
+        // Store movieId in the session via an AJAX request
+        fetch("login_movieId.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: `movie_id=${encodeURIComponent(movieId)}`,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to store movie ID.");
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log(data); // Optional: Log success message
+                openModal(movieElement); // Proceed to open the modal
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Failed to store movie ID. Please try again.");
+            });
+    }
+
+    // Function to open the modal and populate its content
+    function openModal(movie) {
+        const modal = document.getElementById("movieModal");
+
+        // Set modal content from the clicked movie's data attributes
+        document.getElementById("modalTitle").innerText = movie.dataset.title;
+        document.getElementById("modalGenre").innerText = `Genre: ${movie.dataset.genre}`;
+        document.getElementById("modalDescription").innerText = movie.dataset.description;
+        document.getElementById("modalDuration").innerText = `Duration: ${movie.dataset.duration}`;
+        document.getElementById("modalImage").src = movie.dataset.thumbnail;
+
+        // Set trailer URL dynamically
+        currentTrailerUrl = movie.dataset.url || ""; // Store the trailer URL for later use
+
+        // Show the modal
+        modal.style.display = "flex";
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        const modal = document.getElementById("movieModal");
+        modal.style.display = "none";
+        modalIframe.src = ""; // Stop video when closing
+    }
+
+    // Function to extract YouTube video ID from different URL formats
+    function extractYouTubeId(url) {
+        const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/);
+        return match ? match[1] : null;
+    }
 });

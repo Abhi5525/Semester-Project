@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error: " . mysqli_error($conn);
         }
     }
+    header("Location: index.php");
 }
 
 mysqli_close($conn);

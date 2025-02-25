@@ -57,8 +57,9 @@
                         </label>
                     </div>
                     <div id="noShowsMessage" style="display: none; color: red; font-weight: bold; margin-left: 10px;">
-                        (No shows available for this date)
+                        (NO SHOWS AVAILABLE FOR THIS DATE)
                     </div>
+                    <div id = "messageShow" style = "display: none; color: green; font-weight: bolder; margin-left: 10px;">(SELECT AMONG AVAILABLE SHOWTIMES)</div>
                 </div>
             </div>
 
@@ -130,8 +131,11 @@ $(document).ready(function () {
 
         if (firstAvailable) {
             $(firstAvailable).prop('checked', true);
+            $("#messageShow").show();
         } else {
             $("#noShowsMessage").show();
+            $("#messageShow").hide();
+
         }
     }
 });

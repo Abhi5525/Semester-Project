@@ -139,8 +139,12 @@ body {
     display: none;
     background-color: #000; /* Black background before video loads */
 }
-
-
+#modalGenre, #modalDuration{
+    font-size: 15px;
+}
+#modalDescription{
+    font-size: 15px;
+}
 
 /* Right side (description and buttons) */
 .modal-right {

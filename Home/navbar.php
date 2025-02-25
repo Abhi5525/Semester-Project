@@ -42,7 +42,7 @@
     /* Welcome Text */
     .welcome-text {
         font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
-        font-size: 25px;
+        font-size: 20px;
         font-weight: bold;
     }
 
@@ -242,11 +242,11 @@
     </div>
     <ul class="nav-links">
     <?php
-    
+    if(isset($_SESSION['userRole'])){
     if($_SESSION['userRole'] == 'User'){?>
         <li><a href="#">Location</a></li>
         <li><a href="#">About Us</a></li>
-        <?php } ?>
+        <?php } }?>
         <li><a href="#" id="viewRatesLink">Ticket Rate</a></li>
 
     </ul>
