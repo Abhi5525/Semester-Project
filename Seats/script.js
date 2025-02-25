@@ -331,6 +331,7 @@ function submitBooking() {
 }
 
 function generateTicketPDF(data) {
+    // alert("ENtered in generate ticket");
     // Retrieve the user's session information
     const userName = sessionStorage.getItem("username");
     const userEmail = sessionStorage.getItem("userEmail");

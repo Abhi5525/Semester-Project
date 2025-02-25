@@ -47,11 +47,11 @@
     }
 
     /* Logout Button */
-    .logout  {
+    .logout {
         /* font-family: 'Times New Roman', serif; */
         padding: 7px 12px;
         color: white;
-        background-color:transparent;
+        background-color: transparent;
         border-radius: 5%;
         border: none;
         font-weight: 600;
@@ -60,11 +60,11 @@
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
 
-    .sign-in{
+    .sign-in {
         /* font-family: Cambria, Georgia, Times, 'Times New Roman', serif; */
         padding: 8px 14px;
         color: white;
-        background-color:transparent;
+        background-color: transparent;
         border-radius: 5%;
         border: none;
         font-weight: 600;
@@ -72,10 +72,12 @@
         text-decoration: none;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
+
     .logout:hover {
         background-color: #de0f27;
         transform: scale(1.1);
     }
+
     .sign-in:hover {
         background-color: #de0f27;
         transform: scale(1.1);
@@ -234,36 +236,136 @@
         margin: 5px;
         /* border-radius: 5px; */
     }
+
+    /* Dropdown */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        margin-right: 15px;
+    }
+
+    .dropbtn {
+        background-color: transparent;
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+        font-size: 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: black;
+        min-width: 240px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a,
+    .dropdown-content form {
+        /* color: black; */
+        /* padding: 10px; */
+        text-decoration: none;
+        display: block;
+        /* border-bottom: 1px solid #ddd; */
+
+
+        background: none;
+        border: none;
+        color: black;
+        /* width: 97%; */
+        text-align: left;
+        padding: 4px;
+        cursor: pointer;
+        font-size: 12px;
+
+    }
+
+    .dropdown-content a:hover {
+        /* background-color: #f1f1f1; */
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-btns {
+        /* background: none; */
+        /* border: none; */
+        /* color: black; */
+        width: 100%;
+        text-align: left;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        background-color: #8b1109;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .dropdown-btns:hover {
+        transform: scale(1.05);
+    }
 </style>
+
 
 <nav class="navbar">
     <div class="logo">
         <img src="../images/logo.png" alt="Logo">
     </div>
     <ul class="nav-links">
-    <?php
-    if(isset($_SESSION['userRole'])){
-    if($_SESSION['userRole'] == 'User'){?>
-        <li><a href="#">Location</a></li>
-        <li><a href="#">About Us</a></li>
-        <?php } }?>
+        <?php
+        if (isset($_SESSION['userRole'])) {
+            if ($_SESSION['userRole'] == 'User') { ?>
+                <li><a href="#">Location</a></li>
+                <li><a href="#">About Us</a></li>
+        <?php }
+        } ?>
         <li><a href="#" id="viewRatesLink">Ticket Rate</a></li>
-
     </ul>
 
-    <div class="search-container">
-        <input type="text" class="search-bar" id="search-bar" placeholder="Search movies..." onkeyup="searchMovies()">
-        <div class="search-results" id="search-results"></div>
-    </div>
+    <?php
+    if (isset($_SESSION['userRole'])) {
+        if ($_SESSION['userRole'] == 'User') { ?>
+            <div class="search-container">
+                <input type="text" class="search-bar" id="search-bar" placeholder="Search movies..." onkeyup="searchMovies()">
+                <div class="search-results" id="search-results"></div>
+            </div>
+    <?php }
+    } ?>
 
-    <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true): ?>
-        <span class="welcome-text">Welcome, <?php echo htmlspecialchars($_SESSION['userRole'] == 'User' ? $_SESSION['username'] : 'Admin'); ?>!</span>
+
+<span class="welcome-text">Welcome, <?php echo htmlspecialchars($_SESSION['userRole'] == 'User' ? $_SESSION['username'] : 'Admin'); ?>!</span>
+<?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn'] === true): ?>
+    <?php if ($_SESSION['userRole'] == 'Admin'): ?>
+        <div class="dropdown">
+            <button class="dropbtn">Admin Panel</button>
+            <div class="dropdown-content">
+                <a href="../Movies/UploadMovies.php"><button class="dropdown-btns">Add New Movies</button></a>
+                <a href="../Movies/Availablemovies.php"><button class="dropdown-btns">Manage Available Movies</button></a>
+                <a href="../ticket/ticketform.php"><button class="dropdown-btns">Manage ticket rates</button></a>
+                <a href="assign_showtimes.php"><button class="dropdown-btns">Manage Showtimes </button></a>
+                <a href="admin_bookings.php"><button class="dropdown-btns">Manage Seat Bookings</button></a>
+
+
+
+                <form action="dbcleanup.php" method="post">
+                    <button class="dropdown-btns" type="submit">Archive Data</button>
+                </form>
+            </div>
+        </div>
+    <?php endif; ?>
         <a href="../LoginFiles/logout.php" class="logout">Logout</a>
     <?php else: ?>
         <a href="../LoginFiles/register.html" class="sign-in">Sign Up</a>
     <?php endif; ?>
-
 </nav>
+
 
 <div id="ticketRatesModal" class="navbar-modal" role="dialog" aria-label="Ticket Rates Modal" style="display: none;">
     <div class="navbar-modal-content">
@@ -284,8 +386,6 @@
     </div>
 </div>
 <script>
-
-    
     function searchMovies() {
         const query = document.getElementById('search-bar').value.trim(); // Fetch and trim the query
         const searchResults = document.getElementById('search-results'); // Target results container
@@ -430,6 +530,4 @@
             closeRatesModal();
         }
     });
-
-    
 </script>

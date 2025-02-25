@@ -38,14 +38,14 @@ body {
 
 /* General container styling for the buttons */
 .managemovies {
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 50px;
     /* Spacing between buttons */
-    margin-top: 20px;
+    /* margin-top: 20px;
     padding: 20px;
-    background-color: #251717;
+    background-color: #251717;  */
     
 }
 
@@ -54,80 +54,80 @@ body {
 .managemovies .button2 .managemovies .button3 .managemovies .cleanup  {
     /* width: 100%; */
     /* Full width within the container */
-    text-align: center;
-    padding: auto;
+    /* text-align: center;
+    padding: auto; */
 }
 
 /* Button styling */
 .movie-button,
 .ticket-button {
-    background-color: #1b5f0c;
+    /* background-color: #1b5f0c; */
     
     /* Vibrant red for buttons */
-    color: #fff;
+    /* color: #fff; */
     /* White text for contrast */
-    border: none;
+    /* border: none; */
     /* Remove default border */
-    border-radius: 5px;
+    /* border-radius: 5px; */
     /* Slightly rounded corners */
-    padding: 15px 30px;
+    /* padding: 15px 30px; */
     /* Comfortable padding */
-    font-size: 1.1rem;
+    /* font-size: 1.1rem; */
     /* Slightly larger text */
-    font-weight: bold;
+    /* font-weight: bold; */
     /* Bold text */
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     /* Uppercase for a bold appearance */
-    cursor: pointer;
+    /* cursor: pointer; */
     /* Pointer cursor on hover */
-    transition: all 0.3s ease;
+    /* transition: all 0.3s ease; */
     /* Smooth transitions for hover effects */
 }
 
 /* Button hover effect */
 .movie-button:hover {
-    background-color: #b71c1c;
+    /* background-color: #b71c1c; */
     /* Darker red on hover */
     /* color: #000; Black text for inverted contrast */
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
     /* Slight enlargement */
-    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.5);
+    /* box-shadow: 0 4px 15px rgba(211, 47, 47, 0.5); */
     /* Glow effect */
 }
 .ticket-button:hover{
-    background-color: #b71c1c;
-    transform: scale(1.05);
+    /* background-color: #b71c1c; */
+    /* transform: scale(1.05); */
     /* box-shadow: 0 4px 15px rgba(211, 47, 47, 0.5); */
 }
 
 /* Button active effect */
 .movie-button:active {
-    transform: scale(0.98);
+    /* transform: scale(0.98); */
     /* Slightly shrink on click */
-    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.4);
+    /* box-shadow: 0 2px 8px rgba(211, 47, 47, 0.4); */
     /* Reduced shadow */
 }
 
 /* Link styling to remove default link appearance */
 .managemovies a {
-    text-decoration: none;
+    /* text-decoration: none; */
     /* Remove underline */
-    width: 100%;
+    /* width: 100%; */
     /* Full width for flex alignment */
-    display: block;
+    /* display: block; */
 }
 
 /* Text styling inside buttons */
 .movie-button span {
-    font-family: "Arial", sans-serif;
+    /* font-family: "Arial", sans-serif; */
     /* Clean font family */
-    letter-spacing: 1px;
+    /* letter-spacing: 1px; */
     /* Subtle spacing for better readability */
 }
 
 .movie:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    /* transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); */
 }
 .cleanup form{
     margin: 0;
@@ -142,7 +142,7 @@ body {
 }
 
 .cleanup-button:hover {
-    background-color: #d32f2f;
+    /* background-color: #d32f2f; */
 }
 
 .thumbnail {
