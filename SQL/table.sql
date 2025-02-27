@@ -1,64 +1,69 @@
--- Table: users
-CREATE TABLE `users` (
-  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(100) NOT NULL,
-  `phone` VARCHAR(15) NOT NULL,
-  `password` VARCHAR(255) NOT NULL,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS movie_booking;
+USE movie_booking;
 
--- Table: ticket_rates
-CREATE TABLE `ticket_rates` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `day_type` ENUM('weekday', 'weekend', 'holiday') NOT NULL,
-  `show_time` ENUM('morning', 'afternoon', 'evening') NOT NULL,
-  `price` DECIMAL(10,2) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Users Table
+CREATE TABLE users (
+    user_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    phone VARCHAR(15),
+    password VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
--- Table: movies
-CREATE TABLE `movies` (
-  `movie_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `Title` VARCHAR(255) NULL,
-  `Description` TEXT NULL,
-  `Duration` VARCHAR(30) NULL,
-  `URL` VARCHAR(50) NULL,
-  `Genre` VARCHAR(40) NULL,
-  `Thumbnail` VARCHAR(50) NULL,
-  PRIMARY KEY (`movie_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Movies Table
+CREATE TABLE movies (
+    movie_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    Description TEXT,
+    Duration VARCHAR(30),
+    URL VARCHAR(50),
+    Genre VARCHAR(40),
+    Thumbnail VARCHAR(50),
+    status ENUM('Now Showing', 'Coming Soon') NOT NULL
+);
 
--- Table: seat_reservations
-CREATE TABLE `seat_reservations` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `seat_number` VARCHAR(5) NOT NULL,
-  `reservation_date` DATE NOT NULL,
-  `showtime` TIME NULL,
-  `reserved_by` INT(11) NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `movie_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`reserved_by`) REFERENCES `users` (`user_id`)
-    ON DELETE SET NULL ON UPDATE CASCADE,
-  FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Showtimes Table
+CREATE TABLE showtimes (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    movie_id INT(11),
+    show_date DATE NOT NULL,
+    show_time TIME NOT NULL,
+    day_type ENUM('weekday', 'weekend', 'holiday') NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
+);
 
--- Table: archive_booking_table
-CREATE TABLE `archive_booking_table` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `seat_number` VARCHAR(5) NOT NULL,
-  `reservation_date` DATE NOT NULL,
-  `showtime` TIME NULL,
-  `reserved_by` INT(11) NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `movie_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`reserved_by`) REFERENCES `users` (`user_id`)
-    ON DELETE SET NULL ON UPDATE CASCADE,
-  FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Ticket Rates Table
+CREATE TABLE ticket_rates (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    day_type ENUM('weekday', 'weekend', 'holiday') NOT NULL,
+    show_time ENUM('10:00:00', '14:00:00', '18:00:00') NOT NULL,
+    price DECIMAL(10,2) NOT NULL
+);
+
+-- Seat Reservations Table
+CREATE TABLE seat_reservations (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    seat_number VARCHAR(5) NOT NULL,
+    reservation_date DATE NOT NULL,
+    showtime TIME NOT NULL,
+    reserved_by INT(11),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    movie_id INT(11),
+    STATUS ENUM('available', 'reserved') NOT NULL DEFAULT 'available',
+    FOREIGN KEY (reserved_by) REFERENCES users(user_id) ON DELETE SET NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
+);
+
+-- Archive Booking Table
+CREATE TABLE archive_booking_table (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    seat_number VARCHAR(5) NOT NULL,
+    reservation_date DATE NOT NULL,
+    showtime TIME NOT NULL,
+    reserved_by INT(11),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    movie_id INT(11),
+    FOREIGN KEY (reserved_by) REFERENCES users(user_id) ON DELETE SET NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
+);

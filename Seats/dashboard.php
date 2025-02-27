@@ -33,7 +33,7 @@
                         for ($i = 0; $i < 3; $i++) {
                             $date = date('Y-m-d', strtotime("+$i days"));
                             $dayOfWeek = date('l', strtotime($date)); // Get the day of the week
-                            echo "<option value='$date'>" . date('M d, Y', strtotime($date)) . " ($dayOfWeek)</option>";
+                            echo "<option value='$date' >" . date('M d, Y', strtotime($date)) . " ($dayOfWeek)</option>";
                         }
                         ?>
                     </select>
@@ -43,17 +43,17 @@
                 <div id="shifts" class="shifts">
                     <div id="morningOption">
                         <label>
-                            <input type="radio" id="morning" name="time" value="10:00:00"> Morning Show
+                            <input type="radio" id="morning" name="time" value="10:00:00" disabled> Morning Show
                         </label>
                     </div>
                     <div id="afternoonOption">
                         <label>
-                            <input type="radio" id="afternoon" name="time" value="14:00:00"> Afternoon Show
+                            <input type="radio" id="afternoon" name="time" value="14:00:00" disabled> Afternoon Show
                         </label>
                     </div>
                     <div id="eveningOption">
                         <label>
-                            <input type="radio" id="evening" name="time" value="18:00:00"> Evening Show
+                            <input type="radio" id="evening" name="time" value="18:00:00" disabled> Evening Show
                         </label>
                     </div>
                     <div id="noShowsMessage" style="display: none; color: red; font-weight: bold; margin-left: 10px;">
@@ -69,9 +69,11 @@
                 // Global variable to store prices
                 let price = null;
                 $(document).ready(function() {
+                    // Fetch showtimes when the page loads
                     fetchShowtimes();
 
-                    $("#dateDropdown").on("change", function() {
+                    // Event listener for date dropdown change
+                    $("#dateDropdown").change(function() {
                         fetchShowtimes();
                     });
 
@@ -111,36 +113,41 @@
                         var selectedDate = $("#dateDropdown").val();
                         var availableShowtimes = showtimesData[selectedDate] || [];
 
-                        $("#morning, #afternoon, #evening").prop('disabled', false).prop('checked', false);
+                        // Reset showtime options
+                        // $("#morning, #afternoon, #evening").prop('disabled', false).prop('checked', false);
                         $("#noShowsMessage").hide();
 
                         var firstAvailable = null;
 
+                        // Check availability and disable unavailable showtimes
                         if (!availableShowtimes.includes("10:00:00")) {
                             $("#morning").prop('disabled', true);
+                            return;
                         } else {
                             firstAvailable = firstAvailable || "#morning";
                         }
 
                         if (!availableShowtimes.includes("14:00:00")) {
                             $("#afternoon").prop('disabled', true);
+                            return;
                         } else {
                             firstAvailable = firstAvailable || "#afternoon";
                         }
 
                         if (!availableShowtimes.includes("18:00:00")) {
                             $("#evening").prop('disabled', true);
+                            return;
                         } else {
                             firstAvailable = firstAvailable || "#evening";
                         }
 
+                        // Automatically select the first available showtime
                         if (firstAvailable) {
                             $(firstAvailable).prop('checked', true);
                             $("#messageShow").show();
                         } else {
                             $("#noShowsMessage").show();
                             $("#messageShow").hide();
-
                         }
                     }
 
@@ -159,6 +166,11 @@
                                 movieId: movieId
                             },
                             success: function(response) {
+                                if (response.message) {
+                                    price = 0;
+                                    console.log(response)
+                                    return;
+                                }
                                 // Store the fetched prices in the global variable
                                 price = parseFloat(JSON.parse(response).price);
 
@@ -167,7 +179,6 @@
                                 // alert(price);
                                 // You can update the DOM with the fetched prices here
                                 // Example: Display the prices in a div
-                                $('#priceDisplay').html(`Prices: ${JSON.stringify(price)}`);
                             },
                             error: function(xhr, status, error) {
                                 console.error('Error fetching prices:', error);
@@ -357,13 +368,16 @@
             <input type="hidden" name="date" id="selectedDate" value="">
             <input type="hidden" name="time" id="selectedTime" value="">
             <input type="hidden" id="selectedSeats" name="seats" value="[]">
+            
+            <p>
+                Total Price Rs. 
+                <span id="total-price">
 
+                </span>
+            </p>
             <div class="confirm-booking">
                 <!-- Changed the "Book Selected Seats" button to a normal button -->
                 <button type="button" id="bookSeatsButton">Book Selected Seats</button>
-            </div>
-            <div id="total-price">
-
             </div>
 
             <!-- Confirmation Modal -->
