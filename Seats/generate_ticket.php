@@ -94,11 +94,11 @@ if (isset($_POST['seats']) && isset($_POST['movie']) && isset($_POST['reservatio
             }
 
             // --- Generate QR code ---
-            $qrData = "Movie: " . $movie['Title'] . "\n" .
-                      "Seat: " . $seat['seat_number'] . "\n" .
-                      "Date: " . $reservationDate . "\n" .
-                      "Showtime: " . $showtime . "\n" .
-                      "User: " . $userName;
+            $qrData = "Movie: " . $movie['Title'] . "\n" . 
+                "Seat: " . $seat['seat_number'] . "\n" . 
+                "Date: " . $reservationDate . "\n" . 
+                "Showtime: " . $showtime . "\n" . 
+                "User: " . $userName;
 
             // Temporary file for QR code
             $qrFile = tempnam(sys_get_temp_dir(), 'qr') . '.png';
@@ -121,8 +121,20 @@ if (isset($_POST['seats']) && isset($_POST['movie']) && isset($_POST['reservatio
             $pdf->Ln(5);
         }
 
-        // Output the PDF to the browser (inline display)
-        $pdf->Output('I', 'ticket.pdf');
+        // Set filename using "Bamel" and user name
+        $movie_name = "Bamel"; // Fixed name "Bamel"
+        // $user_sanitized = preg_replace('/[^A-Za-z0-9_]/', '_', $userName); // Sanitize username
+        $date = date('Ymd'); // Format: YYYYMMDD
+        $filename = "{$userName}_{$movie_name}_Ticket.pdf"; // "Bamel_Username_Ticket_YYYYMMDD.pdf"
+
+        // Send proper headers for PDF download
+        header('Content-Type: application/pdf');
+        header("Content-Disposition: inline; filename=\"$filename\"");
+        header('Cache-Control: private, max-age=0, must-revalidate');
+        header('Pragma: public');
+
+        // Output PDF
+        $pdf->Output('I', $filename); // Inline PDF display
     } catch (Exception $e) {
         // Handle any errors during PDF generation
         echo json_encode(['error' => 'Failed to generate PDF: ' . $e->getMessage()]);

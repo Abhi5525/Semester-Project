@@ -1,97 +1,6 @@
 let selectedSeats = [];
 let totalPrice = 0;
 let totalPriceDiv = document.getElementById('total-price');
-
-document.addEventListener("DOMContentLoaded", function () {
-    let movieId = sessionStorage.getItem("movieId");
-
-    if (!movieId) {
-        console.error("No movieId found in sessionStorage");
-        return;
-    }
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "fetch_closestShowtime.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // console.log(xhr.responseText);
-            let response = JSON.parse(xhr.responseText);
-            console.log(response);
-            
-            if (response.length > 0) {
-                updateShowtimes(response);
-            }
-        }
-    };
-
-    xhr.send("movie_id=" + movieId);
-});
-
-function updateShowtimes(showtimes) {
-    let dateDropdown = document.getElementById("dateDropdown");
-    let radioButtons = document.querySelectorAll('input[name="time"]');
-
-    let now = new Date();
-    let closestShow = null;
-    let closestTimeDiff = Infinity;
-
-    let showtimeMap = {};
-
-    // Build a map of available showtimes
-    showtimes.forEach(show => {
-        let showDateTime = new Date(`${show.show_date} ${show.show_time}`);
-        let timeDiff = showDateTime - now;
-
-        // Find the closest future showtime
-        if (timeDiff > 0 && timeDiff < closestTimeDiff) {
-            closestTimeDiff = timeDiff;
-            closestShow = show;
-        }
-
-        if (!showtimeMap[show.show_date]) {
-            showtimeMap[show.show_date] = [];
-        }
-        showtimeMap[show.show_date].push(show.show_time);
-    });
-
-    if (closestShow) {
-        console.log("Closest Show:", closestShow);
-
-        // Set the dropdown value to the closest show date
-        dateDropdown.value = closestShow.show_date;
-
-        // Enable all available times for the selected date
-        radioButtons.forEach(radio => {
-            let showDate = dateDropdown.value;
-            let availableTimes = showtimeMap[showDate] || [];
-
-            if (availableTimes.includes(radio.value)) {
-                radio.disabled = false;
-            } else {
-                radio.disabled = true;
-            }
-        });
-
-        // Select the closest available showtime
-        let selectedRadio = document.querySelector(`input[name="time"][value="${closestShow.show_time}"]`);
-        if (selectedRadio) {
-            selectedRadio.checked = true;
-
-            // Ensure the selected showtime is enabled
-            setTimeout(() => {
-                selectedRadio.disabled = false;
-            }, 200);
-
-            console.log("Selected Show:", selectedRadio);
-            console.log("Checked:", selectedRadio.checked);
-        }
-    }
-}
-
-
-
 // Function to fetch and update reserved seats
 function updateReservedSeats() {
     // Reset all seats to default
@@ -108,6 +17,7 @@ function updateReservedSeats() {
     }
     const time = document.querySelector('input[name="time"]:checked').value;
     console.log(time);
+    
     // Send an AJAX request to the server
     fetch("check_reserved_seats.php", {
         method: "POST",
@@ -126,7 +36,6 @@ function updateReservedSeats() {
                     alert("Error fetching reserved seats: " + reservedSeats.error);
                     return;
                 }
-
                 // Reset all seats to default
                 document.querySelectorAll(".seat").forEach(seat => {
                     seat.classList.remove("disabled");
@@ -144,6 +53,7 @@ function updateReservedSeats() {
 
                     }
                 });
+                
             } catch (e) {
                 console.error("Error parsing JSON:", e);
                 alert("Failed to parse reserved seats data. Please try again.");
@@ -356,9 +266,14 @@ function initializeBookingSystem() {
     // setDefaultDate();
     // setDefaultTime();
 
-    document.querySelectorAll(".seat").forEach(seat =>
-        seat.addEventListener("click", () => toggleSeat(seat))
-    );
+    document.querySelectorAll(".seat").forEach(seat =>{
+        
+        seat.addEventListener("click", () =>{ if(!sessionStorage.username){
+            window.location.href="../LoginFiles/login.html";   
+           }else{ toggleSeat(seat);
+
+    }});
+});
 
     document.getElementById("bookSeatsButton")?.addEventListener("click", function () {
         alert(selectedSeats);
@@ -379,7 +294,7 @@ function submitBooking() {
     const userName = sessionStorage.getItem("username");
     const userEmail = sessionStorage.getItem("userEmail");
     const userPhone = sessionStorage.getItem("phone");
-    // const currentMovieId = sessionStorage.getItem("movieId");
+    const currentMovieId = sessionStorage.getItem("movieId");
 
     if (!userName || !userEmail || !userPhone) {
         alert("User details are missing. Please log in again.");
@@ -416,6 +331,8 @@ function submitBooking() {
                     if (response.success) {
                         console.log("Booking successful. Calling generateTicket...");
                         generateTicketPDF(response); // Pass the entire response data
+                        // selectedSeats=[];
+                        updateReservedSeats();
                         // setTimeout(function () {
                         //     window.location.href = "dashboard.php"; // Correct syntax to redirect
                         // }, 500);

@@ -22,7 +22,7 @@
             document.getElementById("phoneError").textContent = "";
             let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
             let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
-            let namePattern = /^[a-zA-Z0]$/;
+            let namePattern = /^[a-zA-Z0\s]+$/;
 
 
 
@@ -31,7 +31,7 @@
             if (username == "") {
                 document.getElementById("nameError").textContent = "Username can't be empty";
                 valid = false;
-            }else if (!namePattern.test(name)) {
+            }else if (!namePattern.test(username)) {
                 document.getElementById("nameError").textContent = "Invalid name format";
                 valid = false;
             }

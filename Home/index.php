@@ -158,7 +158,7 @@ include("connection.php");
                     <button onclick="bookTicket()">Book Tickets</button>
                     <script>
                         function bookTicket() {
-                            window.location.href = '../Seats/logincheck.php';
+                            window.location.href = '../Seats/Dashboard.php';
                         }
                     </script>
                 </div>

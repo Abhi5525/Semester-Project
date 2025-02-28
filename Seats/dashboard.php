@@ -43,17 +43,17 @@
                 <div id="shifts" class="shifts">
                     <div id="morningOption">
                         <label>
-                            <input type="radio" id="morning" name="time" value="10:00:00" disabled> Morning Show
+                            <input type="radio" id="morning" name="time" value="10:00:00"> Morning Show
                         </label>
                     </div>
                     <div id="afternoonOption">
                         <label>
-                            <input type="radio" id="afternoon" name="time" value="14:00:00" disabled> Afternoon Show
+                            <input type="radio" id="afternoon" name="time" value="14:00:00"> Afternoon Show
                         </label>
                     </div>
                     <div id="eveningOption">
                         <label>
-                            <input type="radio" id="evening" name="time" value="18:00:00" disabled> Evening Show
+                            <input type="radio" id="evening" name="time" value="18:00:00"> Evening Show
                         </label>
                     </div>
                     <div id="noShowsMessage" style="display: none; color: red; font-weight: bold; margin-left: 10px;">
@@ -63,10 +63,7 @@
                 </div>
             </div>
 
-
-
             <script>
-                // Global variable to store prices
                 let price = null;
                 $(document).ready(function() {
                     // Fetch showtimes when the page loads
@@ -74,7 +71,7 @@
 
                     // Event listener for date dropdown change
                     $("#dateDropdown").change(function() {
-                        fetchShowtimes();
+                        fetchShowtimes(); // Fetch showtimes when a date is selected
                     });
 
                     function fetchShowtimes() {
@@ -87,7 +84,7 @@
                         }
 
                         $.ajax({
-                            url: "fetch_showtimes.php",
+                            url: "fetch_showtimes.php", // Your PHP script that fetches showtimes for a given date
                             type: "POST",
                             data: {
                                 movie_id: movie_id,
@@ -114,40 +111,43 @@
                         var availableShowtimes = showtimesData[selectedDate] || [];
 
                         // Reset showtime options
-                        // $("#morning, #afternoon, #evening").prop('disabled', false).prop('checked', false);
+                        $("#morning, #afternoon, #evening").prop('disabled', false).prop('checked', false);
                         $("#noShowsMessage").hide();
+                        $("#messageShow").hide();
 
                         var firstAvailable = null;
 
                         // Check availability and disable unavailable showtimes
                         if (!availableShowtimes.includes("10:00:00")) {
                             $("#morning").prop('disabled', true);
-                            return;
                         } else {
-                            firstAvailable = firstAvailable || "#morning";
+                            // If Morning is available, set it as the first available if no other was set
+                            if (!firstAvailable) firstAvailable = "#morning";
                         }
 
                         if (!availableShowtimes.includes("14:00:00")) {
                             $("#afternoon").prop('disabled', true);
-                            return;
                         } else {
-                            firstAvailable = firstAvailable || "#afternoon";
+                            // If Afternoon is available, set it as the first available if no other was set
+                            if (!firstAvailable) firstAvailable = "#afternoon";
                         }
 
                         if (!availableShowtimes.includes("18:00:00")) {
                             $("#evening").prop('disabled', true);
-                            return;
                         } else {
-                            firstAvailable = firstAvailable || "#evening";
+                            // If Evening is available, set it as the first available if no other was set
+                            if (!firstAvailable) firstAvailable = "#evening";
                         }
 
                         // Automatically select the first available showtime
                         if (firstAvailable) {
                             $(firstAvailable).prop('checked', true);
                             $("#messageShow").show();
+                            
+                checkAndFetchPrices();
+                updateReservedSeats();
                         } else {
                             $("#noShowsMessage").show();
-                            $("#messageShow").hide();
                         }
                     }
 
@@ -186,10 +186,10 @@
                         });
                     }
 
-                    // Event listeners for date dropdown and time radio buttons
-                    $('#dateDropdown').change(function() {
-                        checkAndFetchPrices();
-                    });
+                    // // Event listeners for date dropdown and time radio buttons
+                    // $('#dateDropdown').change(function() {
+                    //     checkAndFetchPrices();
+                    // });
 
                     $('input[name="time"]').change(function() {
                         checkAndFetchPrices();
@@ -197,16 +197,18 @@
 
                     // Function to check if both date and time are selected
                     function checkAndFetchPrices() {
-                        var selectedDate = $('#dateDropdown').val();
-                        var selectedTime = $('input[name="time"]:checked').val();
+                        var selectedDate = $('#dateDropdown');
+                        var selectedTime = $('input[name="time"]:checked');
 
                         if (selectedDate && selectedTime) {
+                            // alert(selectedDate.val() + "\n" + selectedTime.val())
                             // Both date and time are selected, call fetchPrices
-                            fetchPrices(selectedDate, selectedTime);
+                            fetchPrices(selectedDate.val(), selectedTime.val());
                         }
                     }
                 });
             </script>
+
             <div class="right-part">
                 <h2>SCREEN</h2>
                 <div id="seat-map" class="container">
@@ -368,9 +370,9 @@
             <input type="hidden" name="date" id="selectedDate" value="">
             <input type="hidden" name="time" id="selectedTime" value="">
             <input type="hidden" id="selectedSeats" name="seats" value="[]">
-            
+
             <p>
-                Total Price Rs. 
+                Total Price Rs.
                 <span id="total-price">
 
                 </span>
