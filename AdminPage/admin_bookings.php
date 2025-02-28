@@ -3,9 +3,11 @@ session_start();
 if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
     header("Location: ../LoginFiles/login.html");
     exit();
-}?>
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +19,10 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: rgb(214, 180, 180); /* Light gray background */
+            background: linear-gradient(135deg, rgb(39, 25, 25), rgb(57, 3, 3));
+            /* Dark gradient background */
+            color: #ffffff;
+            /* White text */
             margin: 0;
             padding: 0;
         }
@@ -27,19 +32,22 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
             font-weight: 700;
             text-align: center;
             margin-bottom: 30px;
-            color: #343a40; /* Dark gray for headings */
+            color: whitesmoke;
+            /* Light golden color for headings */
         }
 
         .container {
             margin-top: 20px;
             padding: 20px;
-            background: white;
+            background: #1b1717;
+            /* Dark background for container */
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
         }
 
         .table-container {
-            overflow-x: auto;
+            /* overflow-x: auto; */
             margin-top: 20px;
         }
 
@@ -53,8 +61,10 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
         .table td {
             padding: 12px 15px;
             text-align: left;
-            border: 1px solid #dee2e6; /* Light gray border */
-            color: #495057; /* Dark gray for text */
+            border: 1px solid #df7676;
+            /* Light red border */
+            color: rgb(14, 13, 13);
+            /* White text */
             font-size: 16px;
         }
 
@@ -63,8 +73,10 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
         }
 
         .table th {
-            background-color: #343a40; /* Dark gray for header */
-            color: white;
+            background-color: #7a0000;
+            /* Dark red for header */
+            color: whitesmoke;
+            /* Light golden text */
             font-weight: 600;
             text-transform: uppercase;
             font-size: 14px;
@@ -72,16 +84,19 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
         }
 
         .table tbody tr {
-            transition: background-color 0.3s ease; /* Smooth hover effect */
+            transition: background-color 0.3s ease;
+            /* Smooth hover effect */
         }
 
         .table tbody tr:hover {
-            background-color: #f1f3f5; /* Light gray on hover */
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Light hover effect */
         }
 
         .btn-change-seat,
         .btn-cancel-seat {
-            width: 100px; /* Slightly wider for better text fit */
+            width: 100px;
+            /* Slightly wider for better text fit */
             height: 35px;
             text-align: center;
             font-size: 14px;
@@ -89,58 +104,63 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin: 2px; /* Small margin between buttons */
+            margin: 2px;
+            /* Small margin between buttons */
         }
-        .btn-change-seat,
-.btn-cancel-seat {
-    display: inline-block;
-}
 
         .btn-change-seat {
-            background-color: #007bff; /* Blue for change seat */
+            background-color: #007bff;
+            /* Blue for change seat */
             color: white;
         }
 
         .btn-change-seat:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3;
+            /* Darker blue on hover */
             color: white;
         }
 
         .btn-cancel-seat {
-            background-color: #dc3545; /* Red for cancel seat */
+            background-color: #dc3545;
+            /* Red for cancel seat */
             color: white;
         }
 
         .btn-cancel-seat:hover {
-            background-color: #c82333; /* Darker red on hover */
+            background-color: #c82333;
+            /* Darker red on hover */
             color: white;
         }
 
-       .btn-sm {
-    padding: 5px 10px !important;  /* Override Bootstrap's default */
-    font-size: 14px !important; 
-    height: auto !important;
-}
-
+        .btn-sm {
+            padding: 5px 10px !important;
+            /* Override Bootstrap's default */
+            font-size: 14px !important;
+            height: auto !important;
+        }
 
         .text-center {
             text-align: center;
         }
 
         .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(0, 0, 0, 0.05); /* Light gray for striped rows */
+            background-color: rgba(255, 255, 255, 0.05);
+            /* Light gray for striped rows */
         }
 
         .table-bordered {
-            border: 1px solid #dee2e6; /* Light gray border */
+            border: 1px solid #df7676;
+            /* Light red border */
         }
 
         .table-dark {
-            background-color: #343a40; /* Dark gray for table header */
+            background-color: #7a0000;
+            /* Dark red for table header */
         }
 
         .table-dark th {
-            border-color: #454d55; /* Slightly darker border for header */
+            border-color: #df7676;
+            /* Light red border for header */
         }
 
         .table-responsive {
@@ -148,37 +168,69 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
         }
 
         .btn-primary {
-            background-color: #007bff; /* Blue for primary buttons */
+            background-color: #007bff;
+            /* Blue for primary buttons */
             border-color: #007bff;
         }
 
         .btn-primary:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3;
+            /* Darker blue on hover */
             border-color: #004085;
         }
 
         .btn-danger {
-            background-color: #dc3545; /* Red for danger buttons */
+            background-color: #dc3545;
+            /* Red for danger buttons */
             border-color: #dc3545;
         }
 
         .btn-danger:hover {
-            background-color: #c82333; /* Darker red on hover */
+            background-color: #c82333;
+            /* Darker red on hover */
             border-color: #bd2130;
         }
 
         .btn {
-            margin: 2px; /* Small margin between buttons */
+            margin: 2px;
+            /* Small margin between buttons */
+        }
+
+        /* Search Input Styling */
+        #searchInput {
+            background-color: rgb(10, 9, 10);
+            /* Dark background for search input */
+            color: #ffffff;
+            /* White text */
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #searchInput:focus {
+            border-color: #b30000;
+            /* Darker red on focus */
+            box-shadow: 0 0 8px rgba(223, 118, 118, 0.5);
+            /* Glow effect */
+        }
+
+        #searchInput::placeholder {
+            color: #ffffff;
+            /* White color for placeholder text */
+            opacity: 1;
+            /* Ensure full visibility */
         }
     </style>
 </head>
+
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Manage Seat Bookings</h1>
 
         <!-- Search Input -->
         <div class="mb-4">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search by seat number, date, or movie name" />
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by username, movie name seat number or date......" />
         </div>
 
         <!-- Table to Display Results -->
@@ -190,6 +242,7 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
                         <th>Seat Number</th>
                         <th>Reservation Date</th>
                         <th>Showtime</th>
+                        <th>User Id</th>
                         <th>Reserved By</th>
                         <th>Movie Name</th>
                         <th>Status</th>
@@ -236,6 +289,7 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
                                 <td>${row.reservation_date}</td>
                                 <td>${row.showtime}</td>
                                 <td>${row.reserved_by}</td>
+                                <td>${row.user_name}</td>
                                 <td>${row.movie_name}</td>
                                 <td>${row.STATUS}</td>
                                 <td>
@@ -256,7 +310,8 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
                     return (
                         row.seat_number.toLowerCase().includes(query.toLowerCase()) ||
                         row.reservation_date.toLowerCase().includes(query.toLowerCase()) ||
-                        row.movie_name.toLowerCase().includes(query.toLowerCase())
+                        row.movie_name.toLowerCase().includes(query.toLowerCase()) ||
+                        row.user_name.toLowerCase().includes(query.toLowerCase()) 
                     );
                 });
                 renderTable(filteredData);
@@ -273,4 +328,5 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
         });
     </script>
 </body>
+
 </html>

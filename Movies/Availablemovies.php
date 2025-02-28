@@ -18,8 +18,8 @@ $result = $conn->query($sql);
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: wheat;
-
+            background-color:rgb(56, 19, 19);
+            color: white;
             margin: 0;
             padding: 0;
         }
@@ -31,15 +31,13 @@ $result = $conn->query($sql);
             text-align: center;
             margin-bottom: 30px;
             text-transform: uppercase;
-            color: black;
-            /* Vibrant wheat for labels */
-
-
+            color:rgb(218, 204, 204);
         }
 
         .container {
             margin-top: 20px;
             padding: 20px;
+
         }
 
         .table-container {
@@ -50,57 +48,28 @@ $result = $conn->query($sql);
         .table {
             width: 100%;
             border-collapse: collapse;
+            /* background: linear-gradient(135deg, #222, #444); */
+            background-color:transparent;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        .table th,
-        .table td {
+        .table th, .table td {
             padding: 12px 15px;
             text-align: left;
-            border: 3px solid rgb(199, 44, 44);
-            color: black;
-            font-size: 17px;
-
+            border: 1px solid #ff4444;
+            color: white;
+            font-size: large;
         }
 
         .table th {
             font-size: 18px;
-
+            background: linear-gradient(135deg,rgb(65, 58, 58), #aa0000);
+            color: white;
+            font-weight: bold;
         }
 
-        td:nth-child(3) {
-            /* Description column */
-            width: 30%;
-            /* Adjust as per your requirement */
-            white-space: nowrap;
-            /* Ensures text does not wrap */
-            overflow: hidden;
-            /* Hides overflow */
-            text-overflow: ellipsis;
-            /* Adds ... for clipped text */
-        }
-
-        td:nth-child(5) {
-            /* URL column */
-            width: 20%;
-        }
-
-        .table th {
-            background-color: transparent;
-            color: black;
-            font-weight: 600;
-        }
-
-        .table tbody tr {
-            height: 140px;
-            /* Set a minimum height for all rows */
-            height: auto;
-            /* Allow rows to expand if needed */
-            vertical-align: middle;
-            /* Align content vertically in the middle */
-        }
-
-        .btn-edit,
-        .btn-delete {
+        .btn-edit, .btn-delete {
             width: 80px;
             height: 35px;
             text-align: center;
@@ -112,21 +81,21 @@ $result = $conn->query($sql);
         }
 
         .btn-edit {
-            background-color: #28a745;
+            background: linear-gradient(135deg, #28a745, #1e7e34);
             color: white;
         }
 
         .btn-edit:hover {
-            background-color: #218838;
+            background: linear-gradient(135deg, #1e7e34, #155724);
         }
 
         .btn-delete {
-            background-color: #dc3545;
+            background: linear-gradient(135deg, #ff4444, #cc0000);
             color: white;
         }
 
         .btn-delete:hover {
-            background-color: #c82333;
+            background: linear-gradient(135deg, #cc0000, #990000);
         }
 
         img {
@@ -136,8 +105,7 @@ $result = $conn->query($sql);
         }
 
         .see-more-btn {
-            display: inline-block;
-            color: #007bff;
+            color:rgb(44, 166, 227);
             background: none;
             border: none;
             padding: 0;

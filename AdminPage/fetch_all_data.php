@@ -7,10 +7,10 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
 include("connection.php");
 
 // Fetch all seat reservations with movie name
-$query = "SELECT sr.*, m.Title AS movie_name 
+$query = "SELECT sr.*, m.Title AS movie_name, u.username AS user_name 
           FROM seat_reservations sr 
-          JOIN movies m ON sr.movie_id = m.movie_id";
-
+          JOIN movies m ON sr.movie_id = m.movie_id 
+          JOIN users u ON sr.reserved_by = u.user_id";
 $result = $conn->query($query);
 $data = [];
 

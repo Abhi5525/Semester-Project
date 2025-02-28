@@ -1,86 +1,84 @@
-
-    <style>
-        .footer {
-    /* background-color: #2a0c2f;
+<style>
+    .footer {
+        /* background-color: #2a0c2f;
      */
-    background: linear-gradient(to bottom, rgba(139, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
-    color: white;
-    padding: 20px 0;
-    font-family: Arial, sans-serif;
-}
+        background: linear-gradient(to bottom, rgba(139, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+        color: white;
+        padding: 20px 0;
+        font-family: Arial, sans-serif;
+    }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-}
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+    }
 
-.footer-section {
-    flex: 1;
-    margin: 10px;
-    padding: 10px;
-}
+    .footer-section {
+        flex: 1;
+        margin: 10px;
+        padding: 10px;
+    }
 
-.footer-section h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
+    .footer-section h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
 
-.footer-section p {
-    font-size: 14px;
-}
+    .footer-section p {
+        font-size: 14px;
+    }
 
-.footer-section ul {
-    list-style-type: none;
-    padding: 0;
-}
+    .footer-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
 
-.footer-section ul li {
-    font-size: 14px;
-    margin: 5px 0;
-}
+    .footer-section ul li {
+        font-size: 14px;
+        margin: 5px 0;
+    }
 
-.footer-section ul li a {
-    text-decoration: none;
-    color: white;
-    transition: color 0.3s;
-}
+    .footer-section ul li a {
+        text-decoration: none;
+        color: white;
+        transition: color 0.3s;
+    }
 
-.footer-section ul li a:hover {
-    color: #ff6666;
-}
+    .footer-section ul li a:hover {
+        color: #ff6666;
+    }
 
-.social-links {
-    display: flex;
-    gap: 15px;
-}
+    .social-links {
+        display: flex;
+        gap: 15px;
+    }
 
-.social-links li a {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    transition: color 0.3s;
-}
+    .social-links li a {
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+        transition: color 0.3s;
+    }
 
-.social-links li a:hover {
-    color: #ff6666;
-}
+    .social-links li a:hover {
+        color: #ff6666;
+    }
 
-.footer-bottom {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-}
+    .footer-bottom {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+    }
 
-.footer-bottom p {
-    margin: 0;
-}
+    .footer-bottom p {
+        margin: 0;
+    }
+</style>
 
-    </style>
-
-<footer class="footer">
+<footer class="footer" id = "footer">
     <div class="footer-content">
         <div class="footer-section">
             <h3>About Us</h3>

@@ -322,8 +322,10 @@
         <?php
         if (isset($_SESSION['userRole'])) {
             if ($_SESSION['userRole'] == 'User') { ?>
-                <li><a href="#">Location</a></li>
-                <li><a href="#">About Us</a></li>
+                <li><a href="https://maps.app.goo.gl/D4AUTkzRPxB15dhS9" target="_blank">
+    
+Location</a></li>
+                <li><a href="../Footer/Aboutus.html">About Us</a></li>
         <?php }
         } ?>
         <li><a href="#" id="viewRatesLink">Ticket Rate</a></li>

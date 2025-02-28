@@ -14,74 +14,75 @@ include('connection.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assign Showtimes</title>
     <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #e9ecef; /* Light gray background */
-        color: #333;
-        margin: 0;
-        padding: 20px;
-    }
+        body {
+            background: linear-gradient(135deg, rgb(39, 25, 25), rgb(57, 3, 3));
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        h2 {
+            color: wheat;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .container {
+            background-color: #1b1717;
+            border-radius: 12px;
+            padding: 25px;
+            width: 400px;
+            box-shadow: 0 0 15px rgba(176, 173, 173, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .input-field {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: wheat;
+        }
+        select {
+            padding: 10px;
+            border: 1px solid #df7676;
+            border-radius: 6px;
+            background-color: #1a1a1a;
+            color: #fff;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        button {
+            padding: 12px;
+            background: linear-gradient(135deg, #7a0000, #400000);
+            color: wheat;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #b30000, #590000);
+            transform: scale(1.05);
+        }
+    </style>
 
-    h2 {
-        color: #2c3e50; /* Dark blue-gray for headings */
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    form {
-        background-color: #ffffff; /* White background for the form */
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        color: #34495e; /* Slightly darker blue-gray for labels */
-    }
-
-    select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #bdc3c7; /* Light gray border */
-        border-radius: 4px;
-        font-size: 16px;
-        background-color: #ecf0f1; /* Light blue-gray background for select */
-        color: #2c3e50; /* Dark blue-gray text */
-    }
-
-    button {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: none;
-        border-radius: 4px;
-        font-size: 16px;
-        background-color: #3498db; /* Bright blue for the button */
-        color: white;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-        background-color: #2980b9; /* Darker blue on hover */
-    }
-
-    option {
-        padding: 10px;
-        background-color: #ffffff; /* White background for options */
-        color: #2c3e50; /* Dark blue-gray text for options */
-    }
-</style>
 </head>
 <body>
 
     <h2>Assign Showtimes to Movies</h2>
+<div class="container">
 
     <form action="process_showtime.php" method="POST">
         <label for="movie">Select Movie:</label>
@@ -126,6 +127,7 @@ include('connection.php');
 
         <button type="submit">Assign Showtime</button>
     </form>
+</div>
 
 </body>
 </html>

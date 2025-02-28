@@ -13,14 +13,19 @@ body {
 /* Movie list styling */
 .available-movies , .Coming-soon{
     max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
+    margin: 30px auto;
+    padding: 10px;
 }
 
  h2 {
     font-size: 28px;
     margin-bottom: 20px;
     text-align: center;
+}
+.heading{
+    
+    font-size: 30px;
+    margin-bottom: 30px;
 }
 
 .movie-container {

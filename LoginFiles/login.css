@@ -70,13 +70,13 @@ input:focus {
 }
 
 /* Password container with the eye icon */
-.password-container {
+/* .password-container {
     position: relative;
 }
 
 .password-container input {
     padding-right: 40px; /* Space for the eye icon */
-}
+/* } */ 
 
 
 /* Button Styling */
@@ -127,15 +127,17 @@ p a:hover {
 .input-container {
     position: relative;
     width: 100%;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 }
+
+
 .toggle-password {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-}
+} 
 
 /* Responsive Design */
 @media (max-width: 480px) {

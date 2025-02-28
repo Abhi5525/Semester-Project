@@ -44,7 +44,7 @@ include("connection.php");
     <?php include('navbar.php'); ?>
     <!-- Movie List Section -->
     <section class="available-movies">
-        <h2>Now Showing</h2>
+        <h2  class = "heading">Now Showing</h2>
         <div class="movie-container">
             <?php
             $sql = "SELECT * from movies WHERE status = 'Now Showing'";
@@ -87,7 +87,7 @@ include("connection.php");
 
     </section>
     <section class="Coming-soon">
-        <h2>Coming Soon</h2>
+        <h2 class = "heading">Coming Soon</h2>
         <div class="movie-container">
             <?php
             $sql = "SELECT * from movies WHERE status = 'Coming Soon'";
