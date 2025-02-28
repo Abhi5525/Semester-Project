@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
+    header("Location: ../LoginFiles/login.html");
+    exit();
+}
 // fetch_prices.php
 
 // Enable error reporting for debugging

@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
+    header("Location: ../LoginFiles/login.html");
+    exit();
+}
 include("connection.php"); // Include the connection file
 
 // Fetch movie data for editing
@@ -149,8 +154,8 @@ if (isset($_GET['id'])) {
         
     <label for="status">Movie Status</label>
     <select name="status" id="status" required>
-        <option value="now_showing" <?php echo $movie['status'] == 'now_showing' ? 'selected' : ''; ?>>Now Showing</option>
-        <option value="coming_soon" <?php echo $movie['status'] == 'coming_soon' ? 'selected' : ''; ?>>Coming Soon</option>
+        <option value="Now Showing" <?php echo $movie['status'] == 'Now Showing' ? 'selected' : ''; ?>>Now Showing</option>
+        <option value="Coming Soon" <?php echo $movie['status'] == 'Coming Soon' ? 'selected' : ''; ?>>Coming Soon</option>
         <option value="ended" <?php echo $movie['status'] == 'ended' ? 'selected' : ''; ?>>Ended</option>
     </select>
     <span class="error" id="statusError"></span>

@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
+    header("Location: ../LoginFiles/login.html");
+    exit();
+}
 include("connection.php"); // Include the connection file
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -36,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($conn->query($update_sql) === TRUE) {
         // Redirect after a successful update
-        header("Location: Availablemovies.php");
+        header("Location: ../AdminPage/index.php");
         exit();
     } else {
         echo "Error updating movie: " . $conn->error;

@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
+    header("Location: ../LoginFiles/login.html");
+    exit();
+}
 include 'connection.php';
 
 // Fetch the current reservation details using GET
