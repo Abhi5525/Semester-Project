@@ -323,8 +323,8 @@
         if (isset($_SESSION['userRole'])) {
             if ($_SESSION['userRole'] == 'User') { ?>
                 <li><a href="https://maps.app.goo.gl/D4AUTkzRPxB15dhS9" target="_blank">
-    
-Location</a></li>
+
+                        Location</a></li>
                 <li><a href="../Footer/Aboutus.html">About Us</a></li>
         <?php }
         } ?>
@@ -540,4 +540,26 @@ Location</a></li>
             closeRatesModal();
         }
     });
+
+
+    //this is added by sijal before the final defence day from script.js of home to display the movie modal on clicking on the searchBar, TIME: 1:30 Pm. Only sijal and sachit.
+    // Function to open the modal and populate its content
+    // function openModal(movie) {
+    //     // alert(movie);
+    //     const modal = document.getElementById("movieModal");
+
+    //     // Set modal content from the clicked movie's data attributes
+    //     document.getElementById("modalTitle").innerText = movie.dataset.title;
+    //     document.getElementById("modalGenre").innerText = `Genre: ${movie.dataset.genre}`;
+    //     document.getElementById("modalDescription").innerText = movie.dataset.description;
+    //     document.getElementById("modalDuration").innerText = `Duration: ${movie.dataset.duration}`;
+    //     document.getElementById("modalImage").src = movie.dataset.thumbnail;
+
+    //     // Set trailer URL dynamically
+    //     currentTrailerUrl = movie.dataset.url || ""; // Store the trailer URL for later use
+
+    //     // Show the modal
+    //     modal.style.display = "flex";
+    // }
+
 </script>

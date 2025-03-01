@@ -68,8 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
+    // this function  is moved to navbar
     // Function to open the modal and populate its content
     function openModal(movie) {
+        // alert(movie);
         const modal = document.getElementById("movieModal");
 
         // Set modal content from the clicked movie's data attributes

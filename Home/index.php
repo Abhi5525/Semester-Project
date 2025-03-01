@@ -70,8 +70,8 @@ include("connection.php");
                         data-genre="<?php echo $genre; ?>"
                         data-url="<?php echo $url; ?>"
                         data-thumbnail="../Movies/<?php echo $thumbnailPath; ?>"
-                        onclick="showModal(this)"> <!-- Added onclick for opening modal -->
-
+                    <?php if ($_SESSION['userRole'] != 'Admin') { ?>   onclick="showModal(this)"> <!-- Added onclick for opening modal -->
+<?php }?>
                         <div class="thumbnail">
                             <img src="../Movies/<?php echo $thumbnailPath; ?>" alt="<?php echo $title; ?> Thumbnail">
                         </div>
@@ -112,9 +112,8 @@ include("connection.php");
                         data-duration="<?php echo $duration; ?>"
                         data-genre="<?php echo $genre; ?>"
                         data-url="<?php echo $url; ?>"
-                        data-thumbnail="../Movies/<?php echo $thumbnailPath; ?>"
-                        onclick="showModal(this)"> <!-- Added onclick for opening modal -->
-
+                        data-thumbnail="../Movies/<?php echo $thumbnailPath; ?>"<?php if ($_SESSION['userRole'] != 'Admin') { ?>   onclick="showModal(this)"> <!-- Added onclick for opening modal -->
+                            <?php }?>
                         <div class="thumbnail">
                             <img src="../Movies/<?php echo $thumbnailPath; ?>" alt="<?php echo $title; ?> Thumbnail">
                         </div>
