@@ -44,7 +44,7 @@ include("connection.php");
     <?php include('navbar.php'); ?>
     <!-- Movie List Section -->
     <section class="available-movies">
-        <h2  class = "heading">Now Showing</h2>
+        <h2 class="heading">Now Showing</h2>
         <div class="movie-container">
             <?php
             $sql = "SELECT * from movies WHERE status = 'Now Showing'";
@@ -70,12 +70,13 @@ include("connection.php");
                         data-genre="<?php echo $genre; ?>"
                         data-url="<?php echo $url; ?>"
                         data-thumbnail="../Movies/<?php echo $thumbnailPath; ?>"
-                    <?php if ($_SESSION['userRole'] != 'Admin') { ?>   onclick="showModal(this)"> <!-- Added onclick for opening modal -->
-<?php }?>
-                        <div class="thumbnail">
-                            <img src="../Movies/<?php echo $thumbnailPath; ?>" alt="<?php echo $title; ?> Thumbnail">
-                        </div>
-                        <p class="movie-title"><?php echo $title; ?></p>
+                        <?php if (!isset($_SESSION['userRole']) || $_SESSION['userRole'] === 'User') { ?>
+                        onclick="showModal(this)">
+                    <?php } ?>
+                    <div class="thumbnail">
+                        <img src="../Movies/<?php echo $thumbnailPath; ?>" alt="<?php echo $title; ?> Thumbnail">
+                    </div>
+                    <p class="movie-title"><?php echo $title; ?></p>
                     </div>
                     <!-- </div> -->
 
@@ -87,7 +88,7 @@ include("connection.php");
 
     </section>
     <section class="Coming-soon">
-        <h2 class = "heading">Coming Soon</h2>
+        <h2 class="heading">Coming Soon</h2>
         <div class="movie-container">
             <?php
             $sql = "SELECT * from movies WHERE status = 'Coming Soon'";
@@ -112,12 +113,14 @@ include("connection.php");
                         data-duration="<?php echo $duration; ?>"
                         data-genre="<?php echo $genre; ?>"
                         data-url="<?php echo $url; ?>"
-                        data-thumbnail="../Movies/<?php echo $thumbnailPath; ?>"<?php if ($_SESSION['userRole'] != 'Admin') { ?>   onclick="showModal(this)"> <!-- Added onclick for opening modal -->
-                            <?php }?>
-                        <div class="thumbnail">
-                            <img src="../Movies/<?php echo $thumbnailPath; ?>" alt="<?php echo $title; ?> Thumbnail">
-                        </div>
-                        <p class="movie-title"><?php echo $title; ?></p>
+                        data-thumbnail="../Movies/<?php echo $thumbnailPath; ?>"
+                        <?php if (!isset($_SESSION['userRole']) || $_SESSION['userRole'] === 'User') { ?>
+                        onclick="showModal(this)">
+                    <?php } ?>
+                    <div class="thumbnail">
+                        <img src="../Movies/<?php echo $thumbnailPath; ?>" alt="<?php echo $title; ?> Thumbnail">
+                    </div>
+                    <p class="movie-title"><?php echo $title; ?></p>
                     </div>
                     <!-- </div> -->
 
