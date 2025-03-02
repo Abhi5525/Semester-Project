@@ -92,7 +92,7 @@ body {
     text-overflow: ellipsis; /* Add ellipsis for overflowed text */
     overflow: hidden; /* Hide overflowing text */
     display: -webkit-box; /* Required for line clamping */
-    -webkit-line-clamp:1 ; /* Limits content to 3 lines */
+    /* -webkit-line-clamp:1 ; Limits content to 3 lines */
     -webkit-box-orient: vertical; /* Set vertical orientation */
     line-height: 1.5; /* Adjust line height for proper spacing */
     position: relative;
@@ -118,7 +118,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     width: 90%;
-    height: 80%;
+    min-height: 80%;
     max-width: 800px;
     color: #fff;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
@@ -154,7 +154,7 @@ body {
 /* Right side (description and buttons) */
 .modal-right {
     flex: 1; /* Occupy the other half */
-    height: 25%;
+    min-height: 25%;
     padding-left: 20px;
     display: flex;
     flex-direction: column;

@@ -155,6 +155,19 @@ include("connection.php");
                 <p id="modalDuration"></p>
                 <p id="modalDescription">
                 </p>
+                <button style="
+                display:inline-block;
+                width:100%;
+                color:rgb(44, 166, 227);
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            text-align: right;
+        " id="seeMoreBtn" onclick="toggleDescription()">See More</button>
+
                 <div class="buttons">
                     <!-- <button id="trailerButton" onclick="watchTrailer()">Watch Trailer</button> -->
                     <button onclick="bookTicket()">Book Tickets</button>
@@ -162,7 +175,23 @@ include("connection.php");
                         function bookTicket() {
                             window.location.href = '../Seats/Dashboard.php';
                         }
+
+                        function toggleDescription() {
+                            const descriptionEl = document.getElementById("modalDescription");
+                            const seeMoreBtn = document.getElementById("seeMoreBtn");
+
+                            if (descriptionEl.dataset.expanded === "false") {
+                                descriptionEl.innerText = descriptionEl.dataset.full;
+                                seeMoreBtn.innerText = "See Less";
+                                descriptionEl.dataset.expanded = "true";
+                            } else {
+                                descriptionEl.innerText = descriptionEl.dataset.short;
+                                seeMoreBtn.innerText = "See More";
+                                descriptionEl.dataset.expanded = "false";
+                            }
+                        }
                     </script>
+
                 </div>
             </div>
         </div>

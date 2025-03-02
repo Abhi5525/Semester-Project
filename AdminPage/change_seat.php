@@ -34,26 +34,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $movie_id = (int) $reservation['movie_id'];
+// Retrieve showtime and date from the current reservation
+$showtime = $conn->real_escape_string($reservation['showtime']);
+$date = $conn->real_escape_string($reservation['reservation_date']);
 
-    // Retrieve showtime and date from the current reservation
-    // (Adjust these field names if your table uses different names)
-    $showtime = $conn->real_escape_string($reservation['showtime']);
-    $date = $conn->real_escape_string($reservation['reservation_date']);
+// Check if the new seat is already booked for the given showtime and date
+$check_query = "SELECT * FROM seat_reservations 
+                WHERE seat_number = '$new_seat' 
+                  AND movie_id = $movie_id 
+                  AND showtime = '$showtime' 
+                  AND reservation_date = '$date'";
+$check_result = $conn->query($check_query);
 
-    // Check if the new seat is available for the specific showtime and date
-    $check_query = "SELECT * FROM seat_reservations 
-                    WHERE seat_number = '$new_seat' 
-                      AND movie_id = $movie_id 
-                      AND showtime = '$showtime'
-                      AND reservation_date = '$date'
-                      AND status = 'available'";
-    $check_result = $conn->query($check_query);
+if ($check_result && $check_result->num_rows == 0) {
+    // Get the current seat number of the booking
+    $current_seat_query = "SELECT seat_number FROM seat_reservations WHERE id = $id";
+    $current_seat_result = $conn->query($current_seat_query);
+    $current_seat = ($current_seat_result->num_rows > 0) ? $current_seat_result->fetch_assoc()['seat_number'] : null;
 
-    if ($check_result && $check_result->num_rows > 0) {
-        // Update the seat number and mark it as booked
+    if ($current_seat) {
+        // Update the seat to the new number
         $update_query = "UPDATE seat_reservations 
-                         SET seat_number = '$new_seat', status = 'booked' 
+                         SET seat_number = '$new_seat' 
                          WHERE id = $id";
+        
         if ($conn->query($update_query)) {
             echo "<script>
                     alert('Seat changed successfully!');
@@ -65,11 +69,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
         echo "<script>
-                alert('Seat is already booked or not available for the selected showtime and date!');
+                alert('Error retrieving current seat information.');
                 window.location.href='admin_bookings.php';
               </script>";
-        exit;
     }
+} else {
+    echo "<script>
+            alert('Selected seat is already booked!');
+            window.location.href='admin_bookings.php';
+          </script>";
+    exit;
+}
 }
 ?>
 

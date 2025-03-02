@@ -221,12 +221,27 @@ if (!isset($_SESSION["isLoggedIn"]) || $_SESSION["isLoggedIn"] !== true) {
             opacity: 1;
             /* Ensure full visibility */
         }
+        .backtohome {
+            float: right;
+            text-decoration: none;
+            padding: 5px 10px;
+            color: wheat ;
+            background-color: green ;
+            font-size: 1opx;
+            border-radius: 4px;
+            margin-bottom: 10px;
+
+        }
     </style>
 </head>
 
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Manage Seat Bookings</h1>
+
+         
+        <a class="backtohome" href="index.php">Home</a>
+        
 
         <!-- Search Input -->
         <div class="mb-4">

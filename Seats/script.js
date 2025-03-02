@@ -248,7 +248,14 @@ function handleBookingConfirmation() {
         const date = document.getElementById("dateDropdown").value;
         const time = document.querySelector('input[name="time"]:checked').value;
         const seats = JSON.parse(document.getElementById("selectedSeats").value || "[]").join(", ");
-        const message = `You have selected the following seats: ${seats}\nDate: ${date}\nTime: ${time}\nDo you want to proceed?`;
+        const message = `You have selected the following seats: 
+${seats}
+Date: ${date}
+Time: ${time}
+Total Payable Amount: Rs. ${totalPrice} 
+
+Do you want to proceed?`;
+
         toggleModal(message);
     }
 }
@@ -276,7 +283,7 @@ function initializeBookingSystem() {
 });
 
     document.getElementById("bookSeatsButton")?.addEventListener("click", function () {
-        alert(selectedSeats);
+        // alert(selectedSeats);
         handleBookingConfirmation();
     });
     document.getElementById("confirm-button")?.addEventListener("click", submitBooking);
@@ -358,7 +365,7 @@ function submitBooking() {
 }
 
 function generateTicketPDF(data) {
-    alert("ENtered in generate ticket");
+    // alert("ENtered in generate ticket");
     // Retrieve the user's session information
     const userName = sessionStorage.getItem("username");
     const userEmail = sessionStorage.getItem("userEmail");

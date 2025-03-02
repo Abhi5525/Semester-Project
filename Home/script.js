@@ -69,24 +69,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // this function  is moved to navbar
-    // Function to open the modal and populate its content
     function openModal(movie) {
-        // alert(movie);
         const modal = document.getElementById("movieModal");
-
-        // Set modal content from the clicked movie's data attributes
+        const descriptionEl = document.getElementById("modalDescription");
+        const seeMoreBtn = document.getElementById("seeMoreBtn");
+        seeMoreBtn.innerText="See more";
+    
+        // Set movie details
         document.getElementById("modalTitle").innerText = movie.dataset.title;
         document.getElementById("modalGenre").innerText = `Genre: ${movie.dataset.genre}`;
-        document.getElementById("modalDescription").innerText = movie.dataset.description;
         document.getElementById("modalDuration").innerText = `Duration: ${movie.dataset.duration}`;
         document.getElementById("modalImage").src = movie.dataset.thumbnail;
-
-        // Set trailer URL dynamically
-        currentTrailerUrl = movie.dataset.url || ""; // Store the trailer URL for later use
-
+     // Set trailer URL dynamically
+     currentTrailerUrl = movie.dataset.url || ""; // Store the trailer URL for later use
+        // Get full description
+        const fullDescription = movie.dataset.description;
+        const shortDescription = fullDescription.length > 100 ? fullDescription.substring(0, 100) + "..." : fullDescription;
+    
+        // Set description and See More button visibility
+        descriptionEl.innerText = shortDescription;
+        seeMoreBtn.style.display = fullDescription.length > 100 ? "inline-block" : "none";
+    
+        // Store full description for toggling
+        descriptionEl.dataset.full = fullDescription;
+        descriptionEl.dataset.short = shortDescription;
+        descriptionEl.dataset.expanded = "false";
+    
         // Show the modal
         modal.style.display = "flex";
     }
+    
+    
+    
+    
 
     // Function to close the modal
     function closeModal() {
