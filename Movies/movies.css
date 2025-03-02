@@ -92,7 +92,12 @@ input[type="submit"]:hover {
     font-size: 12px;
     margin-top: 5px;
 }
+.thumbnailPreview{
+    height: 160px;
+    width:150px;
+    object-fit: contain;
 
+}
 /* Media query for small screens */
 @media screen and (max-width: 500px) {
     .container {

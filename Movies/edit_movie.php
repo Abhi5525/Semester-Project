@@ -104,7 +104,6 @@ if (isset($_GET['id'])) {
             <label for="title">Movie Title</label>
             <input type="text" name="title" id="title" value="<?php echo htmlspecialchars($movie['Title']); ?>" required>
             <span class="error" id="titleError"></span>
-        
         </div>
         <div class="input-field">
         
@@ -143,13 +142,25 @@ if (isset($_GET['id'])) {
 
         </div>
         <div class="input-field">
-        
-            <label for="thumbnail">Thumbnail</label>
-            <input type="file" name="thumbnail" id="thumbnail">
-            <img src="<?php echo $movie['Thumbnail']; ?>" alt="Thumbnail" width="100">
-            <span class="error" id="thumbnailError"></span>
-        
-        </div>
+    <label for="thumbnail">Thumbnail</label>
+    <input type="file" name="thumbnail" id="thumbnail" accept="image/*">
+    <img id="thumbnailPreview" src="<?php echo $movie['Thumbnail']; ?>" alt="Thumbnail" width="100">
+    <span class="error" id="thumbnailError"></span>
+</div>
+
+<script>
+document.getElementById("thumbnail").addEventListener("change", function(event) {
+    var file = event.target.files[0]; // Get the selected file
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("thumbnailPreview").src = e.target.result; // Update the preview
+        }
+        reader.readAsDataURL(file); // Convert file to Base64
+    }
+});
+</script>
+
         <div class="input-field">
         
     <label for="status">Movie Status</label>
